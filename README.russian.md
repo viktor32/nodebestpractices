@@ -46,43 +46,43 @@
 
 # `1. Практики Структуры Проекта`
 
-## ![✔] 1.1 Structure your solution by components
+## ![✔] 1.1 Структурируйте свое решение по компонентам
 
-**TL;DR:** The worst large applications pitfall is maintaining a huge code base with hundreds of dependencies - such a monolith slows down developers as they try to incorporate new features. Instead, partition your code into components, each gets its own folder or a dedicated codebase, and ensure that each unit is kept small and simple. Visit 'Read More' below to see examples of correct project structure
+**TL;DR:** Самая большая проблема больших приложений - поддержка кодбазы с сотнями зависимостей - это очень сильно замедняет разработку и внедрение новых функций. Вместо этого разделите ваш код на компоненты, каждый из которых получает свою собственную папку или выделенную кодбазу, и убедитесь, что каждый модуль остается маленьким и простым. По ссылке «Подробнее» ниже вы найдете примеры правильной структуры проекта.
 
-**Otherwise:** When developers who code new features struggle to realize the impact of their change and fear to break other dependant components - deployments become slower and more risky. It's also considered harder to scale-out when all the business units are not separated
+**В противном случае:** При разработке нового функционала разработчикам постоянно приходится осознавать влияние своего кода на все приложение в целом, так как появляется большая вероятность сломать другие зависимые компоненты, развертывание  приложения становится медленным, увеличиваются риски допустить ошибку. Также приложение с разделенной логикой легче поддается маштабированию.
 
-🔗 [**Read More: structure by components**](/sections/projectstructre/breakintcomponents.md)
-
-<br/><br/>
-
-## ![✔] 1.2 Layer your components, keep Express within its boundaries
-
-**TL;DR:** Each component should contain 'layers' - a dedicated object for the web, logic and data access code. This not only draws a clean separation of concerns but also significantly eases mocking and testing the system. Though this is a very common pattern, API developers tend to mix layers by passing the web layer objects (Express req, res) to business logic and data layers - this makes your application dependant on and accessible by Express only
-
-**Otherwise:** App that mixes web objects with other layers can not be accessed by testing code, CRON jobs and other non-Express callers
-
-🔗 [**Read More: layer your app**](/sections/projectstructre/createlayers.md)
+🔗 [**Подробнее: компонентная структура**](/sections/projectstructre/breakintcomponents.russian.md)
 
 <br/><br/>
 
-## ![✔] 1.3 Wrap common utilities as npm packages
+## ![✔] 1.2 Разделяйте логику компонентов, отделяйте Express от бизнес-логики приложения
 
-**TL;DR:** In a large app that constitutes a large code base, cross-cutting-concern utilities like logger, encryption and alike, should be wrapped by your own code and exposed as private npm packages. This allows sharing them among multiple code bases and projects
+**TL;DR:** Каждый компонент должен содержать «слои» - выделенные объекты для web, логики и кода для работы с данными. Это не только четко разделяет задачи, но и значительно облегчает проверку и тестирование системы. Хотя это очень распространенный шаблон, разработчики API склонны смешивать слои, передавая объекты веб-слоя (Express req, res) в бизнес-логику и слои работы с данными - это делает ваше приложение зависимым и доступным только для Express.
 
-**Otherwise:** You'll have to invent your own deployment and dependency wheel
+**В противном случае:** Приложение, которое смешивает веб-объекты с другими слоями, сложно поддается покритием тестами, вызовами через CRON и другим обработками не из-под Express.
 
-🔗 [**Read More: Structure by feature**](/sections/projectstructre/wraputilities.md)
+🔗 [**Подробнее: слои приложения**](/sections/projectstructre/createlayers.russian.md)
 
 <br/><br/>
 
-## ![✔] 1.4 Separate Express 'app' and 'server'
+## ![✔] 1.3 Используйте приватные npm пакеты для переиспользуемых модулей
 
-**TL;DR:** Avoid the nasty habit of defining the entire [Express](https://expressjs.com/) app in a single huge file - separate your 'Express' definition to at least two files: the API declaration (app.js) and the networking concerns (WWW). For even better structure, locate your API declaration within components
+**TL; DR:** В приложении с большой кодбазой, модули и утилиты, которые могут быть переиспользованя (такие как регистрация, шифрование и т.п.) должны быть обернуты в ваши приватные пакеты npm. Это позволяет делиться ими между кодбазами и проектами
 
-**Otherwise:** Your API will be accessible for testing via HTTP calls only (slower and much harder to generate coverage reports). It probably won't be a big pleasure to maintain hundreds of lines of code in a single file
+**В противном случае:** Вам придется каждый раз изобретать колесо при реализации подобного функционала
 
-🔗 [**Read More: separate Express 'app' and 'server'**](/sections/projectstructre/separateexpress.md)
+🔗 [**Read More: Структурирование функционала**](/sections/projectstructre/wraputilities.russian.md)
+
+<br/><br/>
+
+## ![✔] 1.4 Разделяйте Express 'app' и 'server'
+
+**TL;DR:** Избегайте неприятной привычки определять все приложение [Express](https://expressjs.com/) в одном огромном файле - разделяйте ваш «Express» как минимум на два файла: объявление API (app.js) и сетевые задачи (WWW). Для еще лучшей структуры объявляйте API в компонентах
+
+**В противном случае:** Ваш API будет доступен для тестирования только через HTTP-вызовы (медленнее и намного сложнее создавать отчеты о покрытии кода тестами). К тому же ни для кого не будет удовольствием работать с файлами в сотни и тысячи строк кода.
+
+🔗 [**Подробнее: разделяйте Express 'app' и 'server'**](/sections/projectstructre/separateexpress.md)
 
 <br/><br/>
 
