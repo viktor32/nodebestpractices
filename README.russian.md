@@ -86,17 +86,17 @@
 
 <br/><br/>
 
-## ![✔] 1.5 Use environment aware, secure and hierarchical config
+## ![✔] 1.5 Конфигурация должна зависеть от переменных окружения, быть безопасной и поддерживать иерархию
 
-**TL;DR:** A perfect and flawless configuration setup should ensure (a) keys can be read from file AND from environment variable (b) secrets are kept outside committed code (c) config is hierarchical for easier findability. There are a few packages that can help tick most of those boxes like [rc](https://www.npmjs.com/package/rc), [nconf](https://www.npmjs.com/package/nconf) and [config](https://www.npmjs.com/package/config)
+**TL;DR:** Идеальная и безупречная конфигурация должна обеспечивать (а) считывание ключей из файла И из переменной среды (б) приватные ключи и пароли хранятся вне репозитория (в) конфигурация является иерархической для облегчения поиска. Есть несколько пакетов, которые могут помочь решить большинство из этих задач. К примеру [rc](https://www.npmjs.com/package/rc), [nconf](https://www.npmjs.com/package/nconf) и [config](https://www.npmjs.com/package/config)
 
-**Otherwise:** Failing to satisfy any of the config requirements will simply bog down the development or devops team. Probably both
+**В противном случае:** Невыполнение каких-либо требований к конфигурации приведет к проблемам с разработкой или к проблемам для команды разработки. Вероятно, оба
 
-🔗 [**Read More: configuration best practices**](/sections/projectstructre/configguide.md)
+🔗 [**Подробнее: правильная конфигурация**](/sections/projectstructre/configguide.russian.md)
 
 <br/><br/><br/>
 
-<p align="right"><a href="#table-of-contents">⬆ Return to top</a></p>
+<p align="right"><a href="#table-of-contents">⬆ Вернуться наверх</a></p>
 
 # `2. Практики Обработки ошибок`
 
