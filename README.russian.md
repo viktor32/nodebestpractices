@@ -35,7 +35,7 @@
 ## Оглавление
 
 1.  [Структура Проекта (5)](#1-project-structure-practices)
-2.  [Практики Обработки ошибок (11) ](#2-error-handling-practices)
+2.  [Обработка ошибок (11) ](#2-error-handling-practices)
 3.  [Практики Стиля Кода (12) ](#3-code-style-practices)
 4.  [Практики Тестирования И Поддержания Качества (9) ](#4-testing-and-overall-quality-practices)
 5.  [Практики Релиза (18) ](#5-going-to-production-practices)
@@ -98,115 +98,115 @@
 
 <p align="right"><a href="#table-of-contents">⬆ Вернуться наверх</a></p>
 
-# `2. Практики Обработки ошибок`
+# `2. Обработка ошибок`
 
-## ![✔] 2.1 Use Async-Await or promises for async error handling
+## ![✔] 2.1 Используйте Async-Await или promises для асинхронной обработки ошибок
 
-**TL;DR:** Handling async errors in callback style is probably the fastest way to hell (a.k.a the pyramid of doom). The best gift you can give to your code is using a reputable promise library or async-await instead which enables a much more compact and familiar code syntax like try-catch
+**TL; DR:** Обработка асинхронных ошибок в стиле обратного вызова, вероятно, является самым быстрым путем в ад. Лучший подарок, который вы можете дать своему коду, - это использовать Promise'ы или async-await, что обеспечивает гораздо более компактный и знакомый синтаксис кода, такой как try-catch
 
-**Otherwise:** Node.js callback style, function(err, response), is a promising way to un-maintainable code due to the mix of error handling with casual code, excessive nesting and awkward coding patterns
+**В противном случае:** Стиль обратного вызова Node.js, function(err, response), является многообещающим способом непригодного для использования кода из-за сочетания обработки ошибок со случайным кодом, чрезмерного вложения и неуклюжих шаблонов кодирования.
 
-🔗 [**Read More: avoiding callbacks**](/sections/errorhandling/asyncerrorhandling.md)
-
-<br/><br/>
-
-## ![✔] 2.2 Use only the built-in Error object
-
-**TL;DR:** Many throws errors as a string or as some custom type – this complicates the error handling logic and the interoperability between modules. Whether you reject a promise, throw an exception or an emit error – using only the built-in Error object will increase uniformity and prevent loss of information
-
-**Otherwise:** When invoking some component, being uncertain which type of errors come in return – it makes proper error handling much harder. Even worse, using custom types to describe errors might lead to loss of critical error information like the stack trace!
-
-🔗 [**Read More: using the built-in error object**](/sections/errorhandling/useonlythebuiltinerror.md)
+🔗 [**Read More: избегайте функций обратного вызова**](/sections/errorhandling/asyncerrorhandling.md)
 
 <br/><br/>
 
-## ![✔] 2.3 Distinguish operational vs programmer errors
+## ![✔] 2.2 Используйте встроенный Error object для передачи ошибки
 
-**TL;DR:** Operational errors (e.g. API received an invalid input) refer to known cases where the error impact is fully understood and can be handled thoughtfully. On the other hand, programmer error (e.g. trying to read undefined variable) refers to unknown code failures that dictate to gracefully restart the application
+**TL; DR:** Многие выбрасывают ошибки в виде строки или некоторого пользовательского типа - это усложняет логику обработки ошибок и взаимодействие между модулями. Вне зависимости от того, отклоняете ли вы обещание, генерируете исключение или генерируете ошибку - используйте встроенный объект Error, это приведет к повышению однородности и предотвращению потери информации
 
-**Otherwise:** You may always restart the application when an error appears, but why let ~5000 online users down because of a minor, predicted, operational error? the opposite is also not ideal – keeping the application up when an unknown issue (programmer error) occurred might lead to an unpredicted behavior. Differentiating the two allows acting tactfully and applying a balanced approach based on the given context
+**В противном случае:** При вызове какого-либо компонента, будучи неуверенным, какой тип ошибок приходит в ответ - это значительно затрудняет правильную обработку ошибок. Хуже того, использование пользовательских типов для описания ошибок может привести к потере информации о критических ошибках, таких как трассировка стека!
 
-🔗 [**Read More: operational vs programmer error**](/sections/errorhandling/operationalvsprogrammererror.md)
-
-<br/><br/>
-
-## ![✔] 2.4 Handle errors centrally, not within an Express middleware
-
-**TL;DR:** Error handling logic such as mail to admin and logging should be encapsulated in a dedicated and centralized object that all endpoints (e.g. Express middleware, cron jobs, unit-testing) call when an error comes in
-
-**Otherwise:** Not handling errors within a single place will lead to code duplication and probably to improperly handled errors
-
-🔗 [**Read More: handling errors in a centralized place**](/sections/errorhandling/centralizedhandling.md)
+🔗 [**Read More: использование объекта Error**](/sections/errorhandling/useonlythebuiltinerror.md)
 
 <br/><br/>
 
-## ![✔] 2.5 Document API errors using Swagger
+## ![✔] 2.3 Различайте операционные ошибки и ошибки программиста
 
-**TL;DR:** Let your API callers know which errors might come in return so they can handle these thoughtfully without crashing. This is usually done with REST API documentation frameworks like Swagger
+**TL; DR:** Операционные ошибки (например, API получил неверный ввод) относятся к известным случаям, когда влияние ошибки полностью понимается и может быть обработано вдумчиво. С другой стороны, ошибка программиста (например, попытка прочитать неопределенную переменную) относится к неизвестным ошибкам кода, которые требуют изящного перезапуска приложения.
 
-**Otherwise:** An API client might decide to crash and restart only because he received back an error he couldn’t understand. Note: the caller of your API might be you (very typical in a microservice environment)
+**В противном случае:** Вы всегда можете перезапустить приложение, когда появляется ошибка, но зачем подводить ~ 5000 онлайн-пользователей из-за незначительной, прогнозируемой, операционной ошибки? обратное также не идеально - поддержание приложения в случае возникновения неизвестной проблемы (ошибка программиста) может привести к непредсказуемому поведению. Разграничение между ними позволяет действовать тактично и применять сбалансированный подход, основанный на данном контексте
 
-🔗 [**Read More: documenting errors in Swagger**](/sections/errorhandling/documentingusingswagger.md)
-
-<br/><br/>
-
-## ![✔] 2.6 Shut the process gracefully when a stranger comes to town
-
-**TL;DR:** When an unknown error occurs (a developer error, see best practice number #3)- there is uncertainty about the application healthiness. A common practice suggests restarting the process carefully using a ‘restarter’ tool like Forever and PM2
-
-**Otherwise:** When an unfamiliar exception is caught, some object might be in a faulty state (e.g an event emitter which is used globally and not firing events anymore due to some internal failure) and all future requests might fail or behave crazily
-
-🔗 [**Read More: shutting the process**](/sections/errorhandling/shuttingtheprocess.md)
+🔗 [**Read More: операционные ошибки и ошибки программиста**](/sections/errorhandling/operationalvsprogrammererror.md)
 
 <br/><br/>
 
-## ![✔] 2.7 Use a mature logger to increase error visibility
+## ![✔] 2.4 Обрабатывайте ошибки сентрализованно
 
-**TL;DR:** A set of mature logging tools like Winston, Bunyan or Log4J, will speed-up error discovery and understanding. So forget about console.log
+**TL; DR:** Логика обработки ошибок, такая как отправка емейла администратору и ведение журнала, должна быть вынесена в выделенный централизованный объект, который вызывается всеми конечными точками (например, Express middleware, задания cron, unit-testing) при возникновении ошибки
 
-**Otherwise:** Skimming through console.logs or manually through messy text file without querying tools or a decent log viewer might keep you busy at work until late
+**В противном случае:** Если не обрабатывать ошибки в одном месте, это приведет к дублированию кода и, возможно, к неправильной обработке ошибок.
 
-🔗 [**Read More: using a mature logger**](/sections/errorhandling/usematurelogger.md)
-
-<br/><br/>
-
-## ![✔] 2.8 Test error flows using your favorite test framework
-
-**TL;DR:** Whether professional automated QA or plain manual developer testing – Ensure that your code not only satisfies positive scenario but also handle and return the right errors. Testing frameworks like Mocha & Chai can handle this easily (see code examples within the "Gist popup")
-
-**Otherwise:** Without testing, whether automatically or manually, you can’t rely on our code to return the right errors. Without meaningful errors – there’s no error handling
-
-🔗 [**Read More: testing error flows**](/sections/errorhandling/testingerrorflows.md)
+🔗 [**Read More: централизованная обработка ошибок**](/sections/errorhandling/centralizedhandling.md)
 
 <br/><br/>
 
-## ![✔] 2.9 Discover errors and downtime using APM products
+## ![✔] 2.5 Документируйте возможные типы ошибок в API
 
-**TL;DR:** Monitoring and performance products (a.k.a APM) proactively gauge your codebase or API so they can automagically highlight errors, crashes and slow parts that you were missing
+**TL; DR:** Пользователи вашего API должны иметь возможность узнать, какие ошибки могут прийти в ответ на запрос. В этом случае они смогут обрабатывать их, что не будет приводить к сбоям. Обычно это делается с помощью фреймворков для REST API документации, таких как Swagger
 
-**Otherwise:** You might spend great effort on measuring API performance and downtimes, probably you’ll never be aware which are your slowest code parts under real-world scenario and how these affect the UX
+**В противном случае:** Пользователь API может принять решение о сбое и перезапуске только потому, что он получил ошибку, которую он не мог понять. Примечание: вызывающим абонентом вашего API можете быть и вы (очень типично для микросервисной среды)
 
-🔗 [**Read More: using APM products**](/sections/errorhandling/apmproducts.md)
-
-<br/><br/>
-
-## ![✔] 2.10 Catch unhandled promise rejections
-
-**TL;DR:** Any exception thrown within a promise will get swallowed and discarded unless a developer didn’t forget to explicitly handle. Even if your code is subscribed to process.uncaughtException! Overcome this by registering to the event process.unhandledRejection
-
-**Otherwise:** Your errors will get swallowed and leave no trace. Nothing to worry about
-
-🔗 [**Read More: catching unhandled promise rejection**](/sections/errorhandling/catchunhandledpromiserejection.md)
+🔗 [**Read More: документация ошибок в Swagger**](/sections/errorhandling/documentingusingswagger.md)
 
 <br/><br/>
 
-## ![✔] 2.11 Fail fast, validate arguments using a dedicated library
+## ![✔] 2.6 Прервите и перезапустите процесс в случае неизвестной ошибки
 
-**TL;DR:** This should be part of your Express best practices – Assert API input to avoid nasty bugs that are much harder to track later. The validation code is usually tedious unless you are using a very cool helper library like Joi
+**TL; DR:** При возникновении неизвестной ошибки (ошибка разработчика, см. Рекомендацию № 3) - существует неопределенность в отношении работоспособности приложения. Обычная практика предполагает осторожный перезапуск процесса с использованием инструмента-перезагрузчика, такого как Forever и PM2.
 
-**Otherwise:** Consider this – your function expects a numeric argument “Discount” which the caller forgets to pass, later on, your code checks if Discount!=0 (amount of allowed discount is greater than zero), then it will allow the user to enjoy a discount. OMG, what a nasty bug. Can you see it?
+**В противном случае:** Когда обнаруживается незнакомое исключение, часть функционала может находиться в неисправном состоянии (например, источник событий, который используется глобально и больше не генерирует события из-за некоторого внутреннего сбоя), и все будущие запросы могут завершаться сбоем или вести себя неправильно
 
-🔗 [**Read More: failing fast**](/sections/errorhandling/failfast.md)
+🔗 [**Read More: остановка процесса**](/sections/errorhandling/shuttingtheprocess.md)
+
+<br/><br/>
+
+## ![✔] 2.7 Используйте известные инструменты логирования
+
+**TL; DR:** Использование известных инструментов логирования, таких как Winston, Bunyan или Log4J, ускорит обнаружение и понимание ошибок. Так что забудьте о console.log
+
+**В противном случае:** Дебаг через console.log или вручную через сырой текстовый файл без механизма поиска или удобного форматирования может занять вас на работе до поздней ночи.
+
+🔗 [**Read More: использование инструментов логирования**](/sections/errorhandling/usematurelogger.md)
+
+<br/><br/>
+
+## ![✔] 2.8 Тестируйте обработку ошибок через тестовые фреймворки
+
+**TL; DR:** Будь то профессиональный автоматический QA или простое ручное тестирование разработчиком - убедитесь, что ваш код не только удовлетворяет положительному сценарию, но также обрабатывает и возвращает правильные ошибки. Фреймворки для тестирования, такие как Mocha & Chai, могут легко справиться с этим (см. Примеры кода в «Gist popup»)
+
+**В противном случае:** Без тестирования, будь то автоматически или вручную, вы не можете полагаться на наш код с механизмом возврата правильных ошибок. Без значимых ошибок нет обработки ошибок
+
+🔗 [**Read More: способы тестирования ошибок**](/sections/errorhandling/testingerrorflows.md)
+
+<br/><br/>
+
+## ![✔] 2.9 Обнаружение ошибок и простоев используя APM
+
+**TL; DR:** Сервисы для мониторинга состояния и производительности (к прим. APM) проактивно измеряют вашу кодовую базу или API, чтобы они могли автоматически выделять ошибки, сбои и медленные части, которые вы пропустили
+
+**В противном случае:** Вы можете потратить огромные усилия на измерение производительности и времени простоя API, возможно, вы никогда не узнаете, какие ваши самые медленные части кода в реальном сценарии и как они влияют на UX
+
+🔗 [**Read More: использование APM**](/sections/errorhandling/apmproducts.md)
+
+<br/><br/>
+
+## ![✔] 2.10 Обрабатывайте все исключения Promise
+
+**TL; DR:** Любое исключение, отправленное в Promice, будет отброшено, если разработчик не забудет его явно обработать. Даже если ваш код подписан на ]`process.uncaughtException`! Исправьте это, подписавшись на событие `process.unhandledRejection`
+
+**В противном случае:** Ваши ошибки будут утеряны и не оставят следов. Не о чем беспокоиться
+
+🔗 [**Read More: обработка неизсвестных ошибок Promise**](/sections/errorhandling/catchunhandledpromiserejection.md)
+
+<br/><br/>
+
+## ![✔] 2.11 Проверяйте входные данные вашего API
+
+**TL; DR:** Это должно быть частью вашей лучшей практики Express - проверка входных данных API, чтобы избежать неприятных ошибок, которые потом будет намного сложнее отследить. Код проверки обычно утомителен, если вы не используете очень классную вспомогательную библиотеку, такую как Joi
+
+**В противном случае:** Это может привести к непредвиденным ошибкам. К примеру - API ожидает числовой аргумент `Discount`, который вызывающая сторона забывает передать, позже ваш код проверяет наличине ненулевой скиди (`Discount != 0`) и позволяет пользователю ей пользоваться.
+
+🔗 [**Read More: проверка входных данных**](/sections/errorhandling/failfast.md)
 
 <br/><br/><br/>
 
