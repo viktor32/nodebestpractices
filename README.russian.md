@@ -36,7 +36,7 @@
 
 1.  [Структура Проекта (5)](#1-project-structure-practices)
 2.  [Обработка ошибок (11) ](#2-error-handling-practices)
-3.  [Практики Стиля Кода (12) ](#3-code-style-practices)
+3.  [Стиль Кода (12) ](#3-code-style-practices)
 4.  [Практики Тестирования И Поддержания Качества (9) ](#4-testing-and-overall-quality-practices)
 5.  [Практики Релиза (18) ](#5-going-to-production-practices)
 6.  [Лучшие Практики По Безопасности (24)](#6-security-best-practices)
@@ -212,29 +212,29 @@
 
 <p align="right"><a href="#table-of-contents">⬆ Return to top</a></p>
 
-# `3. Практики Стиля Кода`
+# `3. Стиль Кода`
 
-## ![✔] 3.1 Use ESLint
+## ![✔] 3.1 Используйте ESLint
 
-**TL;DR:** [ESLint](https://eslint.org) is the de-facto standard for checking possible code errors and fixing code style, not only to identify nitty-gritty spacing issues but also to detect serious code anti-patterns like developers throwing errors without classification. Though ESLint can automatically fix code styles, other tools like [prettier](https://www.npmjs.com/package/prettier) and [beautify](https://www.npmjs.com/package/js-beautify) are more powerful in formatting the fix and work in conjunction with ESLint
+**TL;DR:** [ESLint](https://eslint.org) ялвяется стандартом де-факто для проверки кода на возможные ошибки и исправления ошибок стиля кода. ESLint используется не только для исправления неправильных отступов, но и для выявления таких серьезных "анти-паттерных" проблем, как, к примеру, выброс ошибок без классификации. Несмотря на то, что ESLint поддерживает автоматическое исправление кода, такие утилиты как [prettier](https://www.npmjs.com/package/prettier) и [beautify](https://www.npmjs.com/package/js-beautify) сделают это более продуктивно, если их использовать совместно с ESLint.
 
-**Otherwise:** Developers will focus on tedious spacing and line-width concerns and time might be wasted overthinking about the project's code style
-
-<br/><br/>
-
-## ![✔] 3.2 Node.js Specific Plugins
-
-**TL;DR:** On top of ESLint standard rules that cover vanilla JS only, add Node-specific plugins like [eslint-plugin-node](https://www.npmjs.com/package/eslint-plugin-node), [eslint-plugin-mocha](https://www.npmjs.com/package/eslint-plugin-mocha) and [eslint-plugin-node-security](https://www.npmjs.com/package/eslint-plugin-security)
-
-**Otherwise:** Many faulty Node.js code patterns might escape under the radar. For example, developers might require(variableAsPath) files with a variable given as path which allows attackers to execute any JS script. Node.js linters can detect such patterns and complain early
+**В противном случае:** Код не будет иметь единого стилистического подхода
 
 <br/><br/>
 
-## ![✔] 3.3 Start a Codeblock's Curly Braces on the Same Line
+## ![✔] 3.2 Node.js-ориентированные линтеры
 
-**TL;DR:** The opening curly braces of a code block should be in the same line of the opening statement
+**TL;DR:** В дополнение к стандартным правилам ESLint, которые покрывают только  Vanilla JS, используйте такие Node-ориентированные плагины, как [eslint-plugin-node](https://www.npmjs.com/package/eslint-plugin-node), [eslint-plugin-mocha](https://www.npmjs.com/package/eslint-plugin-mocha) и [eslint-plugin-node-security](https://www.npmjs.com/package/eslint-plugin-security)
 
-### Code Example
+**В противном случае:** Ряд проблем паттернов кода Node.js могут быть упущены. Как пример, разработчик может использовать `require(variableAsPath)` с переменной, указанной в качестве пути, которая позволяет злоумышленникам выполнить любой сценарий JS. Линтеры Node.js могут обнаружить такие паттерны и известить о проблеме
+
+<br/><br/>
+
+## ![✔] 3.3 Фигурная скоба в той же строке
+
+**TL;DR:** Открывающая фигурная скобка должна находиться в той же строке, что и объявление метода
+
+### Пример кода
 
 ```javascript
 // Do
@@ -249,19 +249,19 @@ function someFunction()
 }
 ```
 
-**Otherwise:** Deferring from this best practice might lead to unexpected results, as seen in the StackOverflow thread below:
+**В противном случае:** Отклонение от общей практики может привести неожиданным последствиям. Детальнее об этом можно прочитать в треде на StackOverflow:
 
 🔗 [**Read more:** "Why does a results vary based on curly brace placement?" (Stackoverflow)](https://stackoverflow.com/questions/3641519/why-does-a-results-vary-based-on-curly-brace-placement)
 
 <br/><br/>
 
-## ![✔] 3.4 Don't Forget the Semicolon
+## ![✔] 3.4 Не забывайте о точке с запятой
 
-**TL;DR:** While not unanimously agreed upon, it is still recommended to put a semicolon at the end of each statement. This will make your code more readable and explicit to other developers who read it
+**TL;DR:** Даже с учетом, что нет единого мнения, все же рекомендуется ставить точку с запятой в конце каждого объявления. Это делает ваш код более читабельным и понятным для других разработчиков
 
-**Otherwise:** As seen in the previous section, JavaScript's interpreter automatically adds a semicolon at the end of a statement if there isn't one, or considers a statement as not ended where it should, which might lead to some undesired results
+**В противном случае:** Так же, как и в примере выше, интерпритатор JavaScript  добавляет точку с запятой в конец объявления, где его нет. Но так же он может посчитать, что объявление еще не завершено, что может привести к нежелательным последствиям
 
-### Code example
+### Пример кода
 
 ```javascript
 // Do
@@ -279,21 +279,22 @@ const count = 2 // it tries to run 2(), but 2 is not a function
 
 <br/><br/>
 
-## ![✔] 3.5 Name Your Functions
+## ![✔] 3.5 Именуйте функции
 
-**TL;DR:** Name all functions, including closures and callbacks. Avoid anonymous functions. This is especially useful when profiling a node app. Naming all functions will allow you to easily understand what you're looking at when checking a memory snapshot
 
-**Otherwise:** Debugging production issues using a core dump (memory snapshot) might become challenging as you notice significant memory consumption from anonymous functions
+**TL;DR:** Именуйте все функциии, включая замыкания и функции обратного вызова. Игнорируйте анонимные функции. Это особенно полезно при профилировании Node.js приложений. Именование всех функций сильно упрощает разбор снимка памяти
+
+**В противном случае:** Отладка производительности используя снимок памяти станет гораздо сложнее, когда основную часть памяти потребляют анонимные функции
 
 <br/><br/>
 
-## ![✔] 3.6 Naming conventions for variables, constants, functions and classes
+## ![✔] 3.6 Соглашения об именах переменных, констант, функций и классов
 
-**TL;DR:** Use **_lowerCamelCase_** when naming constants, variables and functions and **_UpperCamelCase_** (capital first letter as well) when naming classes. This will help you to easily distinguish between plain variables/functions, and classes that require instantiation. Use descriptive names, but try to keep them short
+**TL;DR:** Используйте **_lowerCamelCase_** когда именуете константы, переменные и функции и **_UpperCamelCase_** (первая также в верхнем регистре) когда именуете классы. Это поможет вам легко различать простые переменные/функции и классы. Используйте описательные имена, но старайтесь, чтобы они были короткими
 
-**Otherwise:** Javascript is the only language in the world which allows invoking a constructor ("Class") directly without instantiating it first. Consequently, Classes and function-constructors are differentiated by starting with UpperCamelCase
+**В противном случае:** Javascript - единственный язык в мире, который позволяет напрямую вызывать конструктор («Class»), не создавая его экземпляры. Следовательно, классы и конструкторы функций различаются, начиная с UpperCamelCase
 
-### Code Example
+### Пример кода
 
 ```javascript
 // for class name we use UpperCamelCase
