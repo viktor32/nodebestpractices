@@ -196,7 +196,7 @@
 
 **В противном случае:** Ваши ошибки будут утеряны и не оставят следов. Не о чем беспокоиться
 
-🔗 [**Read More: обработка неизсвестных ошибок Promise**](/sections/errorhandling/catchunhandledpromiserejection.md)
+🔗 [**Read More: обработка неизвестных ошибок Promise**](/sections/errorhandling/catchunhandledpromiserejection.md)
 
 <br/><br/>
 
@@ -312,34 +312,31 @@ function doSomething() {}
 
 <br/><br/>
 
-## ![✔] 3.7 Prefer const over let. Ditch the var
+## ![✔] 3.7 Используйте const и let, забудьте о var
 
-**TL;DR:** Using `const` means that once a variable is assigned, it cannot be reassigned. Preferring const will help you to not be tempted to use the same variable for different uses, and make your code clearer. If a variable needs to be reassigned, in a for loop, for example, use `let` to declare it. Another important aspect of `let` is that a variable declared using it is only available in the block scope in which it was defined. `var` is function scoped, not block scoped, and [shouldn't be used in ES6](https://hackernoon.com/why-you-shouldnt-use-var-anymore-f109a58b9b70) now that you have const and let at your disposal
+**TL;DR:** Объявление переменной, как `const`, означает, что значение переменной будет присвоено единожды и не будет изменено. Такой подход не позволит переиспользовать переменную для иного функционала, что делает код более читабельным. В случае необходимости переопределения переменной (в цикле, к примеру) используйте `let`. Еще одной особенностью `let` является то, что объявленная переменная будет доступна только в рамках блока, в котором она была объявлена. `var` является переменной функции, а не блока, и [не должна быть использована в ES6](https://hackernoon.com/why-you-shouldnt-use-var-anymore-f109a58b9b70).
 
-**Otherwise:** Debugging becomes way more cumbersome when following a variable that frequently changes
+**Otherwise:** Отладка становится намного более громоздкой в случае, когда переменна меняется и переиспользуется
 
-🔗 [**Read more: JavaScript ES6+: var, let, or const?** ](https://medium.com/javascript-scene/javascript-es6-var-let-or-const-ba58b8dcde75)
-
-<br/><br/>
-
-## ![✔] 3.8 Requires come first, and not inside functions
-
-**TL;DR:** Require modules at the beginning of each file, before and outside of any functions. This simple best practice will not only help you easily and quickly tell the dependencies of a file right at the top but also avoids a couple of potential problems
-
-**Otherwise:** Requires are run synchronously by Node.js. If they are called from within a function, it may block other requests from being handled at a more critical time. Also, if a required module or any of its own dependencies throw an error and crash the server, it is best to find out about it as soon as possible, which might not be the case if that module is required from within a function
+🔗 [**Read more: JavaScript ES6+: var, let, или const?** ](https://medium.com/javascript-scene/javascript-es6-var-let-or-const-ba58b8dcde75)
 
 <br/><br/>
 
-## ![✔] 3.9 Do Require on the folders, not directly on the files
+## ![✔] 3.8 Подключение зависимостей происходит в первую очередь, не внутри функций
 
-**TL;DR:** When developing a module/library in a folder, place an index.js file that exposes the module's
-internals so every consumer will pass through it. This serves as an 'interface' to your module and eases
-future changes without breaking the contract
+**TL;DR:**  Подключение модулей должно происходить в начале файла, перед и вне любых функций. Это простое правило не только поможет быстро понимать зависимости файла, но и предотвратит от ряда нежелательных проблем
 
-**Otherwise:** Changing the internal structure of files or the signature may break the interface with
-clients
+**Otherwise:** В Node.js зависимости подключаются синхронно. При подключении зависимости внутри функции, это может привести к блокировке обработки других операций. Кроме того, если требуемый модуль или какая-либо из его собственных зависимостей выдает ошибку и приводит к сбою сервера, лучше узнать об этом как можно скорее. В случае подключения модуля внутри функции, вызов может произойти гораздо позже
 
-### Code example
+<br/><br/>
+
+## ![✔] 3.9 Создавайте подключение директорий, а не конкретных файлов
+
+**TL;DR:** Разрабатывая модуль или библиотеку, создайте `index.js` внутри вашей директории, через который возвращайте интерфейс вашего модуля. Это позволит избежать изменения архитектуры в случае необходимости расширения модуля
+
+**Otherwise:** Изменения архитектуры файлов в дальнейшем может привести к несовместимости с текущим вариантом использования
+
+### Пример кода
 
 ```javascript
 // Do
@@ -353,13 +350,13 @@ module.exports.SMSNumberResolver = require('./SMSNumberResolver/SMSNumberResolve
 
 <br/><br/>
 
-## ![✔] 3.10 Use the `===` operator
+## ![✔] 3.10 Используйте оператор `===`
 
-**TL;DR:** Prefer the strict equality operator `===` over the weaker abstract equality operator `==`. `==` will compare two variables after converting them to a common type. There is no type conversion in `===`, and both variables must be of the same type to be equal
+**TL;DR:** Используйте строгое равенство (`===`) вместо абстрактного `==`. `==` сравнивает значение после того, как приведет их к общему типу, чего нет при использовании `===`. В этом случае для равенства обе переменные должны быть одного типа
 
-**Otherwise:** Unequal variables might return true when compared with the `==` operator
+**Otherwise:** Отличные переменные могут вернуть `true` в случае сравнения через `==`
 
-### Code example
+### Пример кода
 
 ```javascript
 '' == '0'           // false
@@ -376,15 +373,17 @@ null == undefined   // true
 ' \t\r\n ' == 0     // true
 ```
 
-All statements above will return false if used with `===`
+Все выражения выше вернут `false`, если использовать `===`
 
 <br/><br/>
 
-## ![✔] 3.11 Use Async Await, avoid callbacks
+## ![✔] 3.11 Используйте Async/Await вместо callback (функции обратного вызова)
 
-**TL;DR:** Node 8 LTS now has full support for Async-await. This is a new way of dealing with asynchronous code which supersedes callbacks and promises. Async-await is non-blocking, and it makes asynchronous code look synchronous. The best gift you can give to your code is using async-await which provides a much more compact and familiar code syntax like try-catch
+**TL;DR:** Node 8 полностью поддерживает Async-await. Это новый способ работы с асинхронным кодом, который заменяет обратные вызовы и Promise.
 
-**Otherwise:** Handling async errors in callback style is probably the fastest way to hell - this style forces to check errors all over, deal with awkward code nesting and make it difficult to reason about the code flow
+**TL;DR:** Node 8 LTS now has full support for Async-await. This is a new way of dealing with asynchronous code which supersedes callbacks and promises. Async-await не блокирует и делает асинхронный код синхронным. Лучший подарок, который вы можете дать своему коду, - это использовать async-await, который обеспечивает гораздо более компактный и знакомый синтаксис кода, такой как try-catch
+
+**Otherwise:** Обработка асинхронных ошибок в стиле обратного вызова, вероятно, самый быстрый путь в ад - этот стиль приводит к большому количеству ошибок, связанных с неуклюжим вложением кода, а так же усложняет его читаемость.
 
 🔗[**Read more:** Guide to async await 1.0](https://github.com/yortus/asyncawait)
 
