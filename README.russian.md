@@ -389,11 +389,11 @@ null == undefined   // true
 
 <br/><br/>
 
-## ![✔] 3.12 Use Fat (=>) Arrow Functions
+## ![✔] 3.12 Используйте стрелочные функции (=>)
 
-**TL;DR:** Though it's recommended to use async-await and avoid function parameters when dealing with older API that accept promises or callbacks - arrow functions make the code structure more compact and keep the lexical context of the root function (i.e. 'this')
+**TL;DR:** Хотя рекомендуется использовать async-await и избегать параметров функций при работе со старыми API, которые принимают Promises или обратные вызовы - стрелочные функции делают структуру кода более компактной и поддерживают лексический контекст корневой функции (т.е. `this`)
 
-**Otherwise:** Longer code (in ES5 functions) is more prone to bugs and cumbersome to read
+**Otherwise:** Более длинный код (в ES5 функциях) больше подвержен багам и усложняет чтение
 
 🔗 [**Read mode: It’s Time to Embrace Arrow Functions**](https://medium.com/javascript-scene/familiarity-bias-is-holding-you-back-its-time-to-embrace-arrow-functions-3d37e1a9bb75)
 
@@ -401,47 +401,47 @@ null == undefined   // true
 
 <p align="right"><a href="#table-of-contents">⬆ Return to top</a></p>
 
-# `4. Практики Тестирования И Поддержания Качества`
+# `4. Тестирование И Поддержка Качества`
 
-## ![✔] 4.1 At the very least, write API (component) testing
+## ![✔] 4.1 Как минимум - пришите тесты для API
 
-**TL;DR:** Most projects just don't have any automated testing due to short timetables or often the 'testing project' run out of control and being abandoned. For that reason, prioritize and start with API testing which is the easiest to write and provide more coverage than unit testing (you may even craft API tests without code using tools like [Postman](https://www.getpostman.com/). Afterward, should you have more resources and time, continue with advanced test types like unit testing, DB testing, performance testing, etc
+**TL;DR:** Большинство проектов просто не имеют автоматического тестирования из-за сжатых сроков или из-за того, что тестам не уделяется должного внимания. Поэтому расставьте приоритеты и начните с тестов API на ранней стадии. Вы можете даже создавать тесты API без кода, используя такие инструменты, как [Postman](https://www.getpostman.com/). Затем, если у вас будет достаточно ресурсов и времени, перейдите к расширенным типам тестов, таким как модульное тестирование, тестирование БД, тестирование производительности и т.д.
 
-**Otherwise:** You may spend long days on writing unit tests to find out that you got only 20% system coverage
-
-<br/><br/>
-
-## ![✔] 4.2 Detect code issues with a linter
-
-**TL;DR:** Use a code linter to check basic quality and detect anti-patterns early. Run it before any test and add it as a pre-commit git-hook to minimize the time needed to review and correct any issue. Also check [Section 3](https://github.com/i0natan/nodebestpractices#3-code-style-practices) on Code Style Practices
-
-**Otherwise:** You may let pass some anti-pattern and possible vulnerable code to your production environment.
+**Otherwise:** Вы можете потратить много дней на написание модульных тестов и затем выяснить, что покрыто только 20% вышего кода
 
 <br/><br/>
 
-## ![✔] 4.3 Carefully choose your CI platform (Jenkins vs CircleCI vs Travis vs Rest of the world)
+## ![✔] 4.2 Находите проблемы кода используя linter
 
-**TL;DR:** Your continuous integration platform (CICD) will host all the quality tools (e.g test, lint) so it should come with a vibrant ecosystem of plugins. [Jenkins](https://jenkins.io/) used to be the default for many projects as it has the biggest community along with a very powerful platform at the price of complex setup that demands a steep learning curve. Nowadays, it became much easier to set up a CI solution using SaaS tools like [CircleCI](https://circleci.com) and others. These tools allow crafting a flexible CI pipeline without the burden of managing the whole infrastructure. Eventually, it's a trade-off between robustness and speed - choose your side carefully
+**TL;DR:** Используйте линтеры кода для проверки качества на базовом уровне, а так же для поиска анти-паттернов на ранней стадии. Запускайте проверку перед каждый тестом и добавьте это в pre-commit git-hook для минимизации времени, необходимого для проверки на наличие проблем. Также посмотрите [Секцию №3](#3-code-style-practices) в разделе Стиль Кода
 
-**Otherwise:** Choosing some niche vendor might get you blocked once you need some advanced customization. On the other hand, going with Jenkins might burn precious time on infrastructure setup
-
-🔗 [**Read More: Choosing CI platform**](/sections/testingandquality/citools.md)
+**Otherwise:** Вы можете пропустить анти-паттерны или уязвимый код
 
 <br/><br/>
 
-## ![✔] 4.4 Constantly inspect for vulnerable dependencies
+## ![✔] 4.3 Бережно выбирайте вашу CI платформу (Jenkins vs CircleCI vs Travis vs Rest of the world)
 
-**TL;DR:** Even the most reputable dependencies such as Express have known vulnerabilities. This can get easily tamed using community and commercial tools such as 🔗 [npm audit](https://docs.npmjs.com/cli/audit) and 🔗 [snyk.io](https://snyk.io) that can be invoked from your CI on every build
+**TL;DR:** Ваша платформа непрерывной интеграции (CICD) будет содержать инструменты проверки качества (например, test, lint), поэтому она должна идти с экосистемой плагинов. [Jenkins](https://jenkins.io/) раньше использовался по умолчанию для многих проектов, поскольку у него самое большое сообщество и очень мощная платформа, но при этом он сложно устанавливается и настраивается, что требует квалифицированного специалиста. Сейчас стало гораздо проще использовать SaaS решения, такие как [CircleCI](https://circleci.com) и другие. Эти инструменты позволяют создать гибкий механизм CI без необходимости управлять всей инфраструктурой. В конце концов, это компромисс между надежностью и скоростью - тщательно выбирайте инструмент
 
-**Otherwise:** Keeping your code clean from vulnerabilities without dedicated tools will require to constantly follow online publications about new threats. Quite tedious
+**Otherwise:** Выбирая сторонний сервис вы можете в дальнейшем упереться, когда вам потребуется уникальная для вашего приложения конфигурация. С другой стороны, время, потраченное на установку и настройку Jenkins, также не всегда оправдывается
+
+🔗 [**Read More: Выбор CI платформы**](/sections/testingandquality/citools.md)
+
+<br/><br/>
+
+## ![✔] 4.4 Постоянно проверяйте наличие уязвимых зависимостей
+
+**TL;DR:** Даже самые уважаемые зависимости, такие как Express, имеют известные уязвимости. Для контроля вы можете использовать публичные и коммерческие инструменты, такие как [npm audit](https://docs.npmjs.com/cli/audit) и [snyk.io](https://snyk.io), вызов которых может происходить каждый раз при запуске тестов вашим CI
+
+**Otherwise:** Для обеспечения чистоты кода от уязвимостей без использования специальных инструментов потребуется постоянно следить за публикациями в Интернете о новых угрозах. Что, конечно, довольно утомительно
 
 <br/><br/>
 
 ## ![✔] 4.5 Tag your tests
 
-**TL;DR:** Different tests must run on different scenarios: quick smoke, IO-less, tests should run when a developer saves or commits a file, full end-to-end tests usually run when a new pull request is submitted, etc. This can be achieved by tagging tests with keywords like #cold #api #sanity so you can grep with your testing harness and invoke the desired subset. For example, this is how you would invoke only the sanity test group with [Mocha](https://mochajs.org/): mocha --grep 'sanity'
+**TL; DR:** Различные тесты должны выполняться в разных сценариях: быстрый smoke-тест, IO-less тесты должны выполняться, когда разработчик сохраняет или коммитит файл, полные тесты обычно выполняются, когда создается новый запрос на слияние. Это может быть достигнуто путем пометки тестов ключевыми словами, такими как #cold #api #sanity, чтобы вы могли использовать свой тестовый набор и вызывать нужное подмножество. Например, так вы бы вызывали только группу тестов на работоспособность с [Mocha](https://mochajs.org/): mocha --grep 'sanity'
 
-**Otherwise:** Running all the tests, including tests that perform dozens of DB queries, any time a developer makes a small change can be extremely slow and keeps developers away from running tests
+**Otherwise:** Запуск всех тестов, включая тесты, которые выполняют десятки запросов к БД, каждый раз, когда разработчик вносит небольшие изменения, может быть очень медленным. Это приводит к тому, что разработчики не используют тесты вовсе
 
 <br/><br/>
 
