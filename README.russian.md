@@ -437,7 +437,7 @@ null == undefined   // true
 
 <br/><br/>
 
-## ![✔] 4.5 Tag your tests
+## ![✔] 4.5 Разделяйте тесты
 
 **TL; DR:** Различные тесты должны выполняться в разных сценариях: быстрый smoke-тест, IO-less тесты должны выполняться, когда разработчик сохраняет или коммитит файл, полные тесты обычно выполняются, когда создается новый запрос на слияние. Это может быть достигнуто путем пометки тестов ключевыми словами, такими как #cold #api #sanity, чтобы вы могли использовать свой тестовый набор и вызывать нужное подмножество. Например, так вы бы вызывали только группу тестов на работоспособность с [Mocha](https://mochajs.org/): mocha --grep 'sanity'
 
@@ -445,37 +445,37 @@ null == undefined   // true
 
 <br/><br/>
 
-## ![✔] 4.6 Check your test coverage, it helps to identify wrong test patterns
+## ![✔] 4.6 Проверяйте процент покрытия. Это помогает выявить неправильный подход к тестированию
 
-**TL;DR:** Code coverage tools like [Istanbul/NYC ](https://github.com/gotwarlost/istanbul)are great for 3 reasons: it comes for free (no effort is required to benefit this reports), it helps to identify a decrease in testing coverage, and last but not least it highlights testing mismatches: by looking at colored code coverage reports you may notice, for example, code areas that are never tested like catch clauses (meaning that tests only invoke the happy paths and not how the app behaves on errors). Set it to fail builds if the coverage falls under a certain threshold
+**TL;DR:** Инструмент, вроде [Istanbul/NYC](https://github.com/gotwarlost/istanbul) очень полезен, как минимум, по трем причинам: он бесплатный, помогает следить за поддержкой необходимого уровня покрытия кода тестами, а так же показывает упущения в тестировании: обратив внимание на результат оценки покрытия вы можете определить, к примеру, что ваши тесты никогда не проверяют обработку исключений (имеется ввиду, что тесты проверяют только позитивные сценарии, исключая негативные). Вы можете настроить поставку таким образом, чтобы приложение не собиралось, в случае, если процент охвата кода тестами меньше предустановленного значения
 
-**Otherwise:** There won't be any automated metric telling you when a large portion of your code is not covered by testing
-
-<br/><br/>
-
-## ![✔] 4.7 Inspect for outdated packages
-
-**TL;DR:** Use your preferred tool (e.g. 'npm outdated' or [npm-check-updates](https://www.npmjs.com/package/npm-check-updates) to detect installed packages which are outdated, inject this check into your CI pipeline and even make a build fail in a severe scenario. For example, a severe scenario might be when an installed package is 5 patch commits behind (e.g. local version is 1.3.1 and repository version is 1.3.8) or it is tagged as deprecated by its author - kill the build and prevent deploying this version
-
-**Otherwise:** Your production will run packages that have been explicitly tagged by their author as risky
+**Otherwise:** Вы можете упустить момент, когда большая часть вашего кода останется без тестов
 
 <br/><br/>
 
-## ![✔] 4.8 Use docker-compose for e2e testing
+## ![✔] 4.7 Проверяйте код на наличие устаревших пакетов
 
-**TL;DR:** End to end (e2e) testing which includes live data used to be the weakest link of the CI process as it depends on multiple heavy services like DB. Docker-compose turns this problem into a breeze by crafting production-like environment using a simple text file and easy commands. It allows crafting all the dependent services, DB and isolated network for e2e testing. Last but not least, it can keep a stateless environment that is invoked before each test suite and dies right after
+**TL;DR:** Используйте существующие инструменты (к прмиеру 'npm outdated' или [npm-check-updates](https://www.npmjs.com/package/npm-check-updates) для определения устаревших пакетов, включите проверку в ваш CI pipeline.
 
-**Otherwise:** Without docker-compose teams must maintain a testing DB for each testing environment including developers machines, keep all those DBs in sync so test results won't vary across environments
+**Otherwise:** Есть вероятность допустить использование пакетов, которые были помечены автором, как рискованные
 
 <br/><br/>
 
-## ![✔] 4.9 Refactor regularly using static analysis tools
+## ![✔] 4.8 Используйте docker-compose для e2e тестов
 
-**TL;DR:** Using static analysis tools helps by giving objective ways to improve code quality and keep your code maintainable. You can add static analysis tools to your CI build to fail when it finds code smells. Its main selling points over plain linting are the ability to inspect quality in the context of multiple files (e.g. detect duplications), perform advanced analysis (e.g. code complexity) and follow the history and progress of code issues. Two examples of tools you can use are [Sonarqube](https://www.sonarqube.org/) (2,600+ [stars](https://github.com/SonarSource/sonarqube)) and [Code Climate](https://codeclimate.com/) (1,500+ [stars](https://github.com/codeclimate/codeclimate)).
+**TL;DR:** End to end (e2e) тесты обычно имеют серьезные зависимости (к примеру зависимость от базы данных), что в свою очередь всегда было проблемой для CI. Сейчас эту проблему можно легко решить, используя Docker-compose - оперируя понятным синтаксисом вы можете создать отдельное тестовое окружение, которое будет сложить только для тестирования. Это поможет создать окружение с нужными зависимостями, требуемыми для e2e тестирования. Также это дает возможность использовать чистое окружение для каждого запуска тестов
 
-**Otherwise:** With poor code quality, bugs and performance will always be an issue that no shiny new library or state of the art features can fix.
+**Otherwise:** Без docker-compose сильно усложняется поддержка зависимостей для e2e тестирования, а так же появляется необходимость дополнительной траты времени на подготовку окружения для тестов
 
-🔗 [**Read More: Refactoring!**](/sections/testingandquality/refactoring.md)
+<br/><br/>
+
+## ![✔] 4.9 Проводите регулярный рефакторинг с использованием инструментов статического анализа
+
+**TL;DR:** Использование инструментов статического анализа помогает найти пути для улучшения качества вашего кода и сохранять высокий уровень поддержки вашего кода. Вы также можете добавить эту проверку в ваш CI. Его основные преимущества при использовании простого линтинга - это возможность проверять качество в контексте нескольких файлов (например, обнаруживать дубликаты), выполнять расширенный анализ (например, сложность кода) и следить за историей и развитием проблем в коде. Два примера таких инструментов - [Sonarqube](https://www.sonarqube.org/) (2,600+ [звезд](https://github.com/SonarSource/sonarqube)) и [Code Climate](https://codeclimate.com/) (1,500+ [звезд](https://github.com/codeclimate/codeclimate)).
+
+**Otherwise:** При низком качестве кода ошибки и производительность всегда будут проблемой, которую не может исправить ни новая библиотека, ни современные функции.
+
+🔗 [**Read More: Рефакторинг!**](/sections/testingandquality/refactoring.md)
 
 <br/><br/><br/>
 
