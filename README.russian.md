@@ -481,105 +481,95 @@ null == undefined   // true
 
 <p align="right"><a href="#table-of-contents">⬆ Return to top</a></p>
 
-# `5. Практики Релиза`
+# `5. Релиз приложения`
 
-## ![✔] 5.1. Monitoring!
+## ![✔] 5.1. Мониторинг!
 
-**TL;DR:** Monitoring is a game of finding out issues before customers do – obviously this should be assigned unprecedented importance. The market is overwhelmed with offers thus consider starting with defining the basic metrics you must follow (my suggestions inside), then go over additional fancy features and choose the solution that ticks all boxes. Click ‘The Gist’ below for an overview of the solutions
+**TL;DR:** Мониторинг - это возможность обнаружить ошибки в приложении до того, как это сделает пользователь. Рынок перегружен предложениями, поэтому подумайте о том, чтобы начать с применения основных метрик, которым вы должны следовать (мои предложения внутри), а затем перейти к дополнительным методам
 
-**Otherwise:** Failure === disappointed customers. Simple
+**Otherwise:** Все довольно просто - ошибки === разочарованные пользователи
 
-🔗 [**Read More: Monitoring!**](/sections/production/monitoring.md)
-
-<br/><br/>
-
-## ![✔] 5.2. Increase transparency using smart logging
-
-**TL;DR:** Logs can be a dumb warehouse of debug statements or the enabler of a beautiful dashboard that tells the story of your app. Plan your logging platform from day 1: how logs are collected, stored and analyzed to ensure that the desired information (e.g. error rate, following an entire transaction through services and servers, etc) can really be extracted
-
-**Otherwise:** You end-up with a black box that is hard to reason about, then you start re-writing all logging statements to add additional information
-
-🔗 [**Read More: Increase transparency using smart logging**](/sections/production/smartlogging.md)
+🔗 [**Read More: Мониторинг!**](/sections/production/monitoring.md)
 
 <br/><br/>
 
-## ![✔] 5.3. Delegate anything possible (e.g. gzip, SSL) to a reverse proxy
+## ![✔] 5.2. Увеличьте прозрачность, используя умное логгирование
 
-**TL;DR:** Node is awfully bad at doing CPU intensive tasks like gzipping, SSL termination, etc. You should use ‘real’ middleware services like nginx, HAproxy or cloud vendor services instead
+**TL;DR:** Логи могут быть свалкой строк с информацией, либо же инструментом для создания логичного дашборда для мониторинга вашего приложения. Планируйте механизмы отладки вашего приложения с первого дня разработки: думайте, как будут собираться логи, храниться и анализироваться, убедитесь, что вся нужная информация (частота ошибок, скорость обработки и т.д) собирается и храниться с возможностью ее использования.
 
-**Otherwise:** Your poor single thread will stay busy doing infrastructural tasks instead of dealing with your application core and performance will degrade accordingly
+**Otherwise:** Вы получаете на выходе так называемый черный ящик (black box) без механизмов мониторинга. Затем вы начинаете переписывать логику, чтобы эти механизмы добавить
 
-🔗 [**Read More: Delegate anything possible (e.g. gzip, SSL) to a reverse proxy**](/sections/production/delegatetoproxy.md)
-
-<br/><br/>
-
-## ![✔] 5.4. Lock dependencies
-
-**TL;DR:** Your code must be identical across all environments, but amazingly npm lets dependencies drift across environments by default – when you install packages at various environments it tries to fetch packages’ latest patch version. Overcome this by using npm config files, .npmrc, that tell each environment to save the exact (not the latest) version of each package. Alternatively, for finer grain control use npm” shrinkwrap”. \*Update: as of NPM5, dependencies are locked by default. The new package manager in town, Yarn, also got us covered by default
-
-**Otherwise:** QA will thoroughly test the code and approve a version that will behave differently at production. Even worse, different servers at the same production cluster might run different code
-
-🔗 [**Read More: Lock dependencies**](/sections/production/lockdependencies.md)
+🔗 [**Read More: Увеличьте прозрачность, используя умное логгирование**](/sections/production/smartlogging.md)
 
 <br/><br/>
 
-## ![✔] 5.5. Guard process uptime using the right tool
+## ![✔] 5.3. Делегация процессов сторонним сервисам (e.g. gzip, SSL)
 
-**TL;DR:** The process must go on and get restarted upon failures. For simple scenarios, ‘restarter’ tools like PM2 might be enough but in today ‘dockerized’ world – a cluster management tools should be considered as well
+**TL;DR:** Node ужасно плохо справляется с задачами с высоким потреблением процессора, такими как gzipping, SSL подключения и т.д. Вместо этого вы должны использовать сторонние сервисы, такие как nginx, HAProxy или облачные сервисы.
 
-**Otherwise:** Running dozens of instances without a clear strategy and too many tools together (cluster management, docker, PM2) might lead to a DevOps chaos
+**Otherwise:** Ваше приложение будет занято процессами обработки задач подключения или архивации, вместо выполнения бизнес логики
 
-🔗 [**Read More: Guard process uptime using the right tool**](/sections/production/guardprocess.md)
-
-<br/><br/>
-
-## ![✔] 5.6. Utilize all CPU cores
-
-**TL;DR:** At its basic form, a Node app runs on a single CPU core while all other are left idling. It’s your duty to replicate the Node process and utilize all CPUs – For small-medium apps you may use Node Cluster or PM2. For a larger app consider replicating the process using some Docker cluster (e.g. K8S, ECS) or deployment scripts that are based on Linux init system (e.g. systemd)
-
-**Otherwise:** Your app will likely utilize only 25% of its available resources(!) or even less. Note that a typical server has 4 CPU cores or more, naive deployment of Node.js utilizes only 1 (even using PaaS services like AWS beanstalk!)
-
-🔗 [**Read More: Utilize all CPU cores**](/sections/production/utilizecpu.md)
+🔗 [**Read More: Делегация процессов сторонним сервисам (e.g. gzip, SSL)**](/sections/production/delegatetoproxy.md)
 
 <br/><br/>
 
-## ![✔] 5.7. Create a ‘maintenance endpoint’
+## ![✔] 5.4. Поддержка uptime используя инструменты
 
-**TL;DR:** Expose a set of system-related information, like memory usage and REPL, etc in a secured API. Although it’s highly recommended to rely on standard and battle-tests tools, some valuable information and operations are easier done using code
+**TL;DR:** Процесс должен продолжаться и перезапускаться при сбоях. Для простых сценариев может быть достаточно инструментов-рестартеров, таких как PM2, но в современном «докеризованном» мире стоит также рассмотреть инструменты управления кластером.
 
-**Otherwise:** You’ll find that you’re performing many “diagnostic deploys” – shipping code to production only to extract some information for diagnostic purposes
+**Otherwise:** Запуск десятков экземпляров без четкой стратегии и слишком большого количества инструментов (управление кластером, Docker, PM2) может привести к хаосу DevOps
 
-🔗 [**Read More: Create a ‘maintenance endpoint’**](/sections/production/createmaintenanceendpoint.md)
-
-<br/><br/>
-
-## ![✔] 5.8. Discover errors and downtime using APM products
-
-**TL;DR:** Monitoring and performance products (a.k.a APM) proactively gauge codebase and API so they can auto-magically go beyond traditional monitoring and measure the overall user-experience across services and tiers. For example, some APM products can highlight a transaction that loads too slow on the end-users side while suggesting the root cause
-
-**Otherwise:** You might spend great effort on measuring API performance and downtimes, probably you’ll never be aware which is your slowest code parts under real-world scenario and how these affects the UX
-
-🔗 [**Read More: Discover errors and downtime using APM products**](/sections/production/apmproducts.md)
+🔗 [**Read More: Поддержка uptime используя инструменты**](/sections/production/guardprocess.md)
 
 <br/><br/>
 
-## ![✔] 5.9. Make your code production-ready
+## ![✔] 5.5. Используйте все ядра процессора
 
-**TL;DR:** Code with the end in mind, plan for production from day 1. This sounds a bit vague so I’ve compiled a few development tips that are closely related to production maintenance (click Gist below)
+**TL;DR:** В своей базовой форме приложение Node работает на одном ядре ЦП, а все остальные остаются бездействующими. Ваша обязанность - копировать процесс Node и использовать все процессоры. Для небольших и средних приложений вы можете использовать Node Cluster или PM2. Для более крупного приложения рассмотрите возможность репликации процесса с использованием некоторого кластера Docker (например, K8S, ECS) или сценариев развертывания, основанных на системе инициализации Linux (например, systemd).
 
-**Otherwise:** A world champion IT/DevOps guy won’t save a system that is badly written
+**Otherwise:** Ваше приложение, скорее всего, будет использовать только 25% доступных ресурсов (!) Или даже меньше. Обратите внимание, что типичный сервер имеет 4 или более ядер ЦП, при простом развертывании Node.js используется только 1 (даже при использовании сервисов PaaS, таких как AWS beanstalk!)
 
-🔗 [**Read More: Make your code production-ready**](/sections/production/productioncode.md)
+🔗 [**Read More: Используйте все ядра процессора**](/sections/production/utilizecpu.md)
 
 <br/><br/>
 
-## ![✔] 5.10. Measure and guard the memory usage
+## ![✔] 5.7. Создание механизмов обслуживания
+
+**TL;DR:** Предоставьте набор информации, связанной с системой, такой как использование памяти, REPL и т.д. через защищенное API. Хотя настоятельно рекомендуется полагаться на стандартные инструменты, некоторую ценную информацию и операции легче получить с помощью кода.
+
+**Otherwise:** Вы обнаружите, что выполняете много «диагностических развертываний» - отправка кода в релиз только для извлечения некоторой информации в диагностических целях.
+
+🔗 [**Read More: Создание механизмов обслуживания**](/sections/production/createmaintenanceendpoint.md)
+
+<br/><br/>
+
+## ![✔] 5.8. Обнаружение ошибок и простоев с использованием механизмов APM
+
+**TL;DR:** Продукты для мониторинга и производительности (такие как APM) заранее измеряют кодовую базу и API, поэтому они могут автоматически выходить за рамки традиционного мониторинга и измерять общее взаимодействие пользователей между службами и уровнями. Например, некоторые продукты APM могут выделять транзакцию, которая загружается слишком медленно на стороне конечного пользователя, предлагая при этом основную причину
+
+**Otherwise:** Вы можете потратить огромные усилия на измерение производительности и времени простоя API, возможно, вы никогда не узнаете, какие ваши самые медленные части кода в реальном сценарии и как они влияют на UX
+
+🔗 [**Read More: Обнаружение ошибок и простоев с использованием механизмов APM**](/sections/production/apmproducts.md)
+
+<br/><br/>
+
+## ![✔] 5.9. Код должен быть готовым к релизу
+
+**TL;DR:** Продумывайте с первого дня разработки, как ваше приложение будет запускаться в релизе. Это звучит немного расплывчато, поэтому ниже приведены несколько советов по разработке, которые тесно связаны с техническим обслуживанием
+
+**Otherwise:** Чемпион мира по IT / DevOps не спасет плохо написанную систему
+
+🔗 [**Read More: Сделайте ваш код готовым к релизу**](/sections/production/productioncode.md)
+
+<br/><br/>
+
+## ![✔] 5.10. Измерения и защитита используемой памяти
 
 **TL;DR:** Node.js has controversial relationships with memory: the v8 engine has soft limits on memory usage (1.4GB) and there are known paths to leaks memory in Node’s code – thus watching Node’s process memory is a must. In small apps, you may gauge memory periodically using shell commands but in medium-large app consider baking your memory watch into a robust monitoring system
 
 **Otherwise:** Your process memory might leak a hundred megabytes a day like how it happened at [Walmart](https://www.joyent.com/blog/walmart-node-js-memory-leak)
 
-🔗 [**Read More: Measure and guard the memory usage**](/sections/production/measurememory.md)
+🔗 [**Read More: Измерьте и защитите использование памяти**](/sections/production/measurememory.md)
 
 <br/><br/>
 
