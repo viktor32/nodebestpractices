@@ -565,109 +565,109 @@ null == undefined   // true
 
 ## ![✔] 5.10. Измерения и защитита используемой памяти
 
-**TL;DR:** Node.js has controversial relationships with memory: the v8 engine has soft limits on memory usage (1.4GB) and there are known paths to leaks memory in Node’s code – thus watching Node’s process memory is a must. In small apps, you may gauge memory periodically using shell commands but in medium-large app consider baking your memory watch into a robust monitoring system
+**TL;DR:** Node.js имеет противоречивые отношения с памятью: движок v8 имеет ограничения на использование памяти (1,4 ГБ), и есть известные пути утечки памяти в коде Node - таким образом, мониторинг памяти процесса Node является обязательным. В небольших приложениях вы можете периодически измерять память с помощью команд оболочки, но в средних и больших приложениях стоит подумать о надежном механизме мониторинга.
 
-**Otherwise:** Your process memory might leak a hundred megabytes a day like how it happened at [Walmart](https://www.joyent.com/blog/walmart-node-js-memory-leak)
+**Otherwise:** Потребление памяти может увеличиваться в сотни мегабайт в день, как это было в [Walmart](https://www.joyent.com/blog/walmart-node-js-memory-leak)
 
 🔗 [**Read More: Измерьте и защитите использование памяти**](/sections/production/measurememory.md)
 
 <br/><br/>
 
-## ![✔] 5.11. Get your frontend assets out of Node
+## ![✔] 5.11. Работа со статическими файлами вне Node
 
-**TL;DR:** Serve frontend content using dedicated middleware (nginx, S3, CDN) because Node performance really gets hurt when dealing with many static files due to its single threaded model
+**TL;DR:** Работу со статическими файлами передайте соответствующему ПО (nginx, S3, CDN), поскольку производительность Node действительно снижается при работе со большим количеством статических файлов из-за его однопоточной модели
 
-**Otherwise:** Your single Node thread will be busy streaming hundreds of html/images/angular/react files instead of allocating all its resources for the task it was born for – serving dynamic content
+**Otherwise:** Ваш единственный поток будет занят потоковой передачей сотен файлов html/картинок/стилей/шрифтов вместо того, чтобы распределять все свои ресурсы для задачи, для которой он был создан - обслуживание динамического контента
 
-🔗 [**Read More: Get your frontend assets out of Node**](/sections/production/frontendout.md)
-
-<br/><br/>
-
-## ![✔] 5.12. Be stateless, kill your Servers almost every day
-
-**TL;DR:** Store any type of data (e.g. users session, cache, uploaded files) within external data stores. Consider ‘killing’ your servers periodically or use ‘serverless’ platform (e.g. AWS Lambda) that explicitly enforces a stateless behavior
-
-**Otherwise:** Failure at a given server will result in application downtime instead of just killing a faulty machine. Moreover, scaling-out elasticity will get more challenging due to the reliance on a specific server
-
-🔗 [**Read More: Be stateless, kill your Servers almost every day**](/sections/production/bestateless.md)
+🔗 [**Read More: Работа со статическими файлами вне Node**](/sections/production/frontendout.md)
 
 <br/><br/>
 
-## ![✔] 5.13. Use tools that automatically detect vulnerabilities
+## ![✔] 5.12. Не завязывайтесь на один сервер
 
-**TL;DR:** Even the most reputable dependencies such as Express have known vulnerabilities (from time to time) that can put a system at risk. This can get easily tamed using community and commercial tools that constantly check for vulnerabilities and warn (locally or at GitHub), some can even patch them immediately
+**TL;DR:** Храните данные любого типа (например, сеанс пользователя, кэш, загруженные файлы) во внешних хранилищах данных. Подумайте о том, чтобы периодически «убивать» ваши серверы или используйте платформу «без серверов» (например, AWS Lambda), которая явно обеспечивает поведение без сохранения состояния.
 
-**Otherwise:** Keeping your code clean from vulnerabilities without dedicated tools will require to constantly follow online publications about new threats. Quite tedious
+**Otherwise:** Сбой на данном сервере приведет к простою приложения, а не просто к гибели неисправного компьютера. Кроме того, гибкость масштабирования станет более сложной из-за зависимости от конкретного сервера.
 
-🔗 [**Read More: Use tools that automatically detect vulnerabilities**](/sections/production/detectvulnerabilities.md)
-
-<br/><br/>
-
-## ![✔] 5.14. Assign ‘TransactionId’ to each log statement
-
-**TL;DR:** Assign the same identifier, transaction-id: {some value}, to each log entry within a single request. Then when inspecting errors in logs, easily conclude what happened before and after. Unfortunately, this is not easy to achieve in Node due to its async nature, see code examples inside
-
-**Otherwise:** Looking at a production error log without the context – what happened before – makes it much harder and slower to reason about the issue
-
-🔗 [**Read More: Assign ‘TransactionId’ to each log statement**](/sections/production/assigntransactionid.md)
+🔗 [**Read More: Не завязывайтесь на один сервер**](/sections/production/bestateless.md)
 
 <br/><br/>
 
-## ![✔] 5.15. Set NODE_ENV=production
+## ![✔] 5.13. Используйте инструменты, которые автоматически обнаруживают уязвимости
 
-**TL;DR:** Set the environment variable NODE_ENV to ‘production’ or ‘development’ to flag whether production optimizations should get activated – many npm packages determining the current environment and optimize their code for production
+**TL;DR:** Даже самые уважаемые зависимости, такие как Express, имеют известные уязвимости (время от времени), которые могут подвергать систему риску. Это можно легко обуздать с помощью общественных и коммерческих инструментов, которые постоянно проверяют уязвимости и предупреждают (локально или на GitHub), некоторые могут даже немедленно их исправлять
 
-**Otherwise:** Omitting this simple property might greatly degrade performance. For example, when using Express for server-side rendering omitting `NODE_ENV` makes the slower by a factor of three!
+**Otherwise:** Для обеспечения чистоты кода от уязвимостей без использования специальных инструментов потребуется постоянно следить за публикациями в Интернете о новых угрозах. Довольно утомительно
 
-🔗 [**Read More: Set NODE_ENV=production**](/sections/production/setnodeenv.md)
-
-<br/><br/>
-
-## ![✔] 5.16. Design automated, atomic and zero-downtime deployments
-
-**TL;DR:** Researches show that teams who perform many deployments – lowers the probability of severe production issues. Fast and automated deployments that don’t require risky manual steps and service downtime significantly improves the deployment process. You should probably achieve that using Docker combined with CI tools as they became the industry standard for streamlined deployment
-
-**Otherwise:** Long deployments -> production down time & human-related error -> team unconfident and in making deployment -> less deployments and features
+🔗 [**Read More: Используйте инструменты, которые автоматически обнаруживают уязвимости**](/sections/production/detectvulnerabilities.md)
 
 <br/><br/>
 
-## ![✔] 5.17. Use an LTS release of Node.js
+## ![✔] 5.14. Определяйте идентификатор запроса в логах
 
-**TL;DR:** Ensure you are using an LTS version of Node.js to receive critical bug fixes, security updates and performance improvements
+**TL;DR:** Присвойте один и тот же идентификатор каждой записи журнала в одном запросе. Затем при проверке ошибок в журналах легко сделать вывод о том, что происходило до и после. К сожалению, это не так просто сделать в Node из-за его асинхронной природы, см. примеры кода внутри
 
-**Otherwise:** Newly discovered bugs or vulnerabilities could be used to exploit an application running in production, and your application may become unsupported by various modules and harder to maintain
+**Otherwise:** Без контекста сложно определять причины пролемы имея даже самый полный лог
 
-🔗 [**Read More: Use an LTS release of Node.js**](/sections/production/LTSrelease.md)
+🔗 [**Read More: Определяйте идентификатор запроса в логах**](/sections/production/assigntransactionid.md)
 
 <br/><br/>
 
-## ![✔] 5.18. Don't route logs within the app
+## ![✔] 5.15. Устанавливайте NODE_ENV=production
 
-**TL;DR:** Log destinations should not be hard-coded by developers within the application code, but instead should be defined by the execution environment the application runs in. Developers should write logs to `stdout` using a logger utility and then let the execution environment (container, server, etc.) pipe the `stdout` stream to the appropriate destination (i.e. Splunk, Graylog, ElasticSearch, etc.).
+**TL;DR:** Установите для переменной среды `NODE_ENV` значение `production` или `development`, чтобы указать, должны ли активироваться оптимизации - многие пакеты npm определяют текущую среду и оптимизируют свой код в production
 
-**Otherwise:** Application handling log routing === hard to scale, loss of logs, poor separation of concerns
+**Otherwise:** Пропуск этого простого свойства может значительно снизить производительность. Например, при использовании Express для рендеринга на стороне сервера пропуск NODE_ENV замедляет процесс в три раза!
 
-🔗 [**Read More: Log Routing**](/sections/production/logrouting.md)
+🔗 [**Read More: Устанавливайте NODE_ENV=production**](/sections/production/setnodeenv.md)
+
+<br/><br/>
+
+## ![✔] 5.16. Проектирование автоматизированных, атомарных и непрерывных развертываний
+
+**TL;DR:** Исследования показывают, что команды, которые выполняют частые поставки, снижают вероятность серьезных производственных проблем. Быстрое и автоматическое развертывание, не требующее рискованных ручных операций и простоев служб, значительно улучшает процесс поставки. Вероятно, вам следует добиться этого, используя Docker в сочетании с инструментами CI, поскольку они стали отраслевым стандартом для упрощенного развертывания
+
+**Otherwise:** Длительные развертывания -> время простоя производства и ошибки персонала -> команда неуверенная в себе и при развертывании -> меньше развертываний и функций
+
+<br/><br/>
+
+## ![✔] 5.17. Используйте LTS релиз Node.js
+
+**TL;DR:** Убедитесь, что вы используете LTS-версию Node.js для получения критических исправлений, обновлений безопасности и улучшений производительности.
+
+**Otherwise:** Наличие уязвимостей в Node.js может отразиться в виде наличия уязвимостей вашего приложения, которое может быть взломано
+
+🔗 [**Read More: Используйте LTS релиз Node.js**](/sections/production/LTSrelease.md)
+
+<br/><br/>
+
+## ![✔] 5.18. Логи должны отправляться в stdout
+
+**TL;DR:** Вы не должны жестко указывать, куда отправлять логи. Назначение логов должно определяться средой выполнения, в которой выполняется приложение. Разработчики должны писать логи в `stdout` с помощью утилиты ведения логов, а затем разрешить среде выполнения (контейнер, сервер и т.д.) направляют поток `stdout` в соответствующий пункт назначения (т. е. Splunk, Graylog, ElasticSearch и т.д.).
+
+**Otherwise:** Ручная обработка логов === трудно масштабируется, потеря журналов, плохое разделение задач
+
+🔗 [**Read More: Маршрутизация Логов**](/sections/production/logrouting.md)
 
 <br/><br/><br/>
 
 <p align="right"><a href="#table-of-contents">⬆ Return to top</a></p>
 
-# `6. Лучшие Практики По Безопасности`
+# `6. Безопасность приложения`
 
 <div align="center">
 <img src="https://img.shields.io/badge/OWASP%20Threats-Top%2010-green.svg" alt="53 items"/>
 </div>
 
-## ![✔] 6.1. Embrace linter security rules
+## ![✔] 6.1. Активируйте правила безопасости линтера
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A1-Injection" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A1:Injection%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A7-Cross-Site_Scripting_(XSS)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20XSS%20-green.svg" alt=""/></a>
 
-**TL;DR:** Make use of security-related linter plugins such as [eslint-plugin-security](https://github.com/nodesecurity/eslint-plugin-security) to catch security vulnerabilities and issues as early as possible , at best  while they're being coded. This can help catching security weaknesses like using eval, invoking a child process or importing a module with a string literal (e.g. user input). Click 'Read more' below to see code examples that will get caught by a security linter
+**TL;DR:** Используйте связанные с безопасностью плагины для линтера, такие как [eslint-plugin-security](https://github.com/nodesecurity/eslint-plugin-security), чтобы как можно раньше выявлять уязвимости и проблемы безопасности, в лучшем случае пока они кодируется. Это может помочь выявить слабые места безопасности, такие как использование eval, вызов дочернего процесса или импорт модуля со строковым литералом (например, пользовательский ввод). Нажмите «Читать дальше» ниже, чтобы увидеть примеры кода, которые мог бы определить линтер
 
-**Otherwise:** What could have been a straightforward security weakness during development becomes a major issue in production. Also, the project may not follow consistent code security practices, leading to vulnerabilities being introduced, or sensitive secrets committed into remote repositories
+**Otherwise:** То, что могло быть прямым недостатком безопасности во время разработки, становится основной проблемой в продакшн. Кроме того, проект может не следовать согласованным методам обеспечения безопасности кода, что приводит к появлению уязвимостей или наличие паролей и секретов, сохраненных в репозитории.
 
-🔗 [**Read More: Lint rules**](/sections/security/lintrules.md)
+🔗 [**Read More: Правила линтера**](/sections/security/lintrules.md)
 
 <br/><br/>
 
