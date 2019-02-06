@@ -659,7 +659,7 @@ null == undefined   // true
 <img src="https://img.shields.io/badge/OWASP%20Threats-Top%2010-green.svg" alt="53 items"/>
 </div>
 
-## ![✔] 6.1. Активируйте правила безопасости линтера
+## ![✔] 6.1. Активируйте правила безопасности линтера
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A1-Injection" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A1:Injection%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A7-Cross-Site_Scripting_(XSS)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20XSS%20-green.svg" alt=""/></a>
 
@@ -671,59 +671,59 @@ null == undefined   // true
 
 <br/><br/>
 
-## ![✔] 6.2. Limit concurrent requests using a middleware
+## ![✔] 6.2. Введите ограничение одновременных запросов
 
 <a href="https://www.owasp.org/index.php/Denial_of_Service" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20DDOS%20-green.svg" alt=""/></a>
 
-**TL;DR:** DOS attacks are very popular and relatively easy to conduct. Implement rate limiting using an external service such as cloud load balancers, cloud firewalls, nginx, or (for smaller and less critical apps) a rate limiting middleware (e.g. [express-rate-limit](https://www.npmjs.com/package/express-rate-limit))
+**TL;DR:** DOS атаки доволно популярны и не требуют больших усилий. Реализуйте ограничения и защиту от атаки, используя сторонние сервисы, такие как cloud load balancers, cloud firewalls, nginx или (для небольших приложений) middleware в коде, которые ограничивают запросы (к примеру [express-rate-limit](https://www.npmjs.com/package/express-rate-limit))
 
-**Otherwise:** An application could be subject to an attack resulting in a denial of service where real users receive a degraded or unavailable service.
+**Otherwise:** Приложение может стать объектом атак и вместо предоставления сервиса реальным пользователям, ваше приложение будет занято тем, чтобы отбиться от атаки.
 
-🔗 [**Read More: Implement rate limiting**](/sections/security/limitrequests.md)
+🔗 [**Read More: Реализация ограничения запросов**](/sections/security/limitrequests.md)
 
 <br/><br/>
 
-## ![✔] 6.3 Extract secrets from config files or use packages to encrypt them
+## ![✔] 6.3 Исключите хранение секретов в файлах конфигурации
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A6-Security_Misconfiguration" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A6:Security%20Misconfiguration%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A3-Sensitive_Data_Exposure" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A3:Sensitive%20Data%20Exposure%20-green.svg" alt=""/></a>
 
-**TL;DR:** Never store plain-text secrets in configuration files or source code. Instead, make use of secret-management systems like Vault products, Kubernetes/Docker Secrets, or using environment variables. As a last result, secrets stored in source control must be encrypted and managed (rolling keys, expiring, auditing, etc). Make use of pre-commit/push hooks to prevent committing secrets accidentally
+**TL;DR:** Никогда не храните пароли или секретные ключи в файлах конфигурации или коде. Вместо этого используйте Kubernetes/Docker Secrets или переменные окружения. В последнем случае переменные хранятся в провайдере системы контроля версий и могут быть зашифрованы. Используйте pre-commit/push хуки, чтобы предотвратить случайную передачу секретов
 
-**Otherwise:** Source control, even for private repositories, can mistakenly be made public, at which point all secrets are exposed. Access to source control for an external party will inadvertently provide access to related systems (databases, apis, services, etc).
+**Otherwise:** Даже приватный репозиторий по ошибке может стать публичным, в результате чего все секреты и пароли станут доступны третьей стороне. Доступ к управлению исходным кодом для внешней стороны непреднамеренно предоставит доступ к связанным системам (базам данных, API, службам и т.д.).
 
-🔗 [**Read More: Secret management**](/sections/security/secretmanagement.md)
+🔗 [**Read More: Управление ключами и паролями**](/sections/security/secretmanagement.md)
 
 <br/><br/>
 
-## ![✔] 6.4. Prevent query injection vulnerabilities with ORM/ODM libraries
+## ![✔] 6.4. Предотвратите уязвимости внедрения запросов с помощью библиотек ORM / ODM
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A1-Injection" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A1:Injection%20-green.svg" alt=""/></a>
 
-**TL;DR:** To prevent SQL/NoSQL injection and other malicious attacks, always make use of an ORM/ODM or a database library that escapes data or supports named or indexed parameterized queries, and takes care of validating user input for expected types. Never just use JavaScript template strings or string concatenation to inject values into queries as this opens your application to a wide spectrum of vulnerabilities. All the reputable Node.js data access libraries (e.g. [Sequelize](https://github.com/sequelize/sequelize), [Knex](https://github.com/tgriesser/knex), [mongoose](https://github.com/Automattic/mongoose)) have built-in protection against injection attacks.
+**TL;DR:** Для предотвращения SQL/NoSQL иньекций используйте ORM/ODM или другие библиотекий для работы с базой данных, которые экранируют данные или поддерживают именованные или индексированные параметризованные запросы и заботятся о проверке пользовательского ввода для ожидаемых типов. Никогда не используйте строки шаблонов JavaScript или конкатенацию строк для ввода значений в запросы, поскольку это открывает для вашего приложения широкий спектр уязвимостей. Все авторитетные библиотеки доступа к данным Node.js (как пример [Sequelize](https://github.com/sequelize/sequelize), [Knex](https://github.com/tgriesser/knex), [mongoose](https://github.com/Automattic/mongoose)) имеют встроенную защиту от инъекционных атак.
 
-**Otherwise:** Unvalidated or unsanitized user input could lead to operator injection when working with MongoDB for NoSQL, and not using a proper sanitization system or ORM will easily allow SQL injection attacks, creating a giant vulnerability.
+**Otherwise:** Непроверенный или не подвергнутый анализу пользовательский ввод может привести к внедрению оператора при работе с MongoDB для NoSQL, а отсутствие надлежащей системы очистки или ORM легко разрешит атаки SQL-иньекций, создав гигантскую уязвимость.
 
-🔗 [**Read More: Query injection prevention using ORM/ODM libraries**](/sections/security/ormodmusage.md)
-
-<br/><br/>
-
-## ![✔] 6.5. Collection of generic security best practices
-
-**TL;DR:** This is a collection of security advice that are not related directly to Node.js - the Node implementation is not much different than any other language. Click read more to skim through.
-
-🔗 [**Read More: Common security best practices**](/sections/security/commonsecuritybestpractices.md)
+🔗 [**Read More: Предотвращение иньекций с использованием библиотек ORM/ODM**](/sections/security/ormodmusage.md)
 
 <br/><br/>
 
-## ![✔] 6.6. Adjust the HTTP response headers for enhanced security
+## ![✔] 6.5. Сборник общих рекомендаций по безопасности
+
+**TL;DR:** Это набор рекомендаций по безопасности, которые не связаны напрямую с Node.js - реализация Node мало чем отличается от любого другого языка. Нажмите «читать дальше», чтобы просмотреть.
+
+🔗 [**Read More: Общие рекомендации по безопасности**](/sections/security/commonsecuritybestpractices.md)
+
+<br/><br/>
+
+## ![✔] 6.6. Настройте заголовки ответа HTTP для повышения безопасности.
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A6-Security_Misconfiguration" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A6:Security%20Misconfiguration%20-green.svg" alt=""/></a>
 
-**TL;DR:** Your application should be using secure headers to prevent attackers from using common attacks like cross-site scripting (XSS), clickjacking and other malicious attacks. These can be configured easily using modules like [helmet](https://www.npmjs.com/package/helmet).
+**TL;DR:** Ваше приложение должно использовать безопасные заголовки, чтобы предотвратить использование злоумышленниками обычных атак, таких как межсайтовый скриптинг (XSS), клик-джеккинг и другие злонамеренные атаки. Их можно легко настроить с помощью таких модулей, как [helmet](https://www.npmjs.com/package/helmet).
 
-**Otherwise:** Attackers could perform direct attacks on your application's users, leading huge security vulnerabilities
+**Otherwise:** Злоумышленники могут выполнять прямые атаки на пользователей вашего приложения, что приводит к огромным уязвимостям безопасности
 
-🔗 [**Read More: Using secure headers in your application**](/sections/security/secureheaders.md)
+🔗 [**Read More: Использование безопасных заголовков в вашем приложении**](/sections/security/secureheaders.md)
 
 <br/><br/>
 
