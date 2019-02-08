@@ -727,61 +727,61 @@ null == undefined   // true
 
 <br/><br/>
 
-## ![✔] 6.7. Constantly and automatically inspect for vulnerable dependencies
+## ![✔] 6.7. Постоянно проверяйте наличие уязвимых зависимостей
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A9-Using_Components_with_Known_Vulnerabilities" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A9:Known%20Vulnerabilities%20-green.svg" alt=""/></a>
 
-**TL;DR:** With the npm ecosystem it is common to have many dependencies for a project. Dependencies should always be kept in check as new vulnerabilities are found. Use tools like [npm audit](https://docs.npmjs.com/cli/audit) or [snyk](https://snyk.io/) to track, monitor and patch vulnerable dependencies. Integrate these tools with your CI setup so you catch a vulnerable dependency before it makes it to production.
+**TL;DR:** Экосистема npm обычно проекты имеют большое количество зависимостей. Зависимости постоянно должны проверяться на наличие известных уязвимостей. Для проверки используйте такие инструменты, как [npm audit](https://docs.npmjs.com/cli/audit) или [snyk](https://snyk.io/). Интеграция проверки в ваш CI позволит определять уязвимости раньше, чем они попадут в продакшн.
 
-**Otherwise:** An attacker could detect your web framework and attack all its known vulnerabilities.
+**Otherwise:** Злоумышленники могут узнать о используемом вами фреймворке и использовать его уязвимости для атаки.
 
-🔗 [**Read More: Dependency security**](/sections/security/dependencysecurity.md)
+🔗 [**Read More: Безопасность зависимостей**](/sections/security/dependencysecurity.md)
 
 <br/><br/>
 
-## ![✔] 6.8. Avoid using the Node.js crypto library for handling passwords, use Bcrypt
+## ![✔] 6.8. Используйте Bcrypt для работы с паролями
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A2-Broken_Authentication" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A9:Broken%20Authentication%20-green.svg" alt=""/></a>
 
-**TL;DR:** Passwords or secrets (API keys) should be stored using a secure hash + salt function like `bcrypt`, that should be a preferred choice over its JavaScript implementation due to performance and security reasons.
+**TL;DR:** Пароли и секретные ключи (API ключи) должны храниться в виде хеша, полученного хеш-функцией, вроде `bcrypt` с использованием соли. Это должно быть предпочтительным выбором по сравнению с иными реализациями JavaScript из-за соображений производительности и безопасности.
 
-**Otherwise:** Passwords or secrets that are persisted without using a secure function are vulnerable to brute forcing and dictionary attacks that will lead to their disclosure eventually.
+**Otherwise:** Без использования хеш-функций злоумышленники получат доступы к паролям в сыром виде в случае утечки данных. При использовании слабых алгоритмов шифрования в этой же ситуации злоумышленники смогут легко получить пароль используя бутфорс.
 
-🔗 [**Read More: Use Bcrypt**](/sections/security/bcryptpasswords.md)
+🔗 [**Read More: Исплользование Bcrypt**](/sections/security/bcryptpasswords.md)
 
 <br/><br/>
 
-## ![✔] 6.9. Escape HTML, JS and CSS output
+## ![✔] 6.9. Экранируйте исходящий HTML, JS and CSS
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A7-Cross-Site_Scripting_(XSS)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A7:XSS%20-green.svg" alt=""/></a>
 
-**TL;DR:** Untrusted data that is sent down to the browser might get executed instead of just being displayed, this is commonly being referred as a cross-site-scripting (XSS) attack. Mitigate this by using dedicated libraries that explicitly mark the data as pure content that should never get executed (i.e. encoding, escaping)
+**TL;DR:** Ненадежные данные, которые отправляются в браузер, могут выполняться вместо того, чтобы просто отображаться, это обычно называют cross-site scripting (XSS). Исключите это, используя выделенные библиотеки, которые явно помечают данные как чистый контент, который никогда не должен выполняться (т.е. кодирование, экранирование)
 
-**Otherwise:** An attacker might store a malicious JavaScript code in your DB which will then be sent as-is to the poor clients
+**Otherwise:** Злоумышленник может сохранить в вашей базе данных вредоносный код JavaScript, который затем будет отправлен вашим клиентам как есть.
 
-🔗 [**Read More: Escape output**](/sections/security/escape-output.md)
+🔗 [**Read More: Экранируйте HTML**](/sections/security/escape-output.md)
 
 <br/><br/>
 
-## ![✔] 6.10. Validate incoming JSON schemas
+## ![✔] 6.10. Валидируйте входные JSON-данные
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A7-Cross-Site_Scripting_(XSS)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A7: XSS%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A8-Insecure_Deserialization" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A8:Insecured%20Deserialization%20-green.svg" alt=""/></a>
 
-**TL;DR:** Validate the incoming requests' body payload and ensure it qualifies the expectations, fail fast if it doesn't. To avoid tedious validation coding within each route you may use lightweight JSON-based validation schemas such as [jsonschema](https://www.npmjs.com/package/jsonschema) or [joi](https://www.npmjs.com/package/joi)
+**TL;DR:** Валидируйте входящие данные на соответствие ожидаемому формату. Для упрощения механизма валидации используйе такие библиотеки, как [jsonschema](https://www.npmjs.com/package/jsonschema) или [joi](https://www.npmjs.com/package/joi)
 
-**Otherwise:** Your generosity and permissive approach greatly increases the attack surface and encourages the attacker to try out many inputs until they find some combination to crash the application
+**Otherwise:** Без строгой проверки данных всегда есть вероятность допустить ошибку и оставить возможность атаки
 
-🔗 [**Read More: Validate incoming JSON schemas**](/sections/security/validation.md)
+🔗 [**Read More: Проверка входящие схемы JSON**](/sections/security/validation.md)
 
 <br/><br/>
 
-## ![✔] 6.11. Support blacklisting JWTs
+## ![✔] 6.11. Поддерживайте возможность заносить JWT в черный список
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A2-Broken_Authentication" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A9:Broken%20Authentication%20-green.svg" alt=""/></a>
 
-**TL;DR:** When using JSON Web Tokens (for example, with [Passport.js](https://github.com/jaredhanson/passport)), by default there's no mechanism to revoke access from issued tokens. Once you discover some malicious user activity, there's no way to stop them from accessing the system as long as they hold a valid token. Mitigate this by implementing a blacklist of untrusted tokens that are validated on each request.
+**TL;DR:** Реализация JSON Web Tokens (к примеру, с [Passport.js](https://github.com/jaredhanson/passport)) по умолчанию не поддерживает механизм отзыва токенов, что приводит к проблемам, когда вы находите подозрительный аккаунт и не можете забрать у него доступ. Возможность заносить токены в черный список поможет вам бороться с нежелательными аккаунтами
 
-**Otherwise:** Expired, or misplaced tokens could be used maliciously by a third party to access an application and impersonate the owner of the token.
+**Otherwise:** Истекшие или неуместные токены могут быть использованы злонамеренно третьей стороной для доступа к приложению и выдавать себя за владельца токена.
 
 🔗 [**Read More: Blacklist JSON Web Tokens**](/sections/security/expirejwt.md)
 
