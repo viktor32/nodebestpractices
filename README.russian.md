@@ -787,51 +787,51 @@ null == undefined   // true
 
 <br/><br/>
 
-## ![✔] 6.12. Limit the allowed login requests of each user
+## ![✔] 6.12. Установите ограничение на количество неверных попыток авторизации
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A2-Broken_Authentication" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A9:Broken%20Authentication%20-green.svg" alt=""/></a>
 
-**TL;DR:** A brute force protection middleware such as [express-brute](https://www.npmjs.com/package/express-brute) should be used inside an express application to prevent brute force/dictionary attacks on sensitive routes such as /admin or /login based on request properties such as the user name, or other identifiers such as body parameters
+**TL;DR:** Вы можете использовать такие модули, как [express-brute](https://www.npmjs.com/package/express-brute), чтобы предотвратить брутфорс атаки. Не забывайте также и о панели администратора, если там отдельный механизм авторизации.
 
-**Otherwise:** An attacker can issue unlimited automated password attempts to gain access to privileged accounts on an application
+**Otherwise:** Злоумышленник получает возможность отправить сколько угодно запросов на авторизацию, перебирая фразы пароля.
 
-🔗 [**Read More: Login rate limiting**](/sections/security/login-rate-limit.md)
+🔗 [**Read More: Ограничение попыток авторизации**](/sections/security/login-rate-limit.md)
 
 <br/><br/>
 
-## ![✔] 6.13. Run Node.js as non-root user
+## ![✔] 6.13. Не запускайте Node.js под root пользователем
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A5-Broken_Access_Control" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A5:Broken%20Access%20Access%20Control-green.svg" alt=""/></a>
 
-**TL;DR:** There is a common scenario where Node.js runs as a root user with unlimited permissions. For example, this is the default behaviour in Docker containers. It's recommended to create a non-root user and either bake it into the Docker image (examples given below) or run the process on this users' behalf by invoking the container with the flag "-u username"
+**TL;DR:** Существует распространенный сценарий, когда Node.js запускается от имени пользователя root с неограниченными разрешениями. Например, это поведение по умолчанию в контейнерах Docker. Рекомендуется создать пользователя без полномочий root и либо "запечь" его в образе Docker (примеры приведены ниже), либо запустить процесс от имени этого пользователя, вызвав контейнер с флагом `-u username`
 
-**Otherwise:** An attacker who manages to run a script on the server gets unlimited power over the local machine (e.g. change iptable and re-route traffic to his server)
+**Otherwise:** Злоумышленник, которому удается запустить скрипт на сервере, получает неограниченную власть над локальной машиной (например, изменить iptable и перенаправить трафик на свой сервер)
 
-🔗 [**Read More: Run Node.js as non-root user**](/sections/security/non-root-user.md)
+🔗 [**Read More: Не запускайте Node.js под root пользователем**](/sections/security/non-root-user.md)
 
 <br/><br/>
 
-## ![✔] 6.14. Limit payload size using a reverse-proxy or a middleware
+## ![✔] 6.14. Ограничьте размер полезной нагрузки, используя обратный прокси или промежуточное ПО
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A8-Insecure_Deserialization" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A8:Insecured%20Deserialization%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A1-Injection" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20DDOS%20-green.svg" alt=""/></a>
 
-**TL;DR:** The bigger the body payload is, the harder your single thread works in processing it. This is an opportunity for attackers to bring servers to their knees without tremendous amount of requests (DOS/DDOS attacks). Mitigate this limiting the body size of incoming requests on the edge (e.g. firewall, ELB) or by configuring [express body parser](https://github.com/expressjs/body-parser) to accept only small-size payloads
+**TL;DR:** Огромное тело запроса может заставить ваш процесс заниматься тем, чтобы его парсить и обрабатывать. Без ограничений злоумышленник может заставить ваше приложение работать медленно или совсем остановиться, не тратя при этом на атаку каких-то ресурсов. Как вариант, вы можете ограничить размер, используя параметры конфигурации в [express body parser](https://github.com/expressjs/body-parser).
 
-**Otherwise:** Your application will have to deal with large requests, unable to process the other important work it has to accomplish, leading to performance implications and vulnerability towards DOS attacks
+**Otherwise:** Ваше приложение должно будет обрабатывать большие запросы, не в состоянии обработать другую важную работу, которую оно должно выполнить, что приводит к снижению производительности и уязвимости к атакам DOS
 
-🔗 [**Read More: Limit payload size**](/sections/security/requestpayloadsizelimit.md)
+🔗 [**Read More: Ограничение полезной нагрузки**](/sections/security/requestpayloadsizelimit.md)
 
 <br/><br/>
 
-## ![✔] 6.15. Avoid JavaScript eval statements
+## ![✔] 6.15. Избегайте JavaScript eval
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A7-Cross-Site_Scripting_(XSS)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A7:XSS%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A1-Injection" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A1:Injection%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A4-XML_External_Entities_(XXE)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A4:External%20Entities%20-green.svg" alt=""/></a>
 
-**TL;DR:** `eval` is evil as it allows executing a custom JavaScript code during run time. This is not just a performance concern but also an important security concern due to malicious JavaScript code that may be sourced from user input. Another language feature that should be avoided is `new Function` constructor. `setTimeout` and `setInterval` should never be passed dynamic JavaScript code either.
+**TL;DR:** `eval` - зло, так как позволяет выполнять пользовательский код JavaScript во время выполнения. Это не только проблема производительности, но и важная проблема безопасности из-за вредоносного кода JavaScript, который может быть получен из пользовательского ввода. Другой языковой особенностью, которую следует избегать, является конструктор `new Function`. `setTimeout` и `setInterval` также никогда не должны передавать динамический код JavaScript.
 
-**Otherwise:** Malicious JavaScript code finds a way into a text passed into `eval` or other real-time evaluating JavaScript language functions, and will gain complete access to JavaScript permissions on the page. This vulnerability is often manifested as an XSS attack.
+**Otherwise:** Вредоносный код JavaScript может попасть в переменные, используемые в `eval` или другие реалтайм функции, и получает полный доступ к разрешениям JavaScript на странице. Эта уязвимость часто проявляется как атака XSS.
 
-🔗 [**Read More: Avoid JavaScript eval statements**](/sections/security/avoideval.md)
+🔗 [**Read More: Избегайте JavaScript eval**](/sections/security/avoideval.md)
 
 <br/><br/>
 
