@@ -34,13 +34,13 @@
 
 ## Оглавление
 
-1.  [Структура Проекта (5)](#1-project-structure-practices)
-2.  [Обработка ошибок (11) ](#2-error-handling-practices)
-3.  [Стиль Кода (12) ](#3-code-style-practices)
-4.  [Практики Тестирования И Поддержания Качества (9) ](#4-testing-and-overall-quality-practices)
-5.  [Практики Релиза (18) ](#5-going-to-production-practices)
-6.  [Лучшие Практики По Безопасности (24)](#6-security-best-practices)
-7.  [Лучшие Практики По Быстродействию (в работе)](#7-performance-best-practices)
+1. [Структура Проекта (5)](#1-project-structure-practices)
+2. [Обработка ошибок (11)](#2-error-handling-practices)
+3. [Стиль Кода (12)](#3-code-style-practices)
+4. [Практики Тестирования И Поддержания Качества (9)](#4-testing-and-overall-quality-practices)
+5. [Практики Релиза (18)](#5-going-to-production-practices)
+6. [Безопасность (24)](#6-security-best-practices)
+7. [Быстродействие (в работе)](#7-performance-best-practices)
 
 <br/><br/><br/>
 
@@ -835,73 +835,73 @@ null == undefined   // true
 
 <br/><br/>
 
-## ![✔] 6.16. Prevent evil RegEx from overloading your single thread execution
+## ![✔] 6.16. Предотвратите зло RegEx от перегрузки вашего однопоточного исполнения
 
 <a href="https://www.owasp.org/index.php/Denial_of_Service" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20DDOS%20-green.svg" alt=""/></a>
 
-**TL;DR:** Regular Expressions, while being handy, pose a real threat to JavaScript applications at large, and the Node.js platform in particular. A user input for text to match might require an outstanding amount of CPU cycles to process. RegEx processing might be inefficient to an extent that a single request that validates 10 words can block the entire event loop for 6 seconds and set the CPU on 🔥. For that reason, prefer third-party validation packages like [validator.js](https://github.com/chriso/validator.js) instead of writing your own Regex patterns, or make use of [safe-regex](https://github.com/substack/safe-regex) to detect vulnerable regex patterns
+**TL;DR:** Регулярные выражения, будучи удобными, представляют реальную угрозу для приложений JavaScript в целом и платформы Node.js в частности. Пользовательский ввод для сопоставления текста может потребовать значительного количества циклов ЦП для обработки. Обработка RegEx может быть неэффективной до такой степени, что один запрос, который проверяет 10 слов, может заблокировать весь цикл событий на 6 секунд. По этой причине предпочитайте сторонние пакеты проверки, такие как [validator.js](https://github.com/chriso/validator.js) вместо написания собственных шаблонов Regex, или используйте [safe-regex](https://github.com/substack/safe-regex) для обнаружения уязвимых шаблонов регулярных выражений
 
-**Otherwise:** Poorly written regexes could be susceptible to Regular Expression DoS attacks that will block the event loop completely. For example, the popular `moment` package was found vulnerable with malicious RegEx usage in November of 2017
+**Otherwise:** Плохо написанные регулярные выражения могут быть подвержены DoS-атакам с регулярным выражением, которые полностью блокируют цикл обработки событий. Например, популярный пакет `moment` был обнаружен уязвимым для злонамеренного использования RegEx в ноябре 2017 года.
 
-🔗 [**Read More: Prevent malicious RegEx**](/sections/security/regex.md)
+🔗 [**Read More: Предотвращение вредоносного RegEx**](/sections/security/regex.md)
 
 <br/><br/>
 
-## ![✔] 6.17. Avoid module loading using a variable
+## ![✔] 6.17. Избегайте загрузки модулей с использованием переменных
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A7-Cross-Site_Scripting_(XSS)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A7:XSS%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A1-Injection" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A1:Injection%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A4-XML_External_Entities_(XXE)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A4:External%20Entities%20-green.svg" alt=""/></a>
 
-**TL;DR:** Avoid requiring/importing another file with a path that was given as parameter due to the concern that it could have originated from user input. This rule can be extended for accessing files in general (i.e. `fs.readFile()`) or other sensitive resource access with dynamic variables originating from user input. [Eslint-plugin-security](https://www.npmjs.com/package/eslint-plugin-security) linter can catch such patterns and warn early enough
+**TL;DR:** Избегайте require/import других файлов, путь к которым формируется с использованием переменных. Тем более, если эти сторонние пользователи могут повлиять на эти переменные. Это правило может быть расширено для доступа к файлам в целом (то есть `fs.readFile()`) или для доступа к другим чувствительным ресурсам с помощью динамических переменных, происходящих из пользовательского ввода. [Eslint-plugin-security](https://www.npmjs.com/package/eslint-plugin-security) Линтер может перехватывать такие шаблоны и предупреждать о них достаточно на ранней стадии
 
-**Otherwise:** Malicious user input could find its way to a parameter that is used to require tampered files, for example a previously uploaded file on the filesystem, or access already existing system files.
+**Otherwise:** Вредоносный пользовательский ввод может найти путь к параметру, который используется для запроса подделанных файлов, например, ранее загруженного файла в файловой системе, или для доступа к уже существующим системным файлам.
 
-🔗 [**Read More: Safe module loading**](/sections/security/safemoduleloading.md)
+🔗 [**Read More: Безопасная загрузка модулей**](/sections/security/safemoduleloading.md)
 
 <br/><br/>
 
-## ![✔] 6.18. Run unsafe code in a sandbox
+## ![✔] 6.18. Запускайте небезопасный код в песочнице
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A7-Cross-Site_Scripting_(XSS)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A7:XSS%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A1-Injection" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A1:Injection%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A4-XML_External_Entities_(XXE)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A4:External%20Entities%20-green.svg" alt=""/></a>
 
-**TL;DR:** When tasked to run external code that is given at run-time (e.g. plugin), use any sort of 'sandbox' execution environment that isolates and guards the main code against the plugin. This can be achieved using a dedicated process (e.g. cluster.fork()), serverless environment or dedicated npm packages that acting as a sandbox
+**TL;DR:** Когда задается задача запустить внешний код, который предоставляется во время выполнения (например, плагин), используйте "песочницу" в качестве среды исполнения, которая изолирует и защищает основной код от плагина. Это может быть достигнуто с помощью выделенного процесса (например, `cluster.fork()`), безсерверной среды или выделенных пакетов npm, которые действуют как песочница
 
-**Otherwise:** A plugin can attack through an endless variety of options like infinite loops, memory overloading, and access to sensitive process environment variables
+**Otherwise:** Плагин может атаковать приложение, используя бесконечного множества опций, таких как бесконечные циклы, перегрузка памяти и доступ к чувствительным переменным среды процесса.
 
-🔗 [**Read More: Run unsafe code in a sandbox**](/sections/security/sandbox.md)
+🔗 [**Read More: Запустите небезопасный код в песочнице**](/sections/security/sandbox.md)
 
 <br/><br/>
 
-## ![✔] 6.19. Take extra care when working with child processes
+## ![✔] 6.19. Будьте особенно осторожны при работе с дочерними процессами
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A7-Cross-Site_Scripting_(XSS)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A7:XSS%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A1-Injection" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A1:Injection%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A4-XML_External_Entities_(XXE)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A4:External%20Entities%20-green.svg" alt=""/></a>
 
-**TL;DR:** Avoid using child processes when possible and validate and sanitize input to mitigate shell injection attacks if you still have to. Prefer using `child_process.execFile` which by definition will only execute a single command with a set of attributes and will not allow shell parameter expansion.
+**TL;DR:** Избегайте использования дочерних процессов, когда это возможно, а также проверяйте и валидируйте входные данные, чтобы избежать атаки с использованием инъекций оболочки, если это необходимо. Используйте `child_process.execFile`, который по определению будет выполнять только одну команду с набором атрибутов и не позволит расширять параметры оболочки.
 
-**Otherwise:** Naive use of child processes could result in remote command execution or shell injection attacks due to malicious user input passed to an unsanitized system command.
+**Otherwise:** Наивное использование дочерних процессов может привести к удаленному выполнению команды или атакам внедрения вредоносного кода
 
-🔗 [**Read More: Be cautious when working with child processes**](/sections/security/childprocesses.md)
+🔗 [**Read More: Будьте осторожны при работе с дочерними процессами**](/sections/security/childprocesses.md)
 
 <br/><br/>
 
-## ![✔] 6.20. Hide error details from clients
+## ![✔] 6.20. Скрывайте детали ошибок от клиентов
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A6-Security_Misconfiguration" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A6:Security%20Misconfiguration%20-green.svg" alt=""/></a>
 
-**TL;DR:** An integrated express error handler hides the error details by default. However, great are the chances that you implement your own error handling logic with custom Error objects (considered by many as a best practice). If you do so, ensure not to return the entire Error object to the client, which might contain some sensitive application details
+**TL;DR:** Встроенный экспресс-обработчик ошибок по умолчанию скрывает детали ошибок. Однако велики шансы на то, что вы реализуете свою собственную логику обработки ошибок с помощью пользовательских объектов ошибок (которые многие считают лучшей практикой). Если вы это сделаете, убедитесь, что не вернули весь объект Error клиенту, который может содержать некоторые важные сведения о приложении
 
-**Otherwise:** Sensitive application details such as server file paths, third party modules in use, and other internal workflows of the application which could be exploited by an attacker, could be leaked from information found in a stack trace
+**Otherwise:** Чувствительные детали приложения, такие как пути к файлам сервера, используемые сторонние модули и другие внутренние рабочие процессы приложения, могут попасть в руки злоумышленника из трейса стека ошибки
 
-🔗 [**Read More: Hide error details from client**](/sections/security/hideerrors.md)
+🔗 [**Read More: Скрывайте детали ошибок от клиентов**](/sections/security/hideerrors.md)
 
 <br/><br/>
 
-## ![✔] 6.21. Configure 2FA for npm or Yarn
+## ![✔] 6.21. Используйте 2FA для npm или Yarn
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A6-Security_Misconfiguration" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A6:Security%20Misconfiguration%20-green.svg" alt=""/></a>
 
-**TL;DR:** Any step in the development chain should be protected with MFA (multi-factor authentication), npm/Yarn are a sweet opportunity for attackers who can get their hands on some developer's password. Using developer credentials, attackers can inject malicious code into libraries that are widely installed across projects and services. Maybe even across the web if published in public. Enabling 2-factor-authentication in npm leaves almost zero chances for attackers to alter your package code.
+**TL;DR:** Любой шаг в цепочке разработки должен быть защищен с помощью MFA (многофакторной аутентификации), npm / Yarn - прекрасная возможность для злоумышленников, которые могут заполучить пароль какого-то разработчика. Используя учетные данные разработчика, злоумышленники могут внедрить вредоносный код в библиотеки, которые широко используются в проектах и службах. Включение двухфакторной аутентификации в npm оставляет почти нулевые шансы для злоумышленников изменить код вашего пакета.
 
-**Otherwise:** [Have you heard about the eslint developer who's password was hijacked?](https://medium.com/@oprearocks/eslint-backdoor-what-it-is-and-how-to-fix-the-issue-221f58f1a8c8)
+**Otherwise:** [Вы слышали о разработчике eslint, пароль которого был взломан?](https://medium.com/@oprearocks/eslint-backdoor-what-it-is-and-how-to-fix-the-issue-221f58f1a8c8)
 
 <br/><br/>
 
@@ -909,105 +909,105 @@ null == undefined   // true
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A6-Security_Misconfiguration" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A6:Security%20Misconfiguration%20-green.svg" alt=""/></a>
 
-**TL;DR:** Each web framework and technology has its known weaknesses - telling an attacker which web framework we use is a great help for them. Using the default settings for session middlewares can expose your app to module- and framework-specific hijacking attacks in a similar way to the `X-Powered-By` header. Try hiding anything that identifies and reveals your tech stack (E.g. Node.js, express)
+**TL;DR:** У каждого веб-фреймворка и технологии есть свои известные недостатки - сообщить злоумышленнику, какой веб-фреймворк мы используем, - это большая помощь для них. Использование настроек по умолчанию для промежуточного программного обеспечения сеансов может подвергнуть ваше приложение атакам, направленным на модули и фреймворки, аналогично заголовку `X-Powered-By`. Попробуйте скрыть все, что идентифицирует и раскрывает ваш технический стек (например, Node.js, express)
 
-**Otherwise:** Cookies could be sent over insecure connections, and an attacker might use session identification to identify the underlying framework of the web application, as well as module-specific vulnerabilities
+**Otherwise:** Файлы cookie могут отправляться по незащищенным соединениям, и злоумышленник может использовать идентификатор сеанса для определения базовой структуры веб-приложения, а также уязвимостей, связанных с конкретным модулем.
 
-🔗 [**Read More: Cookie and session security**](/sections/security/sessions.md)
+🔗 [**Read More: Cookie и безопасность сеанса**](/sections/security/sessions.md)
 
 <br/><br/>
 
-## ![✔] 6.23. Avoid DOS attacks by explicitly setting when a process should crash
+## ![✔] 6.23. Избегайте DOS-атак, явно указав, когда должен произойти сбой процесса
 
 <a href="https://www.owasp.org/index.php/Denial_of_Service" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20DDOS%20-green.svg" alt=""/></a>
 
-**TL;DR:** The Node process will crash when errors are not handled. Many best practices even recommend to exit even though an error was caught and got handled. Express, for example, will crash on any asynchronous error - unless you wrap routes with a catch clause. This opens a very sweet attack spot for attackers who recognize what input makes the process crash and repeatedly send the same request. There's no instant remedy for this but a few techniques can mitigate the pain: Alert with critical severity anytime a process crashes due to an unhandled error, validate the input and avoid crashing the process due to invalid user input, wrap all routes with a catch and consider not to crash when an error originated within a request (as opposed to what happens globally)
+**TL;DR:** Процесс Node завершится сбоем, если ошибки не будут обработаны. В некоторых случаях рекомндуется прерывать процесс, даже если ошибка была обнаружена и обработана. Например, в Express произойдет сбой при любой асинхронной ошибке, если только вы не заключите маршруты в условие catch. Это открывает очень приятное место для атак злоумышленников, которые распознают, какой ввод приводит к сбою процесса, и повторно отправляют один и тот же запрос. Нет немедленного решения этой проблемы, но несколько методов могут уменьшить боль: оповещение с критическим приоритетом каждый раз, когда происходит сбой процесса из-за необработанной ошибки, проверка ввода и избежание сбоя процесса из-за неправильного ввода пользователя, оборачивание всех маршрутов с помощью catch и исключение сбоя при возникновении ошибки в запросе (в отличие от того, что происходит глобально)
 
-**Otherwise:** This is just an educated guess: given many Node.js applications, if we try passing an empty JSON body to all POST requests - a handful of applications will crash. At that point, we can just repeat sending the same request to take down the applications with ease
+**Otherwise:** Это всего лишь обоснованное предположение: если учесть множество приложений Node.js, если мы попытаемся передать пустое тело JSON всем запросам POST - несколько приложений потерпит крах. В этот момент мы можем просто повторить отправку одного и того же запроса, чтобы легко сломать приложения
 
 <br/><br/>
 
-## ![✔] 6.24. Prevent unsafe redirects
+## ![✔] 6.24. Предотвращайте небезопасные перенаправления
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A1-Injection" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A1:Injection%20-green.svg" alt=""/></a>
 
-**TL;DR:** Redirects that do not validate user input can enable attackers to launch phishing scams, steal user credentials, and perform other malicious actions.
+**TL;DR:** Перенаправления, которые не проверяют пользовательский ввод, могут позволить злоумышленникам запускать фишинговые атаки, красть учетные данные пользователя и выполнять другие вредоносные действия.
 
-**Otherwise:** If an attacker discovers that you are not validating external, user-supplied input, they may exploit this vulnerability by posting specially-crafted links on forums, social media, and other public places to get users to click it.
+**Otherwise:** Если злоумышленник обнаружит, что вы не проверяете внешний вводимый пользователем ввод, он может воспользоваться этой уязвимостью, разместив специально созданные ссылки на форумах, в социальных сетях и других общедоступных местах, чтобы пользователи могли щелкнуть по нему.
 
-🔗 [**Read More: Prevent unsafe redirects**](/sections/security/saferedirects.md)
+🔗 [**Read More: Предотвращайте небезопасные перенаправления**](/sections/security/saferedirects.md)
 
 <br/><br/><br/>
 
 <p align="right"><a href="#table-of-contents">⬆ Return to top</a></p>
 
-# `7. Лучшие Практики По Быстродействию`
+# `7. Быстродействие`
 
 ## Our contributors are working on this section. [Would you like to join?](https://github.com/i0natan/nodebestpractices/issues/256)
 
 <br/><br/><br/>
 
-# Milestones
+# Основные этапы
 
-To maintain this guide and keep it up to date, we are constantly updating and improving the guidelines and best practices with the help of the community. You can follow our [milestones](https://github.com/i0natan/nodebestpractices/milestones) and join the working groups if you want to contribute to this project
+Чтобы поддерживать это руководство и обновлять его, мы постоянно обновляем и совершенствуем рекомендации и лучшие практики с помощью сообщества. Вы можете подписаться на наши [этапы](https://github.com/i0natan/nodebestpractices/milestones) и присоединиться к рабочим группам, если хотите внести свой вклад в этот проект.
 
 <br/><br/>
 
-## Translations
+## Переводы
 
-All translations are contributed by the community. We will be happy to get any help with either completed, ongoing or new translations!
+Все переводы предоставлены сообществом. Мы будем рады получить любую помощь с выполненными, текущими или новыми переводами!
 
-### Completed translations
+### Завершенные переводы
 
-- ![CN](/assets/flags/CN.png) [Chinese](README.chinese.md) - Courtesy of [Matt Jin](https://github.com/mattjin)
+- ![CN](/assets/flags/CN.png) [Chinese](README.chinese.md) - Предоставлено [Matt Jin](https://github.com/mattjin)
 
-### Translations in progress
+### Переводы выполняются
 
-- ![FR](/assets/flags/FR.png) [French](https://github.com/gaspaonrocks/nodebestpractices/blob/french-translation/README.french.md) ([Discussion](https://github.com/i0natan/nodebestpractices/issues/129))
-- ![HE](/assets/flags/HE.png) Hebrew ([Discussion](https://github.com/i0natan/nodebestpractices/issues/156))
-- ![KR](/assets/flags/KR.png) [Korean](README.korean.md) - Courtesy of [Sangbeom Han](https://github.com/uronly14me) ([Discussion](https://github.com/i0natan/nodebestpractices/issues/94))
-- ![RU](/assets/flags/RU.png) [Russian](https://github.com/i0natan/nodebestpractices/blob/russian-translation/README.russian.md) ([Discussion](https://github.com/i0natan/nodebestpractices/issues/105))
-- ![ES](/assets/flags/ES.png) [Spanish](https://github.com/i0natan/nodebestpractices/blob/spanish-translation/README.spanish.md) ([Discussion](https://github.com/i0natan/nodebestpractices/issues/95))
-- ![TR](/assets/flags/TR.png) Turkish ([Discussion](https://github.com/i0natan/nodebestpractices/issues/139))
+- ![FR](/assets/flags/FR.png) [French](https://github.com/gaspaonrocks/nodebestpractices/blob/french-translation/README.french.md) ([Обсуждение](https://github.com/i0natan/nodebestpractices/issues/129))
+- ![HE](/assets/flags/HE.png) Hebrew ([Обсуждение](https://github.com/i0natan/nodebestpractices/issues/156))
+- ![KR](/assets/flags/KR.png) [Korean](README.korean.md) - Предоставлено [Sangbeom Han](https://github.com/uronly14me) ([Обсуждение](https://github.com/i0natan/nodebestpractices/issues/94))
+- ![RU](/assets/flags/RU.png) [Russian](https://github.com/i0natan/nodebestpractices/blob/russian-translation/README.russian.md) ([Обсуждение](https://github.com/i0natan/nodebestpractices/issues/105))
+- ![ES](/assets/flags/ES.png) [Spanish](https://github.com/i0natan/nodebestpractices/blob/spanish-translation/README.spanish.md) ([Обсуждение](https://github.com/i0natan/nodebestpractices/issues/95))
+- ![TR](/assets/flags/TR.png) Turkish ([Обсуждение](https://github.com/i0natan/nodebestpractices/issues/139))
 
 <br/><br/><br/>
 
-# Core Contributors
+# Основные участники
 
 ## `Yoni Goldberg`
 
-Independent Node.js consultant who works with customers in USA, Europe, and Israel on building large-scale scalable Node applications. Many of the best practices above were first published in his blog post at [goldbergyoni.com](https://goldbergyoni.com). Reach Yoni at @goldbergyoni or me@goldbergyoni.com
+Независимый консультант Node.js, который работает с клиентами в США, Европе и Израиле над созданием масштабируемых масштабируемых приложений Node. Многие из приведенных выше рекомендаций были впервые опубликованы в его блоге на [goldbergyoni.com](https://goldbergyoni.com). Свяжитесь с Yoni по адресу @goldbergyoni или me@goldbergyoni.com
 
 ## `Ido Richter`
 
-👨‍💻 Software engineer, 🌐 web developer, 🤖 emojis enthusiast
+👨‍💻 Разработчик ПО, 🌐 веб-разработчик, 🤖 emojis энтузиаст
 
 ## `Refael Ackermann` [@refack](https://github.com/refack) &lt;refack@gmail.com&gt; (he/him)
 
-Node.js Core Collaborator, been noding since 0.4, and have noded in multiple production sites. Founded `node4good` home of [`lodash-contrib`](https://github.com/node4good/lodash-contrib), [`formage`](https://github.com/node4good/formage), and [`asynctrace`](https://github.com/node4good/asynctrace).
+Соавтор Node.js Core, начиная с версии 0.4, и работает на нескольких продакшн сайтах. Основал `node4good` дом [`lodash-contrib`](https://github.com/node4good/lodash-contrib), [`formage`](https://github.com/node4good/formage) и [`asynctrace`](https://github.com/node4good/asynctrace).
 `refack` on freenode, Twitter, GitHub, GMail, and many other platforms. DMs are open, happy to help
 
 ## `Bruno Scheufler`
 
-💻 full-stack web developer and Node.js enthusiast
+💻 full-stack веб-разработчик и энтузиаст Node.js
 
 ## `Kyle Martin` [@js-kyle](https://github.com/js-kyle)
 
-Full Stack Developer based in New Zealand, interested in architecting and building Node.js applications to perform at global scale. Keen contributor to open source software, including Node.js Core.
+full-stack разработчик из Новой Зеландии, заинтересованный в разработке и создании приложений Node.js глобального масштаба. Вносит весомый вклад в ПО с открытым исходным кодом, включая Node.js Core.
 
 ## `Sagir Khan`
 
-Deep specialist in JavaScript and its ecosystem — React, Node.js, MongoDB, pretty much anything that involves using JavaScript/JSON in any layer of the system — building products using the web platform for the world’s most recognized brands. Individual Member of the Node.js Foundation, collaborating on the Community Committee's Website Redesign Initiative.
+Глубокий специалист по JavaScript и его экосистеме - React, Node.js, MongoDB, практически все, что связано с использованием JavaScript / JSON на любом уровне системы - создание продуктов с использованием веб-платформы для самых узнаваемых мировых брендов. Индивидуальный член Фонда Node.js, сотрудничающий в рамках Инициативы по изменению веб-сайта Комитета сообщества.
 
 Social: gh. [sagirk](https://github.com/sagirk) | t. [@sagir_k](https://twitter.com/sagir_k) | li. [sagirk](https://linkedin.com/in/sagirk) | w. [sagirk.com](https://sagirk.com/)
 
 <br/><br/><br/>
 
-# Thank You Notes
+# Благодарственные записки
 
-This repository is being kept up to date thanks to the help from the community. We appreciate any contribution, from a single word fix to a new best practice. Below is a list of everyone who contributed to this project. A 🌻 marks a successful pull request and a ⭐ marks an approved new best practice
+Этот репозиторий постоянно обновляется благодаря помощи сообщества. Мы ценим любой вклад, от исправления одного слова до добавления новых разделов. Ниже приведен список всех, кто внес свой вклад в этот проект. 🌻 обозначает успешный запрос на получение ответа, а ⭐ обозначает одобренный новый раздел
 
-### Flowers
+### 🌻
 
 🌻 [Kevin Rambaud](https://github.com/kevinrambaud),
 🌻 [Michael Fine](https://github.com/mfine15),
@@ -1073,7 +1073,7 @@ This repository is being kept up to date thanks to the help from the community. 
 🌻 [Kapil Patel](https://github.com/kapilepatel),
 🌻 [迷渡](https://github.com/justjavac)
 
-### Stars <br/>
+### ⭐
 
 ⭐ [Kyle Martin](https://github.com/js-kyle),
 ⭐ [Keith Holliday](https://github.com/TheHollidayInn),
