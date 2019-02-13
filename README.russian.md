@@ -40,13 +40,13 @@
 
 ## Оглавление
 
-1. [Структура проекта (5)](#1-project-structure-practices)
-2. [Обработка ошибок (11)](#2-error-handling-practices)
-3. [Стиль кода (12)](#3-code-style-practices)
-4. [Тестирование и качество кода (9)](#4-testing-and-overall-quality-practices)
-5. [Практики релиза (18)](#5-going-to-production-practices)
-6. [Безопасность (24)](#6-security-best-practices)
-7. [Быстродействие (в работе)](#7-performance-best-practices)
+1. [Структура проекта (5)](#1-структура-проекта)
+2. [Обработка ошибок (11)](#2-обработка-ошибок)
+3. [Стиль кода (12)](#3-стиль-кода)
+4. [Тестирование и качество кода (9)](#4-тестирование-и-качество)
+5. [Релиз приложения (18)](#5-релиз-приложения)
+6. [Безопасность приложения (24)](#6-безопасность-приложения)
+7. [Быстродействие (в работе)](#7-быстродействие)
 
 <br/><br/><br/>
 
@@ -102,7 +102,7 @@
 
 <br/><br/><br/>
 
-<p align="right"><a href="#table-of-contents">⬆ Вернуться наверх</a></p>
+<p align="right"><a href="#оглавление">⬆ К оглавлению</a></p>
 
 # `2. Обработка ошибок`
 
@@ -216,7 +216,7 @@
 
 <br/><br/><br/>
 
-<p align="right"><a href="#table-of-contents">⬆ Return to top</a></p>
+<p align="right"><a href="#оглавление">⬆ К оглавлению</a></p>
 
 # `3. Стиль Кода`
 
@@ -404,9 +404,9 @@ null == undefined   // true
 
 <br/><br/><br/>
 
-<p align="right"><a href="#table-of-contents">⬆ Return to top</a></p>
+<p align="right"><a href="#оглавление">⬆ К оглавлению</a></p>
 
-# `4. Тестирование И Поддержка Качества`
+# `4. Тестирование И Качество`
 
 ## ![✔] 4.1 Как минимум - пришите тесты для API
 
@@ -484,7 +484,7 @@ null == undefined   // true
 
 <br/><br/><br/>
 
-<p align="right"><a href="#table-of-contents">⬆ Return to top</a></p>
+<p align="right"><a href="#оглавление">⬆ К оглавлению</a></p>
 
 # `5. Релиз приложения`
 
@@ -656,7 +656,7 @@ null == undefined   // true
 
 <br/><br/><br/>
 
-<p align="right"><a href="#table-of-contents">⬆ Return to top</a></p>
+<p align="right"><a href="#оглавление">⬆ К оглавлению</a></p>
 
 # `6. Безопасность приложения`
 
@@ -944,7 +944,7 @@ null == undefined   // true
 
 <br/><br/><br/>
 
-<p align="right"><a href="#table-of-contents">⬆ Return to top</a></p>
+<p align="right"><a href="#оглавление">⬆ К оглавлению</a></p>
 
 # `7. Быстродействие`
 
