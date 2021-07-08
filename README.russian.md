@@ -1,3 +1,7 @@
+<!-- markdownlint-disable MD024 -->
+<!-- markdownlint-disable MD026 -->
+<!-- markdownlint-disable MD033 -->
+
 [✔]: assets/images/checkbox-small-blue.png
 
 # Node.js Лучшие практики
@@ -14,7 +18,7 @@
 
 <br/>
 
-[![nodepractices](/assets/images/twitter-s.png)](https://twitter.com/nodepractices/) **Следуйте за нами на Twitter!** [**@nodepractices**](https://twitter.com/nodepractices/)
+[![nodepractices](/assets/images/twitter-s.png)](https://twitter.com/nodepractices/) **Следите за нами на Twitter!** [**@nodepractices**](https://twitter.com/nodepractices/)
 
 <br/>
 
@@ -22,219 +26,221 @@
 
 <br/>
 
-# Добро пожаловать! 3 вещи, которые вы должны знать в первую очередь:
+# Добро пожаловать!
+
+**3 вещи, которые вы должны знать в первую очередь:**
 
 **1. Читая это, на самом деле вы читаете лучшие статьи о Node.js -** это краткое изложение и список наиболее популярных материалов по Node.js.
 
 **2. Это самый большой сборник, и он растет каждую неделю -** здесь представлено более 50 лучших практик, руководств по стилю и советов по архитектуре. Каждый день создаются новые задачи и PR, обновляя данные материалы. Мы бы хотели, чтобы вы также внесли свой вклад, будь то исправление ошибок в коде или предложение новой блестящей идеи. Смотри наш [milestones здесь](https://github.com/i0natan/nodebestpractices/milestones?direction=asc&sort=due_date&state=open)
 
-**3. Большинство маркеров имеют дополнительную информацию -** рядом с большинством маркеров вы найдете ссылку **🔗 Подробнее**, перейдя по который вы сможете найти примеры кода, цитаты из блогов и другую дополнительную информацию.
+**3. Большинство блоков имеют дополнительную информацию -** рядом с большинством блоков вы найдете ссылку **🔗 Подробнее**, перейдя по который вы сможете найти примеры кода, цитаты из блогов и другую дополнительную информацию.
 
 <br/><br/><br/>
 
 ## Оглавление
 
-1.  [Практики Структуры Проекта (5)](#1-project-structure-practices)
-2.  [Практики Обработки ошибок (11) ](#2-error-handling-practices)
-3.  [Практики Стиля Кода (12) ](#3-code-style-practices)
-4.  [Практики Тестирования И Поддержания Качества (9) ](#4-testing-and-overall-quality-practices)
-5.  [Практики Релиза (18) ](#5-going-to-production-practices)
-6.  [Лучшие Практики По Безопасности (24)](#6-security-best-practices)
-7.  [Лучшие Практики По Быстродействию (в работе)](#7-performance-best-practices)
+1. [Структура проекта (5)](#1-структура-проекта)
+2. [Обработка ошибок (11)](#2-обработка-ошибок)
+3. [Стиль кода (12)](#3-стиль-кода)
+4. [Тестирование и качество кода (9)](#4-тестирование-и-качество)
+5. [Релиз приложения (18)](#5-релиз-приложения)
+6. [Безопасность приложения (24)](#6-безопасность-приложения)
+7. [Быстродействие (в работе)](#7-быстродействие)
 
 <br/><br/><br/>
 
-# `1. Практики Структуры Проекта`
+# `1. Структура проекта`
 
-## ![✔] 1.1 Structure your solution by components
+## ![✔] 1.1 Структурируйте приложение по компонентам
 
-**TL;DR:** The worst large applications pitfall is maintaining a huge code base with hundreds of dependencies - such a monolith slows down developers as they try to incorporate new features. Instead, partition your code into components, each gets its own folder or a dedicated codebase, and ensure that each unit is kept small and simple. Visit 'Read More' below to see examples of correct project structure
+**TL;DR:** Самая большая проблема больших приложений - поддержка кодбазы с сотнями зависимостей - это очень сильно замедняет разработку и внедрение новых функций. Вместо этого разделите ваш код на компоненты, каждый из которых получает свою собственную папку или выделенную кодбазу, и убедитесь, что каждый модуль остается маленьким и простым. По ссылке «Подробнее» ниже вы найдете примеры правильной структуры проекта.
 
-**Otherwise:** When developers who code new features struggle to realize the impact of their change and fear to break other dependant components - deployments become slower and more risky. It's also considered harder to scale-out when all the business units are not separated
+**В противном случае:** При разработке нового функционала разработчикам постоянно приходится держать в голове влияние своего кода на все приложение в целом, так как появляется большая вероятность сломать другие зависимые компоненты, развертывание  приложения становится медленным, увеличиваются риски допустить ошибку. Также приложение с разделенной логикой легче поддается маштабированию.
 
-🔗 [**Read More: structure by components**](/sections/projectstructre/breakintcomponents.md)
-
-<br/><br/>
-
-## ![✔] 1.2 Layer your components, keep Express within its boundaries
-
-**TL;DR:** Each component should contain 'layers' - a dedicated object for the web, logic and data access code. This not only draws a clean separation of concerns but also significantly eases mocking and testing the system. Though this is a very common pattern, API developers tend to mix layers by passing the web layer objects (Express req, res) to business logic and data layers - this makes your application dependant on and accessible by Express only
-
-**Otherwise:** App that mixes web objects with other layers can not be accessed by testing code, CRON jobs and other non-Express callers
-
-🔗 [**Read More: layer your app**](/sections/projectstructre/createlayers.md)
+🔗 [**Подробнее: компонентная структура**](/sections/projectstructre/breakintcomponents.md)
 
 <br/><br/>
 
-## ![✔] 1.3 Wrap common utilities as npm packages
+## ![✔] 1.2 Разделяйте логику компонентов, отделяйте Express от бизнес-логики приложения
 
-**TL;DR:** In a large app that constitutes a large code base, cross-cutting-concern utilities like logger, encryption and alike, should be wrapped by your own code and exposed as private npm packages. This allows sharing them among multiple code bases and projects
+**TL;DR:** Каждый компонент должен содержать «слои» - выделенные объекты для web, логики и кода для работы с данными. Это не только четко разделяет задачи, но и значительно облегчает проверку и тестирование системы. Хотя это очень распространенный шаблон, разработчики API склонны смешивать слои, передавая объекты веб-слоя (Express req, res) в бизнес-логику и слои работы с данными - это делает ваше приложение зависимым и доступным только для Express.
 
-**Otherwise:** You'll have to invent your own deployment and dependency wheel
+**В противном случае:** Приложение, в котором бизнес логика смешивается с обработкой роутов, сложно поддается тестированию, а так же не позволяет переиспользовать код в других местах, где это можно было бы сделать
 
-🔗 [**Read More: Structure by feature**](/sections/projectstructre/wraputilities.md)
-
-<br/><br/>
-
-## ![✔] 1.4 Separate Express 'app' and 'server'
-
-**TL;DR:** Avoid the nasty habit of defining the entire [Express](https://expressjs.com/) app in a single huge file - separate your 'Express' definition to at least two files: the API declaration (app.js) and the networking concerns (WWW). For even better structure, locate your API declaration within components
-
-**Otherwise:** Your API will be accessible for testing via HTTP calls only (slower and much harder to generate coverage reports). It probably won't be a big pleasure to maintain hundreds of lines of code in a single file
-
-🔗 [**Read More: separate Express 'app' and 'server'**](/sections/projectstructre/separateexpress.md)
+🔗 [**Подробнее: слои приложения**](/sections/projectstructre/createlayers.md)
 
 <br/><br/>
 
-## ![✔] 1.5 Use environment aware, secure and hierarchical config
+## ![✔] 1.3 Используйте приватные npm пакеты для переиспользуемых модулей
 
-**TL;DR:** A perfect and flawless configuration setup should ensure (a) keys can be read from file AND from environment variable (b) secrets are kept outside committed code (c) config is hierarchical for easier findability. There are a few packages that can help tick most of those boxes like [rc](https://www.npmjs.com/package/rc), [nconf](https://www.npmjs.com/package/nconf) and [config](https://www.npmjs.com/package/config)
+**TL;DR:** Используя npm для отдельных модулей поможет вам во-первых не переписывать каждый раз один и тот же функционал, а во-вторых иметь возможность вносить улучшения или исправления ошибок в модули разово и навсех проектах (главное следить за совместимостью)
 
-**Otherwise:** Failing to satisfy any of the config requirements will simply bog down the development or devops team. Probably both
+**В противном случае:** Вам придется каждый раз изобретать колесо при реализации подобного функционала
 
-🔗 [**Read More: configuration best practices**](/sections/projectstructre/configguide.md)
+🔗 [**Подробнее: Структурирование функционала**](/sections/projectstructre/wraputilities.md)
+
+<br/><br/>
+
+## ![✔] 1.4 Разделяйте Express 'app' и 'server'
+
+**TL;DR:** Избегайте неприятной привычки определять все приложение [Express](https://expressjs.com/) в одном огромном файле - разделяйте ваш "Express" как минимум на два файла: объявление API (app.js) и сетевые задачи (WWW). Для еще лучшей структуры объявляйте API в компонентах
+
+**В противном случае:** Ваш API будет доступен для тестирования только через HTTP-вызовы (медленнее и намного сложнее создавать отчеты о покрытии кода тестами). К тому же ни для кого не будет удовольствием работать с файлами в сотни и тысячи строк кода.
+
+🔗 [**Подробнее: разделяйте Express 'app' и 'server'**](/sections/projectstructre/separateexpress.md)
+
+<br/><br/>
+
+## ![✔] 1.5 Конфигурация должна зависеть от переменных окружения, быть безопасной и поддерживать иерархию
+
+**TL;DR:** Идеальная и безупречная конфигурация должна обеспечивать (а) считывание ключей из файла И из переменной среды (б) приватные ключи и пароли хранятся вне репозитория (в) конфигурация является иерархической для облегчения поиска. Есть несколько пакетов, которые могут помочь решить большинство из этих задач. К примеру [rc](https://www.npmjs.com/package/rc), [nconf](https://www.npmjs.com/package/nconf) и [config](https://www.npmjs.com/package/config)
+
+**В противном случае:** Невыполнение каких-либо требований к конфигурации приведет к проблемам с разработкой или к проблемам для команды разработки. Вероятно, оба варианта
+
+🔗 [**Подробнее: правильная конфигурация**](/sections/projectstructre/configguide.md)
 
 <br/><br/><br/>
 
-<p align="right"><a href="#table-of-contents">⬆ Return to top</a></p>
+<p align="right"><a href="#оглавление">⬆ К оглавлению</a></p>
 
-# `2. Практики Обработки ошибок`
+# `2. Обработка ошибок`
 
-## ![✔] 2.1 Use Async-Await or promises for async error handling
+## ![✔] 2.1 Используйте Async-Await или promises для асинхронной обработки ошибок
 
-**TL;DR:** Handling async errors in callback style is probably the fastest way to hell (a.k.a the pyramid of doom). The best gift you can give to your code is using a reputable promise library or async-await instead which enables a much more compact and familiar code syntax like try-catch
+**TL;DR:** Обработка асинхронных ошибок в стиле обратного вызова, вероятно, является самым быстрым путем в ад. Лучший подарок, который вы можете дать своему коду, - это использовать Promise'ы или async-await, что обеспечивает гораздо более компактный и знакомый синтаксис кода, такой как try-catch
 
-**Otherwise:** Node.js callback style, function(err, response), is a promising way to un-maintainable code due to the mix of error handling with casual code, excessive nesting and awkward coding patterns
+**В противном случае:** Стиль Node.js с колбэками `function(err, response)` приводит к усложнению кода и увеличению вероятности допустить ошибку, так как обработка ошибок происходит наряду с остальной бизнес логикой приложения
 
-🔗 [**Read More: avoiding callbacks**](/sections/errorhandling/asyncerrorhandling.md)
-
-<br/><br/>
-
-## ![✔] 2.2 Use only the built-in Error object
-
-**TL;DR:** Many throws errors as a string or as some custom type – this complicates the error handling logic and the interoperability between modules. Whether you reject a promise, throw an exception or an emit error – using only the built-in Error object will increase uniformity and prevent loss of information
-
-**Otherwise:** When invoking some component, being uncertain which type of errors come in return – it makes proper error handling much harder. Even worse, using custom types to describe errors might lead to loss of critical error information like the stack trace!
-
-🔗 [**Read More: using the built-in error object**](/sections/errorhandling/useonlythebuiltinerror.md)
+🔗 [**Подробнее: избегайте колбэков**](/sections/errorhandling/asyncerrorhandling.md)
 
 <br/><br/>
 
-## ![✔] 2.3 Distinguish operational vs programmer errors
+## ![✔] 2.2 Используйте встроенный Error object для передачи ошибки
 
-**TL;DR:** Operational errors (e.g. API received an invalid input) refer to known cases where the error impact is fully understood and can be handled thoughtfully. On the other hand, programmer error (e.g. trying to read undefined variable) refers to unknown code failures that dictate to gracefully restart the application
+**TL;DR:** Проброс ошибки в виде строки или иного пользовательского типа усложняет логику обработки ошибок и взаимодействие между модулями. Вне зависимости от того, вызываете ли вы `reject` в `Promise`, генерируете исключение исходя из логики или генерируете ошибку - используйте встроенный объект `Error`, это приведет к повышению однородности и предотвращению потери информации
 
-**Otherwise:** You may always restart the application when an error appears, but why let ~5000 online users down because of a minor, predicted, operational error? the opposite is also not ideal – keeping the application up when an unknown issue (programmer error) occurred might lead to an unpredicted behavior. Differentiating the two allows acting tactfully and applying a balanced approach based on the given context
+**В противном случае:** При вызове какого-либо компонента, будучи неуверенным, какой тип ошибок приходит в ответ, значительно увеличивается вероятность неправильной обработки исключений. Хуже того, использование пользовательских типов для описания ошибок может привести к потере информации о критических проблемах, таких как трассировка стека!
 
-🔗 [**Read More: operational vs programmer error**](/sections/errorhandling/operationalvsprogrammererror.md)
-
-<br/><br/>
-
-## ![✔] 2.4 Handle errors centrally, not within an Express middleware
-
-**TL;DR:** Error handling logic such as mail to admin and logging should be encapsulated in a dedicated and centralized object that all endpoints (e.g. Express middleware, cron jobs, unit-testing) call when an error comes in
-
-**Otherwise:** Not handling errors within a single place will lead to code duplication and probably to improperly handled errors
-
-🔗 [**Read More: handling errors in a centralized place**](/sections/errorhandling/centralizedhandling.md)
+🔗 [**Подробнее: использование объекта Error**](/sections/errorhandling/useonlythebuiltinerror.md)
 
 <br/><br/>
 
-## ![✔] 2.5 Document API errors using Swagger
+## ![✔] 2.3 Различайте операционные ошибки и ошибки приложения
 
-**TL;DR:** Let your API callers know which errors might come in return so they can handle these thoughtfully without crashing. This is usually done with REST API documentation frameworks like Swagger
+**TL;DR:** Операционные ошибки (к примеру метод API был вызван с неверными параметрами) относятся к случаям, когда приложение должно правильно обработать ситуацию и реагировать соответствующе, без перезагрузки. С другой стороны, ошибка программиста (например, попытка прочитать неопределенную переменную) относится к неизвестным ошибкам приложения, которые требуют перезапуска приложения.
 
-**Otherwise:** An API client might decide to crash and restart only because he received back an error he couldn’t understand. Note: the caller of your API might be you (very typical in a microservice environment)
+**В противном случае:** Вы всегда можете перезапустить приложение, когда появляется ошибка, но зачем подводить ~ 5000 онлайн-пользователей из-за незначительной, прогнозируемой, операционной ошибки? обратное также не идеально - поддержание приложения в случае возникновения неизвестной проблемы (ошибка программиста) может привести к непредсказуемому поведению. Разграничение между ними позволяет действовать тактично и применять сбалансированный подход, основанный на данном контексте
 
-🔗 [**Read More: documenting errors in Swagger**](/sections/errorhandling/documentingusingswagger.md)
-
-<br/><br/>
-
-## ![✔] 2.6 Shut the process gracefully when a stranger comes to town
-
-**TL;DR:** When an unknown error occurs (a developer error, see best practice number #3)- there is uncertainty about the application healthiness. A common practice suggests restarting the process carefully using a ‘restarter’ tool like Forever and PM2
-
-**Otherwise:** When an unfamiliar exception is caught, some object might be in a faulty state (e.g an event emitter which is used globally and not firing events anymore due to some internal failure) and all future requests might fail or behave crazily
-
-🔗 [**Read More: shutting the process**](/sections/errorhandling/shuttingtheprocess.md)
+🔗 [**Подробнее: операционные ошибки и ошибки приложения**](/sections/errorhandling/operationalvsprogrammererror.md)
 
 <br/><br/>
 
-## ![✔] 2.7 Use a mature logger to increase error visibility
+## ![✔] 2.4 Обрабатывайте ошибки централизованно
 
-**TL;DR:** A set of mature logging tools like Winston, Bunyan or Log4J, will speed-up error discovery and understanding. So forget about console.log
+**TL;DR:** Логика обработки ошибок, такая как отправка емейла администратору и ведение журнала, должна быть вынесена в выделенный централизованный объект, который вызывается всеми конечными точками (например, Express middleware, задания cron, unit-testing) при возникновении ошибки
 
-**Otherwise:** Skimming through console.logs or manually through messy text file without querying tools or a decent log viewer might keep you busy at work until late
+**В противном случае:** Обработка исключений в разных местах приведет к дублированию кода и увеличивает вероятность допустить ошибку
 
-🔗 [**Read More: using a mature logger**](/sections/errorhandling/usematurelogger.md)
-
-<br/><br/>
-
-## ![✔] 2.8 Test error flows using your favorite test framework
-
-**TL;DR:** Whether professional automated QA or plain manual developer testing – Ensure that your code not only satisfies positive scenario but also handle and return the right errors. Testing frameworks like Mocha & Chai can handle this easily (see code examples within the "Gist popup")
-
-**Otherwise:** Without testing, whether automatically or manually, you can’t rely on our code to return the right errors. Without meaningful errors – there’s no error handling
-
-🔗 [**Read More: testing error flows**](/sections/errorhandling/testingerrorflows.md)
+🔗 [**Подробнее: централизованная обработка ошибок**](/sections/errorhandling/centralizedhandling.md)
 
 <br/><br/>
 
-## ![✔] 2.9 Discover errors and downtime using APM products
+## ![✔] 2.5 Документируйте возможные типы ошибок в API
 
-**TL;DR:** Monitoring and performance products (a.k.a APM) proactively gauge your codebase or API so they can automagically highlight errors, crashes and slow parts that you were missing
+**TL;DR:** Пользователи вашего API должны иметь возможность узнать, какие ошибки могут прийти в ответ на запрос. В этом случае они смогут обрабатывать их, что не будет приводить к сбоям. Обычно это делается с помощью фреймворков для REST API документации, таких как Swagger
 
-**Otherwise:** You might spend great effort on measuring API performance and downtimes, probably you’ll never be aware which are your slowest code parts under real-world scenario and how these affect the UX
+**В противном случае:** Пользователь API может принять решение о сбое и перезапуске только потому, что он получил ошибку, которую он не мог понять. Примечание: вызывающим абонентом вашего API можете быть и вы (очень типично для микросервисной среды)
 
-🔗 [**Read More: using APM products**](/sections/errorhandling/apmproducts.md)
-
-<br/><br/>
-
-## ![✔] 2.10 Catch unhandled promise rejections
-
-**TL;DR:** Any exception thrown within a promise will get swallowed and discarded unless a developer didn’t forget to explicitly handle. Even if your code is subscribed to process.uncaughtException! Overcome this by registering to the event process.unhandledRejection
-
-**Otherwise:** Your errors will get swallowed and leave no trace. Nothing to worry about
-
-🔗 [**Read More: catching unhandled promise rejection**](/sections/errorhandling/catchunhandledpromiserejection.md)
+🔗 [**Подробнее: документация ошибок в Swagger**](/sections/errorhandling/documentingusingswagger.md)
 
 <br/><br/>
 
-## ![✔] 2.11 Fail fast, validate arguments using a dedicated library
+## ![✔] 2.6 Прервите и перезапустите процесс в случае неизвестной ошибки
 
-**TL;DR:** This should be part of your Express best practices – Assert API input to avoid nasty bugs that are much harder to track later. The validation code is usually tedious unless you are using a very cool helper library like Joi
+**TL;DR:** При возникновении неизвестной ошибки (ошибка разработчика, см. Рекомендацию № 3) - существует неопределенность в отношении работоспособности приложения. Обычная практика предполагает осторожный перезапуск процесса с использованием инструмента-перезагрузчика, такого как Forever и PM2.
 
-**Otherwise:** Consider this – your function expects a numeric argument “Discount” which the caller forgets to pass, later on, your code checks if Discount!=0 (amount of allowed discount is greater than zero), then it will allow the user to enjoy a discount. OMG, what a nasty bug. Can you see it?
+**В противном случае:** Когда обнаруживается незнакомое исключение, часть функционала может находиться в неисправном состоянии (например, источник событий, который используется глобально и больше не генерирует события из-за некоторого внутреннего сбоя), и все будущие запросы могут завершаться сбоем или вести себя неправильно
 
-🔗 [**Read More: failing fast**](/sections/errorhandling/failfast.md)
+🔗 [**Подробнее: остановка процесса**](/sections/errorhandling/shuttingtheprocess.md)
+
+<br/><br/>
+
+## ![✔] 2.7 Используйте распространенные инструменты логирования
+
+**TL;DR:** Использование распространенных инструментов логирования, таких как Winston, Bunyan или Log4J, ускорит обнаружение и понимание ошибок. Так что забудьте о console.log
+
+**В противном случае:** Дебаг через console.log или вручную через сырой текстовый файл без механизма поиска или удобного форматирования может занять вас на работе до поздней ночи.
+
+🔗 [**Подробнее: использование инструментов логирования**](/sections/errorhandling/usematurelogger.md)
+
+<br/><br/>
+
+## ![✔] 2.8 Тестируйте обработку ошибок через тестовые фреймворки
+
+**TL;DR:** Будь то профессиональный автоматический QA или простое ручное тестирование разработчиком - убедитесь, что ваш код не только удовлетворяет положительному сценарию, но также обрабатывает и возвращает правильные ошибки. Фреймворки для тестирования, такие как Mocha и Chai, могут легко справиться с этим (см. Примеры кода в «Gist popup»)
+
+**В противном случае:** Без тестирования, будь то автоматически или вручную, вы не можете быть увереным в том, что приложение правильно обработает ситуацию при негативном сценарии пользователя
+
+🔗 [**Подробнее: способы тестирования ошибок**](/sections/errorhandling/testingerrorflows.md)
+
+<br/><br/>
+
+## ![✔] 2.9 Обнаружение ошибок и простоев используя APM
+
+**TL;DR:** Сервисы для мониторинга состояния и производительности (к прим. APM) проактивно измеряют вашу кодовую базу или API, чтобы они могли автоматически выделять ошибки, сбои и медленные блоки, которые вы пропустили
+
+**В противном случае:** Вы можете потратить огромные усилия на измерение производительности и времени простоя API, возможно, вы никогда не узнаете, какие ваши самые медленные блоки кода в реальном сценарии и как они влияют на UX
+
+🔗 [**Подробнее: использование APM**](/sections/errorhandling/apmproducts.md)
+
+<br/><br/>
+
+## ![✔] 2.10 Обрабатывайте все исключения Promise
+
+**TL;DR:** Любое исключение, отправленное в Promise, будет отброшено, если разработчик забудет его явно обработать. Даже если ваш код подписан на `process.uncaughtException`! Исправьте это, подписавшись на событие `process.unhandledRejection`
+
+**В противном случае:** Ваши ошибки будут утеряны и не оставят следов. Не о чем беспокоиться
+
+🔗 [**Подробнее: обработка неизвестных ошибок Promise**](/sections/errorhandling/catchunhandledpromiserejection.md)
+
+<br/><br/>
+
+## ![✔] 2.11 Проверяйте входные данные вашего API
+
+**TL;DR:** Это должно быть частью вашей лучшей практики Express - проверка входных данных API, чтобы избежать неприятных ошибок, которые потом будет намного сложнее отследить. Код проверки обычно утомителен, если вы не используете очень классную вспомогательную библиотеку, такую как Joi
+
+**В противном случае:** Это может привести к непредвиденным ошибкам. К примеру - API ожидает числовой аргумент `Discount`, который вызывающая сторона забывает передать, позже ваш код проверяет наличине ненулевой скиди (`Discount !== 0`) и позволяет пользователю ей пользоваться.
+
+🔗 [**Подробнее: проверка входных данных**](/sections/errorhandling/failfast.md)
 
 <br/><br/><br/>
 
-<p align="right"><a href="#table-of-contents">⬆ Return to top</a></p>
+<p align="right"><a href="#оглавление">⬆ К оглавлению</a></p>
 
-# `3. Практики Стиля Кода`
+# `3. Стиль Кода`
 
-## ![✔] 3.1 Use ESLint
+## ![✔] 3.1 Используйте ESLint
 
-**TL;DR:** [ESLint](https://eslint.org) is the de-facto standard for checking possible code errors and fixing code style, not only to identify nitty-gritty spacing issues but also to detect serious code anti-patterns like developers throwing errors without classification. Though ESLint can automatically fix code styles, other tools like [prettier](https://www.npmjs.com/package/prettier) and [beautify](https://www.npmjs.com/package/js-beautify) are more powerful in formatting the fix and work in conjunction with ESLint
+**TL;DR:** [ESLint](https://eslint.org) ялвяется стандартом де-факто для проверки кода на возможные ошибки и исправления ошибок стиля кода. ESLint используется не только для исправления неправильных отступов, но и для выявления таких серьезных "анти-паттерных" проблем, как, к примеру, выброс ошибок без классификации. Несмотря на то, что ESLint поддерживает автоматическое исправление кода, такие утилиты как [prettier](https://www.npmjs.com/package/prettier) и [beautify](https://www.npmjs.com/package/js-beautify) сделают это более продуктивно, если их использовать совместно с ESLint.
 
-**Otherwise:** Developers will focus on tedious spacing and line-width concerns and time might be wasted overthinking about the project's code style
-
-<br/><br/>
-
-## ![✔] 3.2 Node.js Specific Plugins
-
-**TL;DR:** On top of ESLint standard rules that cover vanilla JS only, add Node-specific plugins like [eslint-plugin-node](https://www.npmjs.com/package/eslint-plugin-node), [eslint-plugin-mocha](https://www.npmjs.com/package/eslint-plugin-mocha) and [eslint-plugin-node-security](https://www.npmjs.com/package/eslint-plugin-security)
-
-**Otherwise:** Many faulty Node.js code patterns might escape under the radar. For example, developers might require(variableAsPath) files with a variable given as path which allows attackers to execute any JS script. Node.js linters can detect such patterns and complain early
+**В противном случае:** Код не будет иметь единого стилистического подхода
 
 <br/><br/>
 
-## ![✔] 3.3 Start a Codeblock's Curly Braces on the Same Line
+## ![✔] 3.2 Node.js-ориентированные линтеры
 
-**TL;DR:** The opening curly braces of a code block should be in the same line of the opening statement
+**TL;DR:** В дополнение к стандартным правилам ESLint, которые покрывают только  Vanilla JS, используйте такие Node-ориентированные плагины, как [eslint-plugin-node](https://www.npmjs.com/package/eslint-plugin-node), [eslint-plugin-mocha](https://www.npmjs.com/package/eslint-plugin-mocha) и [eslint-plugin-node-security](https://www.npmjs.com/package/eslint-plugin-security)
 
-### Code Example
+**В противном случае:** Ряд проблем паттернов кода Node.js могут быть упущены. Как пример, разработчик может использовать `require(variableAsPath)` с переменной, указанной в качестве пути, которая позволяет злоумышленникам выполнить любой сценарий JS. Линтеры Node.js могут обнаружить такие паттерны и известить о проблеме
+
+<br/><br/>
+
+## ![✔] 3.3 Фигурная скоба в той же строке
+
+**TL;DR:** Открывающая фигурная скобка должна находиться в той же строке, что и объявление метода
+
+### Пример кода
 
 ```javascript
 // Do
@@ -249,19 +255,19 @@ function someFunction()
 }
 ```
 
-**Otherwise:** Deferring from this best practice might lead to unexpected results, as seen in the StackOverflow thread below:
+**В противном случае:** Отклонение от общей практики может привести неожиданным последствиям. Детальнее об этом можно прочитать в треде на StackOverflow:
 
-🔗 [**Read more:** "Why does a results vary based on curly brace placement?" (Stackoverflow)](https://stackoverflow.com/questions/3641519/why-does-a-results-vary-based-on-curly-brace-placement)
+🔗 [**Подробнее:** "Why does a results vary based on curly brace placement?" (Stackoverflow)](https://stackoverflow.com/questions/3641519/why-does-a-results-vary-based-on-curly-brace-placement)
 
 <br/><br/>
 
-## ![✔] 3.4 Don't Forget the Semicolon
+## ![✔] 3.4 Не забывайте о точке с запятой
 
-**TL;DR:** While not unanimously agreed upon, it is still recommended to put a semicolon at the end of each statement. This will make your code more readable and explicit to other developers who read it
+**TL;DR:** Даже с учетом, что нет единого мнения, все же рекомендуется ставить точку с запятой в конце каждого объявления. Это делает ваш код более читабельным и понятным для других разработчиков
 
-**Otherwise:** As seen in the previous section, JavaScript's interpreter automatically adds a semicolon at the end of a statement if there isn't one, or considers a statement as not ended where it should, which might lead to some undesired results
+**В противном случае:** Так же, как и в примере выше, интерпритатор JavaScript  добавляет точку с запятой в конец объявления, где его нет. Но так же он может посчитать, что объявление еще не завершено, что может привести к нежелательным последствиям
 
-### Code example
+### Пример кода
 
 ```javascript
 // Do
@@ -279,21 +285,21 @@ const count = 2 // it tries to run 2(), but 2 is not a function
 
 <br/><br/>
 
-## ![✔] 3.5 Name Your Functions
+## ![✔] 3.5 Именуйте функции
 
-**TL;DR:** Name all functions, including closures and callbacks. Avoid anonymous functions. This is especially useful when profiling a node app. Naming all functions will allow you to easily understand what you're looking at when checking a memory snapshot
+**TL;DR:** Именуйте все функциии, включая замыкания и функции обратного вызова. Игнорируйте анонимные функции. Это особенно полезно при профилировании Node.js приложений. Именование всех функций сильно упрощает разбор снимка памяти
 
-**Otherwise:** Debugging production issues using a core dump (memory snapshot) might become challenging as you notice significant memory consumption from anonymous functions
+**В противном случае:** Отладка производительности используя снимок памяти станет гораздо сложнее, когда основную часть памяти потребляют анонимные функции
 
 <br/><br/>
 
-## ![✔] 3.6 Naming conventions for variables, constants, functions and classes
+## ![✔] 3.6 Соглашения об именах переменных, констант, функций и классов
 
-**TL;DR:** Use **_lowerCamelCase_** when naming constants, variables and functions and **_UpperCamelCase_** (capital first letter as well) when naming classes. This will help you to easily distinguish between plain variables/functions, and classes that require instantiation. Use descriptive names, but try to keep them short
+**TL;DR:** Используйте **_lowerCamelCase_** когда именуете константы, переменные и функции и **_UpperCamelCase_** (первая также в верхнем регистре) когда именуете классы. Это поможет вам легко различать простые переменные/функции и классы. Используйте описательные имена, но старайтесь, чтобы они были короткими
 
-**Otherwise:** Javascript is the only language in the world which allows invoking a constructor ("Class") directly without instantiating it first. Consequently, Classes and function-constructors are differentiated by starting with UpperCamelCase
+**В противном случае:** Javascript - единственный язык в мире, который позволяет напрямую вызывать конструктор («Class»), не создавая его экземпляры. Следовательно, классы и конструкторы функций различаются, начиная с UpperCamelCase
 
-### Code Example
+### Пример кода
 
 ```javascript
 // for class name we use UpperCamelCase
@@ -311,34 +317,31 @@ function doSomething() {}
 
 <br/><br/>
 
-## ![✔] 3.7 Prefer const over let. Ditch the var
+## ![✔] 3.7 Используйте const и let, забудьте о var
 
-**TL;DR:** Using `const` means that once a variable is assigned, it cannot be reassigned. Preferring const will help you to not be tempted to use the same variable for different uses, and make your code clearer. If a variable needs to be reassigned, in a for loop, for example, use `let` to declare it. Another important aspect of `let` is that a variable declared using it is only available in the block scope in which it was defined. `var` is function scoped, not block scoped, and [shouldn't be used in ES6](https://hackernoon.com/why-you-shouldnt-use-var-anymore-f109a58b9b70) now that you have const and let at your disposal
+**TL;DR:** Объявление переменной, как `const`, означает, что значение переменной будет присвоено единожды и не будет изменено. Такой подход не позволит переиспользовать переменную для иного функционала, что делает код более читабельным. В случае необходимости переопределения переменной (в цикле, к примеру) используйте `let`. Еще одной особенностью `let` является то, что объявленная переменная будет доступна только в рамках блока, в котором она была объявлена. `var` является переменной функции, а не блока, и [не должна быть использована в ES6](https://hackernoon.com/why-you-shouldnt-use-var-anymore-f109a58b9b70).
 
-**Otherwise:** Debugging becomes way more cumbersome when following a variable that frequently changes
+**В противном случае:** Отладка становится намного более громоздкой в случае, когда переменна меняется и переиспользуется
 
-🔗 [**Read more: JavaScript ES6+: var, let, or const?** ](https://medium.com/javascript-scene/javascript-es6-var-let-or-const-ba58b8dcde75)
-
-<br/><br/>
-
-## ![✔] 3.8 Requires come first, and not inside functions
-
-**TL;DR:** Require modules at the beginning of each file, before and outside of any functions. This simple best practice will not only help you easily and quickly tell the dependencies of a file right at the top but also avoids a couple of potential problems
-
-**Otherwise:** Requires are run synchronously by Node.js. If they are called from within a function, it may block other requests from being handled at a more critical time. Also, if a required module or any of its own dependencies throw an error and crash the server, it is best to find out about it as soon as possible, which might not be the case if that module is required from within a function
+🔗 [**Подробнее: JavaScript ES6+: var, let, или const?**](https://medium.com/javascript-scene/javascript-es6-var-let-or-const-ba58b8dcde75)
 
 <br/><br/>
 
-## ![✔] 3.9 Do Require on the folders, not directly on the files
+## ![✔] 3.8 Подключение зависимостей происходит в первую очередь, не внутри функций
 
-**TL;DR:** When developing a module/library in a folder, place an index.js file that exposes the module's
-internals so every consumer will pass through it. This serves as an 'interface' to your module and eases
-future changes without breaking the contract
+**TL;DR:**  Подключение модулей должно происходить вначале файла, перед и вне любых функций. Это простое правило не только поможет быстро понимать зависимости файла, но и предотвратит от ряда нежелательных проблем
 
-**Otherwise:** Changing the internal structure of files or the signature may break the interface with
-clients
+**В противном случае:** В Node.js зависимости подключаются синхронно. При подключении зависимости внутри функции, это может привести к блокировке обработки других операций. Кроме того, если требуемый модуль или какая-либо из его собственных зависимостей выдает ошибку и приводит к сбою сервера, лучше узнать об этом как можно скорее. В случае подключения модуля внутри функции, вызов может произойти гораздо позже
 
-### Code example
+<br/><br/>
+
+## ![✔] 3.9 Создавайте подключение директорий, а не конкретных файлов
+
+**TL;DR:** Разрабатывая модуль или библиотеку, создайте `index.js` внутри вашей директории, через который возвращайте интерфейс вашего модуля. Это позволит избежать изменения архитектуры в случае необходимости расширения модуля
+
+**В противном случае:** Изменения архитектуры файлов в дальнейшем может привести к несовместимости с текущим вариантом использования
+
+### Пример кода
 
 ```javascript
 // Do
@@ -352,13 +355,13 @@ module.exports.SMSNumberResolver = require('./SMSNumberResolver/SMSNumberResolve
 
 <br/><br/>
 
-## ![✔] 3.10 Use the `===` operator
+## ![✔] 3.10 Используйте оператор `===`
 
-**TL;DR:** Prefer the strict equality operator `===` over the weaker abstract equality operator `==`. `==` will compare two variables after converting them to a common type. There is no type conversion in `===`, and both variables must be of the same type to be equal
+**TL;DR:** Используйте строгое равенство (`===`) вместо абстрактного `==`. `==` сравнивает значение после того, как приведет их к общему типу, чего нет при использовании `===`. В этом случае для равенства обе переменные должны быть одного типа
 
-**Otherwise:** Unequal variables might return true when compared with the `==` operator
+**В противном случае:** Отличные переменные могут вернуть `true` в случае сравнения через `==`
 
-### Code example
+### Пример кода
 
 ```javascript
 '' == '0'           // false
@@ -375,543 +378,533 @@ null == undefined   // true
 ' \t\r\n ' == 0     // true
 ```
 
-All statements above will return false if used with `===`
+Все выражения выше вернут `false`, если использовать `===`
 
 <br/><br/>
 
-## ![✔] 3.11 Use Async Await, avoid callbacks
+## ![✔] 3.11 Используйте Async/Await вместо callback (функции обратного вызова)
 
-**TL;DR:** Node 8 LTS now has full support for Async-await. This is a new way of dealing with asynchronous code which supersedes callbacks and promises. Async-await is non-blocking, and it makes asynchronous code look synchronous. The best gift you can give to your code is using async-await which provides a much more compact and familiar code syntax like try-catch
+**TL;DR:** Node 8 полностью поддерживает Async-await. Это новый способ работы с асинхронным кодом, который заменяет обратные вызовы и Promise. Async-await не блокирует и делает асинхронный код синхронным. Лучший подарок, который вы можете дать своему коду, - это использовать async-await, который обеспечивает гораздо более компактный и знакомый синтаксис кода, такой как try-catch
 
-**Otherwise:** Handling async errors in callback style is probably the fastest way to hell - this style forces to check errors all over, deal with awkward code nesting and make it difficult to reason about the code flow
+**В противном случае:** Обработка асинхронных ошибок в стиле обратного вызова, вероятно, самый быстрый путь в ад - этот стиль приводит к большому количеству ошибок, связанных с неуклюжим вложением кода, а так же усложняет его читаемость.
 
-🔗[**Read more:** Guide to async await 1.0](https://github.com/yortus/asyncawait)
+🔗[**Подробнее:** Guide to async await 1.0](https://github.com/yortus/asyncawait)
 
 <br/><br/>
 
-## ![✔] 3.12 Use Fat (=>) Arrow Functions
+## ![✔] 3.12 Используйте стрелочные функции (=>)
 
-**TL;DR:** Though it's recommended to use async-await and avoid function parameters when dealing with older API that accept promises or callbacks - arrow functions make the code structure more compact and keep the lexical context of the root function (i.e. 'this')
+**TL;DR:** Хотя рекомендуется использовать async-await и избегать параметров функций при работе со старыми API, которые принимают Promises или обратные вызовы - стрелочные функции делают структуру кода более компактной и поддерживают лексический контекст корневой функции (т.е. `this`)
 
-**Otherwise:** Longer code (in ES5 functions) is more prone to bugs and cumbersome to read
+**В противном случае:** Более длинный код (в ES5 функциях) больше подвержен багам и усложняет чтение
 
 🔗 [**Read mode: It’s Time to Embrace Arrow Functions**](https://medium.com/javascript-scene/familiarity-bias-is-holding-you-back-its-time-to-embrace-arrow-functions-3d37e1a9bb75)
 
 <br/><br/><br/>
 
-<p align="right"><a href="#table-of-contents">⬆ Return to top</a></p>
+<p align="right"><a href="#оглавление">⬆ К оглавлению</a></p>
 
-# `4. Практики Тестирования И Поддержания Качества`
+# `4. Тестирование И Качество`
 
-## ![✔] 4.1 At the very least, write API (component) testing
+## ![✔] 4.1 Как минимум - пришите тесты для API
 
-**TL;DR:** Most projects just don't have any automated testing due to short timetables or often the 'testing project' run out of control and being abandoned. For that reason, prioritize and start with API testing which is the easiest to write and provide more coverage than unit testing (you may even craft API tests without code using tools like [Postman](https://www.getpostman.com/). Afterward, should you have more resources and time, continue with advanced test types like unit testing, DB testing, performance testing, etc
+**TL;DR:** Большинство проектов просто не имеют автоматического тестирования из-за сжатых сроков или из-за того, что тестам не уделяется должного внимания. Поэтому расставьте приоритеты и начните с тестов API на ранней стадии. Вы можете даже создавать тесты API без кода, используя такие инструменты, как [Postman](https://www.getpostman.com/). Затем, если у вас будет достаточно ресурсов и времени, перейдите к расширенным типам тестов, таким как модульное тестирование, тестирование БД, тестирование производительности и т.д.
 
-**Otherwise:** You may spend long days on writing unit tests to find out that you got only 20% system coverage
-
-<br/><br/>
-
-## ![✔] 4.2 Detect code issues with a linter
-
-**TL;DR:** Use a code linter to check basic quality and detect anti-patterns early. Run it before any test and add it as a pre-commit git-hook to minimize the time needed to review and correct any issue. Also check [Section 3](https://github.com/i0natan/nodebestpractices#3-code-style-practices) on Code Style Practices
-
-**Otherwise:** You may let pass some anti-pattern and possible vulnerable code to your production environment.
+**В противном случае:** Вы можете потратить много дней на написание модульных тестов и затем выяснить, что покрыто только 20% вышего кода
 
 <br/><br/>
 
-## ![✔] 4.3 Carefully choose your CI platform (Jenkins vs CircleCI vs Travis vs Rest of the world)
+## ![✔] 4.2 Находите проблемы кода используя linter
 
-**TL;DR:** Your continuous integration platform (CICD) will host all the quality tools (e.g test, lint) so it should come with a vibrant ecosystem of plugins. [Jenkins](https://jenkins.io/) used to be the default for many projects as it has the biggest community along with a very powerful platform at the price of complex setup that demands a steep learning curve. Nowadays, it became much easier to set up a CI solution using SaaS tools like [CircleCI](https://circleci.com) and others. These tools allow crafting a flexible CI pipeline without the burden of managing the whole infrastructure. Eventually, it's a trade-off between robustness and speed - choose your side carefully
+**TL;DR:** Используйте линтеры кода для проверки качества на базовом уровне, а так же для поиска анти-паттернов на ранней стадии. Для минимизации времени, необходимого для проверки на наличие проблем, запускайте проверку перед каждый тестом и добавьте это в pre-commit git-hook. Также посмотрите [Секцию №3](#3-стиль-кода) в разделе Стиль Кода
 
-**Otherwise:** Choosing some niche vendor might get you blocked once you need some advanced customization. On the other hand, going with Jenkins might burn precious time on infrastructure setup
-
-🔗 [**Read More: Choosing CI platform**](/sections/testingandquality/citools.md)
+**В противном случае:** Вы можете пропустить анти-паттерны или уязвимый код
 
 <br/><br/>
 
-## ![✔] 4.4 Constantly inspect for vulnerable dependencies
+## ![✔] 4.3 Бережно выбирайте вашу CI платформу (Jenkins vs CircleCI vs Travis vs Rest of the world)
 
-**TL;DR:** Even the most reputable dependencies such as Express have known vulnerabilities. This can get easily tamed using community and commercial tools such as 🔗 [npm audit](https://docs.npmjs.com/cli/audit) and 🔗 [snyk.io](https://snyk.io) that can be invoked from your CI on every build
+**TL;DR:** Ваша платформа непрерывной интеграции (CICD) будет содержать инструменты проверки качества (например, test, lint), поэтому она должна идти с экосистемой плагинов. [Jenkins](https://jenkins.io/) раньше использовался по умолчанию для многих проектов, поскольку у него самое большое сообщество и очень мощная платформа, но при этом он сложно устанавливается и настраивается, что требует квалифицированного специалиста. Сейчас стало гораздо проще использовать SaaS решения, такие как [CircleCI](https://circleci.com) и другие. Эти инструменты позволяют создать гибкий механизм CI без необходимости управлять всей инфраструктурой. В конце концов, это компромисс между надежностью и скоростью
 
-**Otherwise:** Keeping your code clean from vulnerabilities without dedicated tools will require to constantly follow online publications about new threats. Quite tedious
+**В противном случае:** Выбирая сторонний сервис вы можете в дальнейшем упереться, когда вам потребуется уникальная для вашего приложения конфигурация. С другой стороны, время, потраченное на установку и настройку Jenkins, также не всегда оправдывается
 
-<br/><br/>
-
-## ![✔] 4.5 Tag your tests
-
-**TL;DR:** Different tests must run on different scenarios: quick smoke, IO-less, tests should run when a developer saves or commits a file, full end-to-end tests usually run when a new pull request is submitted, etc. This can be achieved by tagging tests with keywords like #cold #api #sanity so you can grep with your testing harness and invoke the desired subset. For example, this is how you would invoke only the sanity test group with [Mocha](https://mochajs.org/): mocha --grep 'sanity'
-
-**Otherwise:** Running all the tests, including tests that perform dozens of DB queries, any time a developer makes a small change can be extremely slow and keeps developers away from running tests
+🔗 [**Подробнее: Выбор CI платформы**](/sections/testingandquality/citools.md)
 
 <br/><br/>
 
-## ![✔] 4.6 Check your test coverage, it helps to identify wrong test patterns
+## ![✔] 4.4 Постоянно проверяйте наличие уязвимых зависимостей
 
-**TL;DR:** Code coverage tools like [Istanbul/NYC ](https://github.com/gotwarlost/istanbul)are great for 3 reasons: it comes for free (no effort is required to benefit this reports), it helps to identify a decrease in testing coverage, and last but not least it highlights testing mismatches: by looking at colored code coverage reports you may notice, for example, code areas that are never tested like catch clauses (meaning that tests only invoke the happy paths and not how the app behaves on errors). Set it to fail builds if the coverage falls under a certain threshold
+**TL;DR:** Даже самые популярные зависимости, такие как Express, имеют известные уязвимости. Для контроля вы можете использовать публичные и коммерческие инструменты, такие как [npm audit](https://docs.npmjs.com/cli/audit) и [snyk.io](https://snyk.io), вызов которых может происходить каждый раз при запуске тестов вашим CI
 
-**Otherwise:** There won't be any automated metric telling you when a large portion of your code is not covered by testing
-
-<br/><br/>
-
-## ![✔] 4.7 Inspect for outdated packages
-
-**TL;DR:** Use your preferred tool (e.g. 'npm outdated' or [npm-check-updates](https://www.npmjs.com/package/npm-check-updates) to detect installed packages which are outdated, inject this check into your CI pipeline and even make a build fail in a severe scenario. For example, a severe scenario might be when an installed package is 5 patch commits behind (e.g. local version is 1.3.1 and repository version is 1.3.8) or it is tagged as deprecated by its author - kill the build and prevent deploying this version
-
-**Otherwise:** Your production will run packages that have been explicitly tagged by their author as risky
+**В противном случае:** Для обеспечения чистоты кода от уязвимостей без использования специальных инструментов потребуется постоянно следить за публикациями в Интернете о новых угрозах. Что, конечно, довольно утомительно
 
 <br/><br/>
 
-## ![✔] 4.8 Use docker-compose for e2e testing
+## ![✔] 4.5 Разделяйте тесты
 
-**TL;DR:** End to end (e2e) testing which includes live data used to be the weakest link of the CI process as it depends on multiple heavy services like DB. Docker-compose turns this problem into a breeze by crafting production-like environment using a simple text file and easy commands. It allows crafting all the dependent services, DB and isolated network for e2e testing. Last but not least, it can keep a stateless environment that is invoked before each test suite and dies right after
+**TL;DR:** Различные тесты должны выполняться в разных сценариях: быстрый smoke-тест, IO-less тесты должны выполняться, когда разработчик сохраняет или коммитит файл, полные тесты обычно выполняются, когда создается новый запрос на слияние. Это может быть достигнуто путем пометки тестов ключевыми словами, такими как #cold #api #sanity, чтобы вы могли использовать свой тестовый набор и вызывать нужное подмножество. Например, так вы бы вызывали только группу тестов на работоспособность с [Mocha](https://mochajs.org/): mocha --grep 'sanity'
 
-**Otherwise:** Without docker-compose teams must maintain a testing DB for each testing environment including developers machines, keep all those DBs in sync so test results won't vary across environments
+**В противном случае:** Запуск всех тестов, включая тесты, которые выполняют десятки запросов к БД, каждый раз, когда разработчик вносит небольшие изменения, может быть очень медленным. Это приводит к тому, что разработчики не используют тесты вовсе
 
 <br/><br/>
 
-## ![✔] 4.9 Refactor regularly using static analysis tools
+## ![✔] 4.6 Проверяйте процент покрытия. Это помогает выявить неправильный подход к тестированию
 
-**TL;DR:** Using static analysis tools helps by giving objective ways to improve code quality and keep your code maintainable. You can add static analysis tools to your CI build to fail when it finds code smells. Its main selling points over plain linting are the ability to inspect quality in the context of multiple files (e.g. detect duplications), perform advanced analysis (e.g. code complexity) and follow the history and progress of code issues. Two examples of tools you can use are [Sonarqube](https://www.sonarqube.org/) (2,600+ [stars](https://github.com/SonarSource/sonarqube)) and [Code Climate](https://codeclimate.com/) (1,500+ [stars](https://github.com/codeclimate/codeclimate)).
+**TL;DR:** Инструмент, вроде [Istanbul/NYC](https://github.com/gotwarlost/istanbul) очень полезен, как минимум, по трем причинам: он бесплатный, помогает следить за поддержкой необходимого уровня покрытия кода тестами, а так же показывает упущения в тестировании: обратив внимание на результат оценки покрытия вы можете определить, к примеру, что ваши тесты никогда не проверяют обработку исключений (имеется ввиду, что тесты проверяют только позитивные сценарии, исключая негативные). Вы можете настроить поставку таким образом, чтобы приложение не собиралось, в случае, если процент охвата кода тестами меньше предустановленного значения
 
-**Otherwise:** With poor code quality, bugs and performance will always be an issue that no shiny new library or state of the art features can fix.
+**В противном случае:** Вы можете упустить момент, когда большая часть вашего кода останется без тестов
 
-🔗 [**Read More: Refactoring!**](/sections/testingandquality/refactoring.md)
+<br/><br/>
+
+## ![✔] 4.7 Проверяйте код на наличие устаревших пакетов
+
+**TL;DR:** Используйте существующие инструменты (к прмиеру 'npm outdated' или [npm-check-updates](https://www.npmjs.com/package/npm-check-updates) для определения устаревших пакетов, включите проверку в ваш CI pipeline.
+
+**В противном случае:** Есть вероятность допустить использование пакетов, которые были помечены автором, как рискованные
+
+<br/><br/>
+
+## ![✔] 4.8 Используйте docker-compose для e2e тестов
+
+**TL;DR:** End to end (e2e) тесты обычно имеют серьезные зависимости (к примеру зависимость от базы данных), что в свою очередь всегда было проблемой для CI. Сейчас эту проблему можно легко решить, используя Docker-compose - оперируя понятным синтаксисом вы можете создать отдельное тестовое окружение, которое будет сложить только для тестирования. Это поможет создать окружение с нужными зависимостями, требуемыми для e2e тестирования. Также это дает возможность использовать чистое окружение для каждого запуска тестов
+
+**В противном случае:** Без docker-compose сильно усложняется поддержка зависимостей для e2e тестирования, а так же появляется необходимость дополнительной траты времени на подготовку окружения для тестов
+
+<br/><br/>
+
+## ![✔] 4.9 Проводите регулярный рефакторинг с использованием инструментов статического анализа
+
+**TL;DR:** Использование инструментов статического анализа помогает найти пути для улучшения качества вашего кода и сохранять высокий уровень поддержки вашего кода. Вы также можете добавить эту проверку в ваш CI. Его основные преимущества при использовании простого линтинга - это возможность проверять качество в контексте нескольких файлов (например, обнаруживать дубликаты), выполнять расширенный анализ (например, сложность кода) и следить за историей и развитием проблем в коде. Два примера таких инструментов - [Sonarqube](https://www.sonarqube.org/) (2,600+ [звезд](https://github.com/SonarSource/sonarqube)) и [Code Climate](https://codeclimate.com/) (1,500+ [звезд](https://github.com/codeclimate/codeclimate)).
+
+**В противном случае:** При низком качестве кода ошибки и производительность всегда будут проблемой, которую не может исправить ни новая библиотека, ни современные функции.
+
+🔗 [**Подробнее: Рефакторинг!**](/sections/testingandquality/refactoring.md)
 
 <br/><br/><br/>
 
-<p align="right"><a href="#table-of-contents">⬆ Return to top</a></p>
+<p align="right"><a href="#оглавление">⬆ К оглавлению</a></p>
 
-# `5. Практики Релиза`
+# `5. Релиз приложения`
 
-## ![✔] 5.1. Monitoring!
+## ![✔] 5.1. Мониторинг!
 
-**TL;DR:** Monitoring is a game of finding out issues before customers do – obviously this should be assigned unprecedented importance. The market is overwhelmed with offers thus consider starting with defining the basic metrics you must follow (my suggestions inside), then go over additional fancy features and choose the solution that ticks all boxes. Click ‘The Gist’ below for an overview of the solutions
+**TL;DR:** Мониторинг - это возможность обнаружить ошибки в приложении до того, как это сделает пользователь. Рынок перегружен предложениями, поэтому подумайте о том, чтобы начать с применения основных метрик, которым вы должны следовать (мои предложения внутри), а затем перейти к дополнительным методам
 
-**Otherwise:** Failure === disappointed customers. Simple
+**В противном случае:** Все довольно просто - ошибки === разочарованные пользователи
 
-🔗 [**Read More: Monitoring!**](/sections/production/monitoring.md)
-
-<br/><br/>
-
-## ![✔] 5.2. Increase transparency using smart logging
-
-**TL;DR:** Logs can be a dumb warehouse of debug statements or the enabler of a beautiful dashboard that tells the story of your app. Plan your logging platform from day 1: how logs are collected, stored and analyzed to ensure that the desired information (e.g. error rate, following an entire transaction through services and servers, etc) can really be extracted
-
-**Otherwise:** You end-up with a black box that is hard to reason about, then you start re-writing all logging statements to add additional information
-
-🔗 [**Read More: Increase transparency using smart logging**](/sections/production/smartlogging.md)
+🔗 [**Подробнее: Мониторинг!**](/sections/production/monitoring.md)
 
 <br/><br/>
 
-## ![✔] 5.3. Delegate anything possible (e.g. gzip, SSL) to a reverse proxy
+## ![✔] 5.2. Увеличьте прозрачность, используя умное логгирование
 
-**TL;DR:** Node is awfully bad at doing CPU intensive tasks like gzipping, SSL termination, etc. You should use ‘real’ middleware services like nginx, HAproxy or cloud vendor services instead
+**TL;DR:** Логи могут быть свалкой строк с информацией, либо же инструментом для создания логичного дашборда для мониторинга вашего приложения. Планируйте механизмы отладки вашего приложения с первого дня разработки: думайте, как будут собираться логи, храниться и анализироваться, убедитесь, что вся нужная информация (частота ошибок, скорость обработки и т.д) собирается и храниться с возможностью ее использования.
 
-**Otherwise:** Your poor single thread will stay busy doing infrastructural tasks instead of dealing with your application core and performance will degrade accordingly
+**В противном случае:** Вы получаете на выходе так называемый черный ящик (black box) без механизмов мониторинга. Затем вы начинаете переписывать логику, чтобы эти механизмы добавить
 
-🔗 [**Read More: Delegate anything possible (e.g. gzip, SSL) to a reverse proxy**](/sections/production/delegatetoproxy.md)
-
-<br/><br/>
-
-## ![✔] 5.4. Lock dependencies
-
-**TL;DR:** Your code must be identical across all environments, but amazingly npm lets dependencies drift across environments by default – when you install packages at various environments it tries to fetch packages’ latest patch version. Overcome this by using npm config files, .npmrc, that tell each environment to save the exact (not the latest) version of each package. Alternatively, for finer grain control use npm” shrinkwrap”. \*Update: as of NPM5, dependencies are locked by default. The new package manager in town, Yarn, also got us covered by default
-
-**Otherwise:** QA will thoroughly test the code and approve a version that will behave differently at production. Even worse, different servers at the same production cluster might run different code
-
-🔗 [**Read More: Lock dependencies**](/sections/production/lockdependencies.md)
+🔗 [**Подробнее: Увеличьте прозрачность, используя умное логгирование**](/sections/production/smartlogging.md)
 
 <br/><br/>
 
-## ![✔] 5.5. Guard process uptime using the right tool
+## ![✔] 5.3. Делегация процессов сторонним сервисам (e.g. gzip, SSL)
 
-**TL;DR:** The process must go on and get restarted upon failures. For simple scenarios, ‘restarter’ tools like PM2 might be enough but in today ‘dockerized’ world – a cluster management tools should be considered as well
+**TL;DR:** Node ужасно плохо справляется с задачами с высоким потреблением процессора, такими как gzipping, SSL подключения и т.д. Вместо этого вы должны использовать сторонние сервисы, такие как nginx, HAProxy или облачные сервисы.
 
-**Otherwise:** Running dozens of instances without a clear strategy and too many tools together (cluster management, docker, PM2) might lead to a DevOps chaos
+**В противном случае:** Ваше приложение будет занято процессами обработки задач подключения или архивации, вместо выполнения бизнес логики
 
-🔗 [**Read More: Guard process uptime using the right tool**](/sections/production/guardprocess.md)
-
-<br/><br/>
-
-## ![✔] 5.6. Utilize all CPU cores
-
-**TL;DR:** At its basic form, a Node app runs on a single CPU core while all other are left idling. It’s your duty to replicate the Node process and utilize all CPUs – For small-medium apps you may use Node Cluster or PM2. For a larger app consider replicating the process using some Docker cluster (e.g. K8S, ECS) or deployment scripts that are based on Linux init system (e.g. systemd)
-
-**Otherwise:** Your app will likely utilize only 25% of its available resources(!) or even less. Note that a typical server has 4 CPU cores or more, naive deployment of Node.js utilizes only 1 (even using PaaS services like AWS beanstalk!)
-
-🔗 [**Read More: Utilize all CPU cores**](/sections/production/utilizecpu.md)
+🔗 [**Подробнее: Делегация процессов сторонним сервисам (e.g. gzip, SSL)**](/sections/production/delegatetoproxy.md)
 
 <br/><br/>
 
-## ![✔] 5.7. Create a ‘maintenance endpoint’
+## ![✔] 5.4. Поддержка uptime используя инструменты
 
-**TL;DR:** Expose a set of system-related information, like memory usage and REPL, etc in a secured API. Although it’s highly recommended to rely on standard and battle-tests tools, some valuable information and operations are easier done using code
+**TL;DR:** Процесс должен продолжаться и перезапускаться при сбоях. Для простых сценариев может быть достаточно инструментов-рестартеров, таких как PM2, но в современном «докеризованном» мире стоит также рассмотреть инструменты управления кластером.
 
-**Otherwise:** You’ll find that you’re performing many “diagnostic deploys” – shipping code to production only to extract some information for diagnostic purposes
+**В противном случае:** Запуск десятков экземпляров без четкой стратегии со слишком большим количествов инструментов (управление кластером, Docker, PM2) может привести к хаосу DevOps
 
-🔗 [**Read More: Create a ‘maintenance endpoint’**](/sections/production/createmaintenanceendpoint.md)
-
-<br/><br/>
-
-## ![✔] 5.8. Discover errors and downtime using APM products
-
-**TL;DR:** Monitoring and performance products (a.k.a APM) proactively gauge codebase and API so they can auto-magically go beyond traditional monitoring and measure the overall user-experience across services and tiers. For example, some APM products can highlight a transaction that loads too slow on the end-users side while suggesting the root cause
-
-**Otherwise:** You might spend great effort on measuring API performance and downtimes, probably you’ll never be aware which is your slowest code parts under real-world scenario and how these affects the UX
-
-🔗 [**Read More: Discover errors and downtime using APM products**](/sections/production/apmproducts.md)
+🔗 [**Подробнее: Поддержка uptime используя инструменты**](/sections/production/guardprocess.md)
 
 <br/><br/>
 
-## ![✔] 5.9. Make your code production-ready
+## ![✔] 5.5. Используйте все ядра процессора
 
-**TL;DR:** Code with the end in mind, plan for production from day 1. This sounds a bit vague so I’ve compiled a few development tips that are closely related to production maintenance (click Gist below)
+**TL;DR:** В своей базовой форме приложение Node работает на одном ядре ЦП, а все остальные остаются бездействующими. Ваша обязанность - копировать процесс Node и использовать все процессоры. Для небольших и средних приложений вы можете использовать Node Cluster или PM2. Для более крупного приложения рассмотрите возможность репликации процесса с использованием некоторого кластера Docker (например, K8S, ECS) или сценариев развертывания, основанных на системе инициализации Linux (например, systemd).
 
-**Otherwise:** A world champion IT/DevOps guy won’t save a system that is badly written
+**В противном случае:** Ваше приложение, скорее всего, будет использовать только 25% доступных ресурсов (!) или даже меньше. Обратите внимание, что типичный сервер имеет 4 или более ядер ЦП, при простом развертывании Node.js используется только 1 (даже при использовании сервисов PaaS, таких как AWS beanstalk!)
 
-🔗 [**Read More: Make your code production-ready**](/sections/production/productioncode.md)
-
-<br/><br/>
-
-## ![✔] 5.10. Measure and guard the memory usage
-
-**TL;DR:** Node.js has controversial relationships with memory: the v8 engine has soft limits on memory usage (1.4GB) and there are known paths to leaks memory in Node’s code – thus watching Node’s process memory is a must. In small apps, you may gauge memory periodically using shell commands but in medium-large app consider baking your memory watch into a robust monitoring system
-
-**Otherwise:** Your process memory might leak a hundred megabytes a day like how it happened at [Walmart](https://www.joyent.com/blog/walmart-node-js-memory-leak)
-
-🔗 [**Read More: Measure and guard the memory usage**](/sections/production/measurememory.md)
+🔗 [**Подробнее: Используйте все ядра процессора**](/sections/production/utilizecpu.md)
 
 <br/><br/>
 
-## ![✔] 5.11. Get your frontend assets out of Node
+## ![✔] 5.7. Создание механизмов обслуживания
 
-**TL;DR:** Serve frontend content using dedicated middleware (nginx, S3, CDN) because Node performance really gets hurt when dealing with many static files due to its single threaded model
+**TL;DR:** Предоставьте набор информации, связанной с системой, такой как использование памяти, REPL и т.д. через защищенное API. Хотя настоятельно рекомендуется полагаться на стандартные инструменты, некоторую ценную информацию и операции легче получить с помощью кода.
 
-**Otherwise:** Your single Node thread will be busy streaming hundreds of html/images/angular/react files instead of allocating all its resources for the task it was born for – serving dynamic content
+**В противном случае:** Вы обнаружите, что выполняете много «диагностических развертываний» - отправка кода в релиз только для извлечения некоторой информации в диагностических целях.
 
-🔗 [**Read More: Get your frontend assets out of Node**](/sections/production/frontendout.md)
-
-<br/><br/>
-
-## ![✔] 5.12. Be stateless, kill your Servers almost every day
-
-**TL;DR:** Store any type of data (e.g. users session, cache, uploaded files) within external data stores. Consider ‘killing’ your servers periodically or use ‘serverless’ platform (e.g. AWS Lambda) that explicitly enforces a stateless behavior
-
-**Otherwise:** Failure at a given server will result in application downtime instead of just killing a faulty machine. Moreover, scaling-out elasticity will get more challenging due to the reliance on a specific server
-
-🔗 [**Read More: Be stateless, kill your Servers almost every day**](/sections/production/bestateless.md)
+🔗 [**Подробнее: Создание механизмов обслуживания**](/sections/production/createmaintenanceendpoint.md)
 
 <br/><br/>
 
-## ![✔] 5.13. Use tools that automatically detect vulnerabilities
+## ![✔] 5.8. Обнаружение ошибок и простоев с использованием механизмов APM
 
-**TL;DR:** Even the most reputable dependencies such as Express have known vulnerabilities (from time to time) that can put a system at risk. This can get easily tamed using community and commercial tools that constantly check for vulnerabilities and warn (locally or at GitHub), some can even patch them immediately
+**TL;DR:** Продукты для мониторинга и производительности (такие как APM) заранее измеряют кодовую базу и API, поэтому они могут автоматически выходить за рамки традиционного мониторинга и измерять общее взаимодействие пользователей между службами и уровнями. Например, некоторые продукты APM могут выделять транзакцию, которая загружается слишком медленно на стороне конечного пользователя, предлагая при этом основную причину
 
-**Otherwise:** Keeping your code clean from vulnerabilities without dedicated tools will require to constantly follow online publications about new threats. Quite tedious
+**В противном случае:** Вы можете потратить огромные усилия на измерение производительности и времени простоя API, возможно, вы никогда не узнаете, какие ваши самые медленные части кода в реальном сценарии и как они влияют на UX
 
-🔗 [**Read More: Use tools that automatically detect vulnerabilities**](/sections/production/detectvulnerabilities.md)
-
-<br/><br/>
-
-## ![✔] 5.14. Assign ‘TransactionId’ to each log statement
-
-**TL;DR:** Assign the same identifier, transaction-id: {some value}, to each log entry within a single request. Then when inspecting errors in logs, easily conclude what happened before and after. Unfortunately, this is not easy to achieve in Node due to its async nature, see code examples inside
-
-**Otherwise:** Looking at a production error log without the context – what happened before – makes it much harder and slower to reason about the issue
-
-🔗 [**Read More: Assign ‘TransactionId’ to each log statement**](/sections/production/assigntransactionid.md)
+🔗 [**Подробнее: Обнаружение ошибок и простоев с использованием механизмов APM**](/sections/production/apmproducts.md)
 
 <br/><br/>
 
-## ![✔] 5.15. Set NODE_ENV=production
+## ![✔] 5.9. Код должен быть готовым к релизу
 
-**TL;DR:** Set the environment variable NODE_ENV to ‘production’ or ‘development’ to flag whether production optimizations should get activated – many npm packages determining the current environment and optimize their code for production
+**TL;DR:** Продумывайте с первого дня разработки, как ваше приложение будет запускаться в релизе. Это звучит немного расплывчато, поэтому ниже приведены несколько советов по разработке, которые тесно связаны с техническим обслуживанием
 
-**Otherwise:** Omitting this simple property might greatly degrade performance. For example, when using Express for server-side rendering omitting `NODE_ENV` makes the slower by a factor of three!
+**В противном случае:** Чемпион мира по IT / DevOps не спасет плохо написанную систему
 
-🔗 [**Read More: Set NODE_ENV=production**](/sections/production/setnodeenv.md)
-
-<br/><br/>
-
-## ![✔] 5.16. Design automated, atomic and zero-downtime deployments
-
-**TL;DR:** Researches show that teams who perform many deployments – lowers the probability of severe production issues. Fast and automated deployments that don’t require risky manual steps and service downtime significantly improves the deployment process. You should probably achieve that using Docker combined with CI tools as they became the industry standard for streamlined deployment
-
-**Otherwise:** Long deployments -> production down time & human-related error -> team unconfident and in making deployment -> less deployments and features
+🔗 [**Подробнее: Сделайте ваш код готовым к релизу**](/sections/production/productioncode.md)
 
 <br/><br/>
 
-## ![✔] 5.17. Use an LTS release of Node.js
+## ![✔] 5.10. Измерения и защитита используемой памяти
 
-**TL;DR:** Ensure you are using an LTS version of Node.js to receive critical bug fixes, security updates and performance improvements
+**TL;DR:** Node.js имеет противоречивые отношения с памятью: движок v8 имеет ограничения на использование памяти (1,4 ГБ), и есть известные пути утечки памяти в коде Node - таким образом, мониторинг памяти процесса Node является обязательным. В небольших приложениях вы можете периодически измерять память с помощью команд оболочки, но в средних и больших приложениях стоит подумать о надежном механизме мониторинга.
 
-**Otherwise:** Newly discovered bugs or vulnerabilities could be used to exploit an application running in production, and your application may become unsupported by various modules and harder to maintain
+**В противном случае:** Потребление памяти может увеличиваться в сотни мегабайт в день, как это было в [Walmart](https://www.joyent.com/blog/walmart-node-js-memory-leak)
 
-🔗 [**Read More: Use an LTS release of Node.js**](/sections/production/LTSrelease.md)
+🔗 [**Подробнее: Измерьте и защитите использование памяти**](/sections/production/measurememory.md)
 
 <br/><br/>
 
-## ![✔] 5.18. Don't route logs within the app
+## ![✔] 5.11. Работа со статическими файлами вне Node
 
-**TL;DR:** Log destinations should not be hard-coded by developers within the application code, but instead should be defined by the execution environment the application runs in. Developers should write logs to `stdout` using a logger utility and then let the execution environment (container, server, etc.) pipe the `stdout` stream to the appropriate destination (i.e. Splunk, Graylog, ElasticSearch, etc.).
+**TL;DR:** Работу со статическими файлами передайте соответствующему ПО (nginx, S3, CDN), поскольку производительность Node действительно снижается при работе со большим количеством статических файлов из-за его однопоточной модели
 
-**Otherwise:** Application handling log routing === hard to scale, loss of logs, poor separation of concerns
+**В противном случае:** Ваш единственный поток будет занят потоковой передачей сотен файлов html/картинок/стилей/шрифтов вместо того, чтобы распределять все свои ресурсы для задачи, для которой он был создан - обслуживание динамического контента
 
-🔗 [**Read More: Log Routing**](/sections/production/logrouting.md)
+🔗 [**Подробнее: Работа со статическими файлами вне Node**](/sections/production/frontendout.md)
+
+<br/><br/>
+
+## ![✔] 5.12. Не завязывайтесь на один сервер
+
+**TL;DR:** Храните данные любого типа (например, сеанс пользователя, кэш, загруженные файлы) во внешних хранилищах данных. Подумайте о том, чтобы периодически «убивать» ваши серверы или используйте платформу «без серверов» (например, AWS Lambda), которая явно обеспечивает поведение без сохранения состояния.
+
+**В противном случае:** Сбой на данном сервере приведет к простою приложения, а не просто к гибели неисправного компьютера. Кроме того, гибкость масштабирования станет более сложной из-за зависимости от конкретного сервера.
+
+🔗 [**Подробнее: Не завязывайтесь на один сервер**](/sections/production/bestateless.md)
+
+<br/><br/>
+
+## ![✔] 5.13. Используйте инструменты, которые автоматически обнаруживают уязвимости
+
+**TL;DR:** Даже самые уважаемые зависимости, такие как Express, имеют известные уязвимости (время от времени), которые могут подвергать систему риску. Это можно легко обуздать с помощью общественных и коммерческих инструментов, которые постоянно проверяют уязвимости и предупреждают (локально или на GitHub), некоторые могут даже немедленно их исправлять
+
+**В противном случае:** Для обеспечения чистоты кода от уязвимостей без использования специальных инструментов потребуется постоянно следить за публикациями в Интернете о новых угрозах. Довольно утомительно
+
+🔗 [**Подробнее: Используйте инструменты, которые автоматически обнаруживают уязвимости**](/sections/production/detectvulnerabilities.md)
+
+<br/><br/>
+
+## ![✔] 5.14. Определяйте идентификатор запроса в логах
+
+**TL;DR:** Присвойте один и тот же идентификатор каждой записи журнала в одном запросе. Затем при проверке ошибок в журналах легко сделать вывод о том, что происходило до и после. К сожалению, это не так просто сделать в Node из-за его асинхронной природы, см. примеры кода внутри
+
+**В противном случае:** Без контекста сложно определять причины пролемы имея даже самый полный лог
+
+🔗 [**Подробнее: Определяйте идентификатор запроса в логах**](/sections/production/assigntransactionid.md)
+
+<br/><br/>
+
+## ![✔] 5.15. Устанавливайте NODE_ENV=production
+
+**TL;DR:** Установите для переменной среды `NODE_ENV` значение `production` или `development`, чтобы указать, должны ли активироваться оптимизации - многие пакеты npm определяют текущую среду и оптимизируют свой код в production
+
+**В противном случае:** Пропуск этого простого свойства может значительно снизить производительность. Например, при использовании Express для рендеринга на стороне сервера пропуск NODE_ENV замедляет процесс в три раза!
+
+🔗 [**Подробнее: Устанавливайте NODE_ENV=production**](/sections/production/setnodeenv.md)
+
+<br/><br/>
+
+## ![✔] 5.16. Проектирование автоматизированных, атомарных и непрерывных развертываний
+
+**TL;DR:** Исследования показывают, что команды, которые выполняют частые поставки, снижают вероятность серьезных производственных проблем. Быстрое и автоматическое развертывание, не требующее рискованных ручных операций и простоев служб, значительно улучшает процесс поставки. Вероятно, вам следует добиться этого, используя Docker в сочетании с инструментами CI, поскольку они стали отраслевым стандартом для упрощенного развертывания
+
+**В противном случае:** Длительные развертывания -> время простоя производства и ошибки персонала -> команда неуверенная в себе и при развертывании -> меньше развертываний и функций
+
+<br/><br/>
+
+## ![✔] 5.17. Используйте LTS релиз Node.js
+
+**TL;DR:** Убедитесь, что вы используете LTS-версию Node.js для получения критических исправлений, обновлений безопасности и улучшений производительности.
+
+**В противном случае:** Наличие уязвимостей в Node.js может отразиться в виде наличия уязвимостей вашего приложения, которое может быть взломано
+
+🔗 [**Подробнее: Используйте LTS релиз Node.js**](/sections/production/LTSrelease.md)
+
+<br/><br/>
+
+## ![✔] 5.18. Логи должны отправляться в stdout
+
+**TL;DR:** Вы не должны жестко указывать, куда отправлять логи. Назначение логов должно определяться средой выполнения, в которой выполняется приложение. Разработчики должны писать логи в `stdout` с помощью утилиты ведения логов, а затем разрешить среде выполнения (контейнер, сервер и т.д.) направляют поток `stdout` в соответствующий пункт назначения (т. е. Splunk, Graylog, ElasticSearch и т.д.).
+
+**В противном случае:** Ручная обработка логов === трудно масштабируется, потеря журналов, плохое разделение задач
+
+🔗 [**Подробнее: Маршрутизация Логов**](/sections/production/logrouting.md)
 
 <br/><br/><br/>
 
-<p align="right"><a href="#table-of-contents">⬆ Return to top</a></p>
+<p align="right"><a href="#оглавление">⬆ К оглавлению</a></p>
 
-# `6. Лучшие Практики По Безопасности`
+# `6. Безопасность приложения`
 
 <div align="center">
 <img src="https://img.shields.io/badge/OWASP%20Threats-Top%2010-green.svg" alt="53 items"/>
 </div>
 
-## ![✔] 6.1. Embrace linter security rules
+## ![✔] 6.1. Активируйте правила безопасности линтера
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A1-Injection" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A1:Injection%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A7-Cross-Site_Scripting_(XSS)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20XSS%20-green.svg" alt=""/></a>
 
-**TL;DR:** Make use of security-related linter plugins such as [eslint-plugin-security](https://github.com/nodesecurity/eslint-plugin-security) to catch security vulnerabilities and issues as early as possible , at best  while they're being coded. This can help catching security weaknesses like using eval, invoking a child process or importing a module with a string literal (e.g. user input). Click 'Read more' below to see code examples that will get caught by a security linter
+**TL;DR:** Используйте связанные с безопасностью плагины для линтера, такие как [eslint-plugin-security](https://github.com/nodesecurity/eslint-plugin-security), чтобы как можно раньше выявлять уязвимости и проблемы безопасности, в лучшем случае пока они кодируется. Это может помочь выявить слабые места безопасности, такие как использование eval, вызов дочернего процесса или импорт модуля со строковым литералом (например, пользовательский ввод). Нажмите «Читать дальше» ниже, чтобы увидеть примеры кода, которые мог бы определить линтер
 
-**Otherwise:** What could have been a straightforward security weakness during development becomes a major issue in production. Also, the project may not follow consistent code security practices, leading to vulnerabilities being introduced, or sensitive secrets committed into remote repositories
+**В противном случае:** То, что могло быть прямым недостатком безопасности во время разработки, становится основной проблемой в продакшн. Кроме того, проект может не следовать согласованным методам обеспечения безопасности кода, что приводит к появлению уязвимостей или наличие паролей и секретов, сохраненных в репозитории.
 
-🔗 [**Read More: Lint rules**](/sections/security/lintrules.md)
+🔗 [**Подробнее: Правила линтера**](/sections/security/lintrules.md)
 
 <br/><br/>
 
-## ![✔] 6.2. Limit concurrent requests using a middleware
+## ![✔] 6.2. Введите ограничение одновременных запросов
 
 <a href="https://www.owasp.org/index.php/Denial_of_Service" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20DDOS%20-green.svg" alt=""/></a>
 
-**TL;DR:** DOS attacks are very popular and relatively easy to conduct. Implement rate limiting using an external service such as cloud load balancers, cloud firewalls, nginx, or (for smaller and less critical apps) a rate limiting middleware (e.g. [express-rate-limit](https://www.npmjs.com/package/express-rate-limit))
+**TL;DR:** DOS атаки доволно популярны и не требуют больших усилий. Реализуйте ограничения и защиту от атаки, используя сторонние сервисы, такие как cloud load balancers, cloud firewalls, nginx или (для небольших приложений) middleware в коде, которые ограничивают запросы (к примеру [express-rate-limit](https://www.npmjs.com/package/express-rate-limit))
 
-**Otherwise:** An application could be subject to an attack resulting in a denial of service where real users receive a degraded or unavailable service.
+**В противном случае:** Приложение может стать объектом атак и вместо предоставления сервиса реальным пользователям, ваше приложение будет занято тем, чтобы отбиться от атаки.
 
-🔗 [**Read More: Implement rate limiting**](/sections/security/limitrequests.md)
+🔗 [**Подробнее: Реализация ограничения запросов**](/sections/security/limitrequests.md)
 
 <br/><br/>
 
-## ![✔] 6.3 Extract secrets from config files or use packages to encrypt them
+## ![✔] 6.3 Исключите хранение секретов в файлах конфигурации
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A6-Security_Misconfiguration" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A6:Security%20Misconfiguration%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A3-Sensitive_Data_Exposure" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A3:Sensitive%20Data%20Exposure%20-green.svg" alt=""/></a>
 
-**TL;DR:** Never store plain-text secrets in configuration files or source code. Instead, make use of secret-management systems like Vault products, Kubernetes/Docker Secrets, or using environment variables. As a last result, secrets stored in source control must be encrypted and managed (rolling keys, expiring, auditing, etc). Make use of pre-commit/push hooks to prevent committing secrets accidentally
+**TL;DR:** Никогда не храните пароли или секретные ключи в файлах конфигурации или коде. Вместо этого используйте Kubernetes/Docker Secrets или переменные окружения. В последнем случае переменные хранятся в провайдере системы контроля версий и могут быть зашифрованы. Используйте pre-commit/push хуки, чтобы предотвратить случайную передачу секретов
 
-**Otherwise:** Source control, even for private repositories, can mistakenly be made public, at which point all secrets are exposed. Access to source control for an external party will inadvertently provide access to related systems (databases, apis, services, etc).
+**В противном случае:** Даже приватный репозиторий по ошибке может стать публичным, в результате чего все секреты и пароли станут доступны третьей стороне. Доступ к управлению исходным кодом для внешней стороны непреднамеренно предоставит доступ к связанным системам (базам данных, API, службам и т.д.).
 
-🔗 [**Read More: Secret management**](/sections/security/secretmanagement.md)
+🔗 [**Подробнее: Управление ключами и паролями**](/sections/security/secretmanagement.md)
 
 <br/><br/>
 
-## ![✔] 6.4. Prevent query injection vulnerabilities with ORM/ODM libraries
+## ![✔] 6.4. Предотвратите уязвимости внедрения запросов с помощью библиотек ORM / ODM
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A1-Injection" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A1:Injection%20-green.svg" alt=""/></a>
 
-**TL;DR:** To prevent SQL/NoSQL injection and other malicious attacks, always make use of an ORM/ODM or a database library that escapes data or supports named or indexed parameterized queries, and takes care of validating user input for expected types. Never just use JavaScript template strings or string concatenation to inject values into queries as this opens your application to a wide spectrum of vulnerabilities. All the reputable Node.js data access libraries (e.g. [Sequelize](https://github.com/sequelize/sequelize), [Knex](https://github.com/tgriesser/knex), [mongoose](https://github.com/Automattic/mongoose)) have built-in protection against injection attacks.
+**TL;DR:** Для предотвращения SQL/NoSQL иньекций используйте ORM/ODM или другие библиотекий для работы с базой данных, которые экранируют данные или поддерживают именованные или индексированные параметризованные запросы и заботятся о проверке пользовательского ввода для ожидаемых типов. Никогда не используйте строки шаблонов JavaScript или конкатенацию строк для ввода значений в запросы, поскольку это открывает для вашего приложения широкий спектр уязвимостей. Все авторитетные библиотеки доступа к данным Node.js (как пример [Sequelize](https://github.com/sequelize/sequelize), [Knex](https://github.com/tgriesser/knex), [mongoose](https://github.com/Automattic/mongoose)) имеют встроенную защиту от инъекционных атак.
 
-**Otherwise:** Unvalidated or unsanitized user input could lead to operator injection when working with MongoDB for NoSQL, and not using a proper sanitization system or ORM will easily allow SQL injection attacks, creating a giant vulnerability.
+**В противном случае:** Непроверенный или не подвергнутый анализу пользовательский ввод может привести к внедрению оператора при работе с MongoDB для NoSQL, а отсутствие надлежащей системы очистки или ORM легко разрешит атаки SQL-иньекций, создав гигантскую уязвимость.
 
-🔗 [**Read More: Query injection prevention using ORM/ODM libraries**](/sections/security/ormodmusage.md)
-
-<br/><br/>
-
-## ![✔] 6.5. Collection of generic security best practices
-
-**TL;DR:** This is a collection of security advice that are not related directly to Node.js - the Node implementation is not much different than any other language. Click read more to skim through.
-
-🔗 [**Read More: Common security best practices**](/sections/security/commonsecuritybestpractices.md)
+🔗 [**Подробнее: Предотвращение иньекций с использованием библиотек ORM/ODM**](/sections/security/ormodmusage.md)
 
 <br/><br/>
 
-## ![✔] 6.6. Adjust the HTTP response headers for enhanced security
+## ![✔] 6.5. Сборник общих рекомендаций по безопасности
+
+**TL;DR:** Это набор рекомендаций по безопасности, которые не связаны напрямую с Node.js - реализация Node мало чем отличается от любого другого языка. Нажмите «читать дальше», чтобы просмотреть.
+
+🔗 [**Подробнее: Общие рекомендации по безопасности**](/sections/security/commonsecuritybestpractices.md)
+
+<br/><br/>
+
+## ![✔] 6.6. Настройте заголовки ответа HTTP для повышения безопасности
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A6-Security_Misconfiguration" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A6:Security%20Misconfiguration%20-green.svg" alt=""/></a>
 
-**TL;DR:** Your application should be using secure headers to prevent attackers from using common attacks like cross-site scripting (XSS), clickjacking and other malicious attacks. These can be configured easily using modules like [helmet](https://www.npmjs.com/package/helmet).
+**TL;DR:** Ваше приложение должно использовать безопасные заголовки, чтобы предотвратить использование злоумышленниками обычных атак, таких как межсайтовый скриптинг (XSS), клик-джеккинг и другие злонамеренные атаки. Их можно легко настроить с помощью таких модулей, как [helmet](https://www.npmjs.com/package/helmet).
 
-**Otherwise:** Attackers could perform direct attacks on your application's users, leading huge security vulnerabilities
+**В противном случае:** Злоумышленники могут выполнять прямые атаки на пользователей вашего приложения, что приводит к огромным уязвимостям безопасности
 
-🔗 [**Read More: Using secure headers in your application**](/sections/security/secureheaders.md)
+🔗 [**Подробнее: Использование безопасных заголовков в вашем приложении**](/sections/security/secureheaders.md)
 
 <br/><br/>
 
-## ![✔] 6.7. Constantly and automatically inspect for vulnerable dependencies
+## ![✔] 6.7. Постоянно проверяйте наличие уязвимых зависимостей
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A9-Using_Components_with_Known_Vulnerabilities" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A9:Known%20Vulnerabilities%20-green.svg" alt=""/></a>
 
-**TL;DR:** With the npm ecosystem it is common to have many dependencies for a project. Dependencies should always be kept in check as new vulnerabilities are found. Use tools like [npm audit](https://docs.npmjs.com/cli/audit) or [snyk](https://snyk.io/) to track, monitor and patch vulnerable dependencies. Integrate these tools with your CI setup so you catch a vulnerable dependency before it makes it to production.
+**TL;DR:** Экосистема npm обычно проекты имеют большое количество зависимостей. Зависимости постоянно должны проверяться на наличие известных уязвимостей. Для проверки используйте такие инструменты, как [npm audit](https://docs.npmjs.com/cli/audit) или [snyk](https://snyk.io/). Интеграция проверки в ваш CI позволит определять уязвимости раньше, чем они попадут в продакшн.
 
-**Otherwise:** An attacker could detect your web framework and attack all its known vulnerabilities.
+**В противном случае:** Злоумышленники могут узнать о используемом вами фреймворке и использовать его уязвимости для атаки.
 
-🔗 [**Read More: Dependency security**](/sections/security/dependencysecurity.md)
+🔗 [**Подробнее: Безопасность зависимостей**](/sections/security/dependencysecurity.md)
 
 <br/><br/>
 
-## ![✔] 6.8. Avoid using the Node.js crypto library for handling passwords, use Bcrypt
+## ![✔] 6.8. Используйте Bcrypt для работы с паролями
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A2-Broken_Authentication" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A9:Broken%20Authentication%20-green.svg" alt=""/></a>
 
-**TL;DR:** Passwords or secrets (API keys) should be stored using a secure hash + salt function like `bcrypt`, that should be a preferred choice over its JavaScript implementation due to performance and security reasons.
+**TL;DR:** Пароли и секретные ключи (API ключи) должны храниться в виде хеша, полученного хеш-функцией, вроде `bcrypt` с использованием соли. Это должно быть предпочтительным выбором по сравнению с иными реализациями JavaScript из-за соображений производительности и безопасности.
 
-**Otherwise:** Passwords or secrets that are persisted without using a secure function are vulnerable to brute forcing and dictionary attacks that will lead to their disclosure eventually.
+**В противном случае:** Без использования хеш-функций злоумышленники получат доступы к паролям в сыром виде в случае утечки данных. При использовании слабых алгоритмов шифрования в этой же ситуации злоумышленники смогут легко получить пароль используя бутфорс.
 
-🔗 [**Read More: Use Bcrypt**](/sections/security/bcryptpasswords.md)
+🔗 [**Подробнее: Исплользование Bcrypt**](/sections/security/bcryptpasswords.md)
 
 <br/><br/>
 
-## ![✔] 6.9. Escape HTML, JS and CSS output
+## ![✔] 6.9. Экранируйте исходящий HTML, JS and CSS
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A7-Cross-Site_Scripting_(XSS)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A7:XSS%20-green.svg" alt=""/></a>
 
-**TL;DR:** Untrusted data that is sent down to the browser might get executed instead of just being displayed, this is commonly being referred as a cross-site-scripting (XSS) attack. Mitigate this by using dedicated libraries that explicitly mark the data as pure content that should never get executed (i.e. encoding, escaping)
+**TL;DR:** Ненадежные данные, которые отправляются в браузер, могут выполняться вместо того, чтобы просто отображаться, это обычно называют cross-site scripting (XSS). Исключите это, используя выделенные библиотеки, которые явно помечают данные как чистый контент, который никогда не должен выполняться (т.е. кодирование, экранирование)
 
-**Otherwise:** An attacker might store a malicious JavaScript code in your DB which will then be sent as-is to the poor clients
+**В противном случае:** Злоумышленник может сохранить в вашей базе данных вредоносный код JavaScript, который затем будет отправлен вашим клиентам как есть.
 
-🔗 [**Read More: Escape output**](/sections/security/escape-output.md)
+🔗 [**Подробнее: Экранируйте HTML**](/sections/security/escape-output.md)
 
 <br/><br/>
 
-## ![✔] 6.10. Validate incoming JSON schemas
+## ![✔] 6.10. Валидируйте входные JSON-данные
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A7-Cross-Site_Scripting_(XSS)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A7: XSS%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A8-Insecure_Deserialization" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A8:Insecured%20Deserialization%20-green.svg" alt=""/></a>
 
-**TL;DR:** Validate the incoming requests' body payload and ensure it qualifies the expectations, fail fast if it doesn't. To avoid tedious validation coding within each route you may use lightweight JSON-based validation schemas such as [jsonschema](https://www.npmjs.com/package/jsonschema) or [joi](https://www.npmjs.com/package/joi)
+**TL;DR:** Валидируйте входящие данные на соответствие ожидаемому формату. Для упрощения механизма валидации используйе такие библиотеки, как [jsonschema](https://www.npmjs.com/package/jsonschema) или [joi](https://www.npmjs.com/package/joi)
 
-**Otherwise:** Your generosity and permissive approach greatly increases the attack surface and encourages the attacker to try out many inputs until they find some combination to crash the application
+**В противном случае:** Без строгой проверки данных всегда есть вероятность допустить ошибку и оставить возможность атаки
 
-🔗 [**Read More: Validate incoming JSON schemas**](/sections/security/validation.md)
+🔗 [**Подробнее: Проверка входящие схемы JSON**](/sections/security/validation.md)
 
 <br/><br/>
 
-## ![✔] 6.11. Support blacklisting JWTs
+## ![✔] 6.11. Поддерживайте возможность заносить JWT в черный список
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A2-Broken_Authentication" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A9:Broken%20Authentication%20-green.svg" alt=""/></a>
 
-**TL;DR:** When using JSON Web Tokens (for example, with [Passport.js](https://github.com/jaredhanson/passport)), by default there's no mechanism to revoke access from issued tokens. Once you discover some malicious user activity, there's no way to stop them from accessing the system as long as they hold a valid token. Mitigate this by implementing a blacklist of untrusted tokens that are validated on each request.
+**TL;DR:** Реализация JSON Web Tokens (к примеру, с [Passport.js](https://github.com/jaredhanson/passport)) по умолчанию не поддерживает механизм отзыва токенов, что приводит к проблемам, когда вы находите подозрительный аккаунт и не можете забрать у него доступ. Возможность заносить токены в черный список поможет вам бороться с нежелательными аккаунтами
 
-**Otherwise:** Expired, or misplaced tokens could be used maliciously by a third party to access an application and impersonate the owner of the token.
+**В противном случае:** Истекшие или неуместные токены могут быть использованы злонамеренно третьей стороной для доступа к приложению и выдавать себя за владельца токена.
 
-🔗 [**Read More: Blacklist JSON Web Tokens**](/sections/security/expirejwt.md)
+🔗 [**Подробнее: Blacklist JSON Web Tokens**](/sections/security/expirejwt.md)
 
 <br/><br/>
 
-## ![✔] 6.12. Limit the allowed login requests of each user
+## ![✔] 6.12. Установите ограничение на количество неверных попыток авторизации
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A2-Broken_Authentication" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A9:Broken%20Authentication%20-green.svg" alt=""/></a>
 
-**TL;DR:** A brute force protection middleware such as [express-brute](https://www.npmjs.com/package/express-brute) should be used inside an express application to prevent brute force/dictionary attacks on sensitive routes such as /admin or /login based on request properties such as the user name, or other identifiers such as body parameters
+**TL;DR:** Вы можете использовать такие модули, как [express-brute](https://www.npmjs.com/package/express-brute), чтобы предотвратить брутфорс атаки. Не забывайте также и о панели администратора, если там отдельный механизм авторизации.
 
-**Otherwise:** An attacker can issue unlimited automated password attempts to gain access to privileged accounts on an application
+**В противном случае:** Злоумышленник получает возможность отправить сколько угодно запросов на авторизацию, перебирая фразы пароля.
 
-🔗 [**Read More: Login rate limiting**](/sections/security/login-rate-limit.md)
+🔗 [**Подробнее: Ограничение попыток авторизации**](/sections/security/login-rate-limit.md)
 
 <br/><br/>
 
-## ![✔] 6.13. Run Node.js as non-root user
+## ![✔] 6.13. Не запускайте Node.js под root пользователем
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A5-Broken_Access_Control" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A5:Broken%20Access%20Access%20Control-green.svg" alt=""/></a>
 
-**TL;DR:** There is a common scenario where Node.js runs as a root user with unlimited permissions. For example, this is the default behaviour in Docker containers. It's recommended to create a non-root user and either bake it into the Docker image (examples given below) or run the process on this users' behalf by invoking the container with the flag "-u username"
+**TL;DR:** Существует распространенный сценарий, когда Node.js запускается от имени пользователя root с неограниченными разрешениями. Например, это поведение по умолчанию в контейнерах Docker. Рекомендуется создать пользователя без полномочий root и либо "запечь" его в образе Docker (примеры приведены ниже), либо запустить процесс от имени этого пользователя, вызвав контейнер с флагом `-u username`
 
-**Otherwise:** An attacker who manages to run a script on the server gets unlimited power over the local machine (e.g. change iptable and re-route traffic to his server)
+**В противном случае:** Злоумышленник, которому удается запустить скрипт на сервере, получает неограниченную власть над локальной машиной (например, изменить iptable и перенаправить трафик на свой сервер)
 
-🔗 [**Read More: Run Node.js as non-root user**](/sections/security/non-root-user.md)
+🔗 [**Подробнее: Не запускайте Node.js под root пользователем**](/sections/security/non-root-user.md)
 
 <br/><br/>
 
-## ![✔] 6.14. Limit payload size using a reverse-proxy or a middleware
+## ![✔] 6.14. Ограничьте размер полезной нагрузки, используя обратный прокси или промежуточное ПО
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A8-Insecure_Deserialization" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A8:Insecured%20Deserialization%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A1-Injection" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20DDOS%20-green.svg" alt=""/></a>
 
-**TL;DR:** The bigger the body payload is, the harder your single thread works in processing it. This is an opportunity for attackers to bring servers to their knees without tremendous amount of requests (DOS/DDOS attacks). Mitigate this limiting the body size of incoming requests on the edge (e.g. firewall, ELB) or by configuring [express body parser](https://github.com/expressjs/body-parser) to accept only small-size payloads
+**TL;DR:** Огромное тело запроса может заставить ваш процесс заниматься тем, чтобы его парсить и обрабатывать. Без ограничений злоумышленник может заставить ваше приложение работать медленно или совсем остановиться, не тратя при этом на атаку каких-то ресурсов. Как вариант, вы можете ограничить размер, используя параметры конфигурации в [express body parser](https://github.com/expressjs/body-parser).
 
-**Otherwise:** Your application will have to deal with large requests, unable to process the other important work it has to accomplish, leading to performance implications and vulnerability towards DOS attacks
+**В противном случае:** Ваше приложение должно будет обрабатывать большие запросы, не в состоянии обработать другую важную работу, которую оно должно выполнить, что приводит к снижению производительности и уязвимости к атакам DOS
 
-🔗 [**Read More: Limit payload size**](/sections/security/requestpayloadsizelimit.md)
+🔗 [**Подробнее: Ограничение полезной нагрузки**](/sections/security/requestpayloadsizelimit.md)
 
 <br/><br/>
 
-## ![✔] 6.15. Avoid JavaScript eval statements
+## ![✔] 6.15. Избегайте JavaScript eval
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A7-Cross-Site_Scripting_(XSS)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A7:XSS%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A1-Injection" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A1:Injection%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A4-XML_External_Entities_(XXE)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A4:External%20Entities%20-green.svg" alt=""/></a>
 
-**TL;DR:** `eval` is evil as it allows executing a custom JavaScript code during run time. This is not just a performance concern but also an important security concern due to malicious JavaScript code that may be sourced from user input. Another language feature that should be avoided is `new Function` constructor. `setTimeout` and `setInterval` should never be passed dynamic JavaScript code either.
+**TL;DR:** `eval` - зло, так как позволяет выполнять пользовательский код JavaScript во время выполнения. Это не только проблема производительности, но и важная проблема безопасности из-за вредоносного кода JavaScript, который может быть получен из пользовательского ввода. Другой языковой особенностью, которую следует избегать, является конструктор `new Function`. `setTimeout` и `setInterval` также никогда не должны передавать динамический код JavaScript.
 
-**Otherwise:** Malicious JavaScript code finds a way into a text passed into `eval` or other real-time evaluating JavaScript language functions, and will gain complete access to JavaScript permissions on the page. This vulnerability is often manifested as an XSS attack.
+**В противном случае:** Вредоносный код JavaScript может попасть в переменные, используемые в `eval` или другие реалтайм функции, и получает полный доступ к разрешениям JavaScript на странице. Эта уязвимость часто проявляется как атака XSS.
 
-🔗 [**Read More: Avoid JavaScript eval statements**](/sections/security/avoideval.md)
+🔗 [**Подробнее: Избегайте JavaScript eval**](/sections/security/avoideval.md)
 
 <br/><br/>
 
-## ![✔] 6.16. Prevent evil RegEx from overloading your single thread execution
+## ![✔] 6.16. Предотвратите зло RegEx от перегрузки вашего однопоточного исполнения
 
 <a href="https://www.owasp.org/index.php/Denial_of_Service" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20DDOS%20-green.svg" alt=""/></a>
 
-**TL;DR:** Regular Expressions, while being handy, pose a real threat to JavaScript applications at large, and the Node.js platform in particular. A user input for text to match might require an outstanding amount of CPU cycles to process. RegEx processing might be inefficient to an extent that a single request that validates 10 words can block the entire event loop for 6 seconds and set the CPU on 🔥. For that reason, prefer third-party validation packages like [validator.js](https://github.com/chriso/validator.js) instead of writing your own Regex patterns, or make use of [safe-regex](https://github.com/substack/safe-regex) to detect vulnerable regex patterns
+**TL;DR:** Регулярные выражения, будучи удобными, представляют реальную угрозу для приложений JavaScript в целом и платформы Node.js в частности. Пользовательский ввод для сопоставления текста может потребовать значительного количества циклов ЦП для обработки. Обработка RegEx может быть неэффективной до такой степени, что один запрос, который проверяет 10 слов, может заблокировать весь цикл событий на 6 секунд. По этой причине предпочитайте сторонние пакеты проверки, такие как [validator.js](https://github.com/chriso/validator.js) вместо написания собственных шаблонов Regex, или используйте [safe-regex](https://github.com/substack/safe-regex) для обнаружения уязвимых шаблонов регулярных выражений
 
-**Otherwise:** Poorly written regexes could be susceptible to Regular Expression DoS attacks that will block the event loop completely. For example, the popular `moment` package was found vulnerable with malicious RegEx usage in November of 2017
+**В противном случае:** Плохо написанные регулярные выражения могут быть подвержены DoS-атакам с регулярным выражением, которые полностью блокируют цикл обработки событий. Например, популярный пакет `moment` был обнаружен уязвимым для злонамеренного использования RegEx в ноябре 2017 года.
 
-🔗 [**Read More: Prevent malicious RegEx**](/sections/security/regex.md)
+🔗 [**Подробнее: Предотвращение вредоносного RegEx**](/sections/security/regex.md)
 
 <br/><br/>
 
-## ![✔] 6.17. Avoid module loading using a variable
+## ![✔] 6.17. Избегайте загрузки модулей с использованием переменных
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A7-Cross-Site_Scripting_(XSS)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A7:XSS%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A1-Injection" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A1:Injection%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A4-XML_External_Entities_(XXE)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A4:External%20Entities%20-green.svg" alt=""/></a>
 
-**TL;DR:** Avoid requiring/importing another file with a path that was given as parameter due to the concern that it could have originated from user input. This rule can be extended for accessing files in general (i.e. `fs.readFile()`) or other sensitive resource access with dynamic variables originating from user input. [Eslint-plugin-security](https://www.npmjs.com/package/eslint-plugin-security) linter can catch such patterns and warn early enough
+**TL;DR:** Избегайте require/import других файлов, путь к которым формируется с использованием переменных. Тем более, если эти сторонние пользователи могут повлиять на эти переменные. Это правило может быть расширено для доступа к файлам в целом (то есть `fs.readFile()`) или для доступа к другим чувствительным ресурсам с помощью динамических переменных, происходящих из пользовательского ввода. [Eslint-plugin-security](https://www.npmjs.com/package/eslint-plugin-security) Линтер может перехватывать такие шаблоны и предупреждать о них достаточно на ранней стадии
 
-**Otherwise:** Malicious user input could find its way to a parameter that is used to require tampered files, for example a previously uploaded file on the filesystem, or access already existing system files.
+**В противном случае:** Вредоносный пользовательский ввод может найти путь к параметру, который используется для запроса подделанных файлов, например, ранее загруженного файла в файловой системе, или для доступа к уже существующим системным файлам.
 
-🔗 [**Read More: Safe module loading**](/sections/security/safemoduleloading.md)
+🔗 [**Подробнее: Безопасная загрузка модулей**](/sections/security/safemoduleloading.md)
 
 <br/><br/>
 
-## ![✔] 6.18. Run unsafe code in a sandbox
+## ![✔] 6.18. Запускайте небезопасный код в песочнице
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A7-Cross-Site_Scripting_(XSS)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A7:XSS%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A1-Injection" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A1:Injection%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A4-XML_External_Entities_(XXE)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A4:External%20Entities%20-green.svg" alt=""/></a>
 
-**TL;DR:** When tasked to run external code that is given at run-time (e.g. plugin), use any sort of 'sandbox' execution environment that isolates and guards the main code against the plugin. This can be achieved using a dedicated process (e.g. cluster.fork()), serverless environment or dedicated npm packages that acting as a sandbox
+**TL;DR:** Когда задается задача запустить внешний код, который предоставляется во время выполнения (например, плагин), используйте "песочницу" в качестве среды исполнения, которая изолирует и защищает основной код от плагина. Это может быть достигнуто с помощью выделенного процесса (например, `cluster.fork()`), безсерверной среды или выделенных пакетов npm, которые действуют как песочница
 
-**Otherwise:** A plugin can attack through an endless variety of options like infinite loops, memory overloading, and access to sensitive process environment variables
+**В противном случае:** Плагин может атаковать приложение, используя бесконечного множества опций, таких как бесконечные циклы, перегрузка памяти и доступ к чувствительным переменным среды процесса.
 
-🔗 [**Read More: Run unsafe code in a sandbox**](/sections/security/sandbox.md)
+🔗 [**Подробнее: Запустите небезопасный код в песочнице**](/sections/security/sandbox.md)
 
 <br/><br/>
 
-## ![✔] 6.19. Take extra care when working with child processes
+## ![✔] 6.19. Будьте особенно осторожны при работе с дочерними процессами
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A7-Cross-Site_Scripting_(XSS)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A7:XSS%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A1-Injection" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A1:Injection%20-green.svg" alt=""/></a> <a href="https://www.owasp.org/index.php/Top_10-2017_A4-XML_External_Entities_(XXE)" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A4:External%20Entities%20-green.svg" alt=""/></a>
 
-**TL;DR:** Avoid using child processes when possible and validate and sanitize input to mitigate shell injection attacks if you still have to. Prefer using `child_process.execFile` which by definition will only execute a single command with a set of attributes and will not allow shell parameter expansion.
+**TL;DR:** Избегайте использования дочерних процессов, когда это возможно, а также проверяйте и валидируйте входные данные, чтобы избежать атаки с использованием инъекций оболочки, если это необходимо. Используйте `child_process.execFile`, который по определению будет выполнять только одну команду с набором атрибутов и не позволит расширять параметры оболочки.
 
-**Otherwise:** Naive use of child processes could result in remote command execution or shell injection attacks due to malicious user input passed to an unsanitized system command.
+**В противном случае:** Наивное использование дочерних процессов может привести к удаленному выполнению команды или атакам внедрения вредоносного кода
 
-🔗 [**Read More: Be cautious when working with child processes**](/sections/security/childprocesses.md)
+🔗 [**Подробнее: Будьте осторожны при работе с дочерними процессами**](/sections/security/childprocesses.md)
 
 <br/><br/>
 
-## ![✔] 6.20. Hide error details from clients
+## ![✔] 6.20. Скрывайте детали ошибок от клиентов
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A6-Security_Misconfiguration" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A6:Security%20Misconfiguration%20-green.svg" alt=""/></a>
 
-**TL;DR:** An integrated express error handler hides the error details by default. However, great are the chances that you implement your own error handling logic with custom Error objects (considered by many as a best practice). If you do so, ensure not to return the entire Error object to the client, which might contain some sensitive application details
+**TL;DR:** Встроенный экспресс-обработчик ошибок по умолчанию скрывает детали ошибок. Однако велики шансы на то, что вы реализуете свою собственную логику обработки ошибок с помощью пользовательских объектов ошибок (которые многие считают лучшей практикой). Если вы это сделаете, убедитесь, что не вернули весь объект Error клиенту, который может содержать некоторые важные сведения о приложении
 
-**Otherwise:** Sensitive application details such as server file paths, third party modules in use, and other internal workflows of the application which could be exploited by an attacker, could be leaked from information found in a stack trace
+**В противном случае:** Чувствительные детали приложения, такие как пути к файлам сервера, используемые сторонние модули и другие внутренние рабочие процессы приложения, могут попасть в руки злоумышленника из трейса стека ошибки
 
-🔗 [**Read More: Hide error details from client**](/sections/security/hideerrors.md)
+🔗 [**Подробнее: Скрывайте детали ошибок от клиентов**](/sections/security/hideerrors.md)
 
 <br/><br/>
 
-## ![✔] 6.21. Configure 2FA for npm or Yarn
+## ![✔] 6.21. Используйте 2FA для npm или Yarn
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A6-Security_Misconfiguration" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A6:Security%20Misconfiguration%20-green.svg" alt=""/></a>
 
-**TL;DR:** Any step in the development chain should be protected with MFA (multi-factor authentication), npm/Yarn are a sweet opportunity for attackers who can get their hands on some developer's password. Using developer credentials, attackers can inject malicious code into libraries that are widely installed across projects and services. Maybe even across the web if published in public. Enabling 2-factor-authentication in npm leaves almost zero chances for attackers to alter your package code.
+**TL;DR:** Любой шаг в цепочке разработки должен быть защищен с помощью MFA (многофакторной аутентификации), npm / Yarn - прекрасная возможность для злоумышленников, которые могут заполучить пароль какого-то разработчика. Используя учетные данные разработчика, злоумышленники могут внедрить вредоносный код в библиотеки, которые широко используются в проектах и службах. Включение двухфакторной аутентификации в npm оставляет почти нулевые шансы для злоумышленников изменить код вашего пакета.
 
-**Otherwise:** [Have you heard about the eslint developer who's password was hijacked?](https://medium.com/@oprearocks/eslint-backdoor-what-it-is-and-how-to-fix-the-issue-221f58f1a8c8)
+**В противном случае:** [Вы слышали о разработчике eslint, пароль которого был взломан?](https://medium.com/@oprearocks/eslint-backdoor-what-it-is-and-how-to-fix-the-issue-221f58f1a8c8)
 
 <br/><br/>
 
@@ -919,105 +912,105 @@ All statements above will return false if used with `===`
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A6-Security_Misconfiguration" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A6:Security%20Misconfiguration%20-green.svg" alt=""/></a>
 
-**TL;DR:** Each web framework and technology has its known weaknesses - telling an attacker which web framework we use is a great help for them. Using the default settings for session middlewares can expose your app to module- and framework-specific hijacking attacks in a similar way to the `X-Powered-By` header. Try hiding anything that identifies and reveals your tech stack (E.g. Node.js, express)
+**TL;DR:** У каждого веб-фреймворка и технологии есть свои известные недостатки - сообщить злоумышленнику, какой веб-фреймворк мы используем, - это большая помощь для них. Использование настроек по умолчанию для промежуточного программного обеспечения сеансов может подвергнуть ваше приложение атакам, направленным на модули и фреймворки, аналогично заголовку `X-Powered-By`. Попробуйте скрыть все, что идентифицирует и раскрывает ваш технический стек (например, Node.js, express)
 
-**Otherwise:** Cookies could be sent over insecure connections, and an attacker might use session identification to identify the underlying framework of the web application, as well as module-specific vulnerabilities
+**В противном случае:** Файлы cookie могут отправляться по незащищенным соединениям, и злоумышленник может использовать идентификатор сеанса для определения базовой структуры веб-приложения, а также уязвимостей, связанных с конкретным модулем.
 
-🔗 [**Read More: Cookie and session security**](/sections/security/sessions.md)
+🔗 [**Подробнее: Cookie и безопасность сеанса**](/sections/security/sessions.md)
 
 <br/><br/>
 
-## ![✔] 6.23. Avoid DOS attacks by explicitly setting when a process should crash
+## ![✔] 6.23. Избегайте DOS-атак, явно указав, когда должен произойти сбой процесса
 
 <a href="https://www.owasp.org/index.php/Denial_of_Service" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20DDOS%20-green.svg" alt=""/></a>
 
-**TL;DR:** The Node process will crash when errors are not handled. Many best practices even recommend to exit even though an error was caught and got handled. Express, for example, will crash on any asynchronous error - unless you wrap routes with a catch clause. This opens a very sweet attack spot for attackers who recognize what input makes the process crash and repeatedly send the same request. There's no instant remedy for this but a few techniques can mitigate the pain: Alert with critical severity anytime a process crashes due to an unhandled error, validate the input and avoid crashing the process due to invalid user input, wrap all routes with a catch and consider not to crash when an error originated within a request (as opposed to what happens globally)
+**TL;DR:** Процесс Node завершится сбоем, если ошибки не будут обработаны. В некоторых случаях рекомндуется прерывать процесс, даже если ошибка была обнаружена и обработана. Например, в Express произойдет сбой при любой асинхронной ошибке, если только вы не заключите маршруты в условие catch. Это открывает очень приятное место для атак злоумышленников, которые распознают, какой ввод приводит к сбою процесса, и повторно отправляют один и тот же запрос. Нет немедленного решения этой проблемы, но несколько методов могут уменьшить боль: оповещение с критическим приоритетом каждый раз, когда происходит сбой процесса из-за необработанной ошибки, проверка ввода и избежание сбоя процесса из-за неправильного ввода пользователя, оборачивание всех маршрутов с помощью catch и исключение сбоя при возникновении ошибки в запросе (в отличие от того, что происходит глобально)
 
-**Otherwise:** This is just an educated guess: given many Node.js applications, if we try passing an empty JSON body to all POST requests - a handful of applications will crash. At that point, we can just repeat sending the same request to take down the applications with ease
+**В противном случае:** Это всего лишь обоснованное предположение: если учесть множество приложений Node.js, если мы попытаемся передать пустое тело JSON всем запросам POST - несколько приложений потерпит крах. В этот момент мы можем просто повторить отправку одного и того же запроса, чтобы легко сломать приложения
 
 <br/><br/>
 
-## ![✔] 6.24. Prevent unsafe redirects
+## ![✔] 6.24. Предотвращайте небезопасные перенаправления
 
 <a href="https://www.owasp.org/index.php/Top_10-2017_A1-Injection" target="_blank"><img src="https://img.shields.io/badge/%E2%9C%94%20OWASP%20Threats%20-%20A1:Injection%20-green.svg" alt=""/></a>
 
-**TL;DR:** Redirects that do not validate user input can enable attackers to launch phishing scams, steal user credentials, and perform other malicious actions.
+**TL;DR:** Перенаправления, которые не проверяют пользовательский ввод, могут позволить злоумышленникам запускать фишинговые атаки, красть учетные данные пользователя и выполнять другие вредоносные действия.
 
-**Otherwise:** If an attacker discovers that you are not validating external, user-supplied input, they may exploit this vulnerability by posting specially-crafted links on forums, social media, and other public places to get users to click it.
+**В противном случае:** Если злоумышленник обнаружит, что вы не проверяете внешний вводимый пользователем ввод, он может воспользоваться этой уязвимостью, разместив специально созданные ссылки на форумах, в социальных сетях и других общедоступных местах, чтобы пользователи могли щелкнуть по нему.
 
-🔗 [**Read More: Prevent unsafe redirects**](/sections/security/saferedirects.md)
+🔗 [**Подробнее: Предотвращайте небезопасные перенаправления**](/sections/security/saferedirects.md)
 
 <br/><br/><br/>
 
-<p align="right"><a href="#table-of-contents">⬆ Return to top</a></p>
+<p align="right"><a href="#оглавление">⬆ К оглавлению</a></p>
 
-# `7. Лучшие Практики По Быстродействию`
+# `7. Быстродействие`
 
 ## Our contributors are working on this section. [Would you like to join?](https://github.com/i0natan/nodebestpractices/issues/256)
 
 <br/><br/><br/>
 
-# Milestones
+# Основные этапы
 
-To maintain this guide and keep it up to date, we are constantly updating and improving the guidelines and best practices with the help of the community. You can follow our [milestones](https://github.com/i0natan/nodebestpractices/milestones) and join the working groups if you want to contribute to this project
+Чтобы поддерживать это руководство и обновлять его, мы постоянно обновляем и совершенствуем рекомендации и лучшие практики с помощью сообщества. Вы можете подписаться на наши [этапы](https://github.com/i0natan/nodebestpractices/milestones) и присоединиться к рабочим группам, если хотите внести свой вклад в этот проект.
 
 <br/><br/>
 
-## Translations
+## Переводы
 
-All translations are contributed by the community. We will be happy to get any help with either completed, ongoing or new translations!
+Все переводы предоставлены сообществом. Мы будем рады получить любую помощь с выполненными, текущими или новыми переводами!
 
-### Completed translations
+### Завершенные переводы
 
-- ![CN](/assets/flags/CN.png) [Chinese](README.chinese.md) - Courtesy of [Matt Jin](https://github.com/mattjin)
+- ![CN](/assets/flags/CN.png) [Chinese](README.chinese.md) - Предоставлено [Matt Jin](https://github.com/mattjin)
 
-### Translations in progress
+### Переводы выполняются
 
-- ![FR](/assets/flags/FR.png) [French](https://github.com/gaspaonrocks/nodebestpractices/blob/french-translation/README.french.md) ([Discussion](https://github.com/i0natan/nodebestpractices/issues/129))
-- ![HE](/assets/flags/HE.png) Hebrew ([Discussion](https://github.com/i0natan/nodebestpractices/issues/156))
-- ![KR](/assets/flags/KR.png) [Korean](README.korean.md) - Courtesy of [Sangbeom Han](https://github.com/uronly14me) ([Discussion](https://github.com/i0natan/nodebestpractices/issues/94))
-- ![RU](/assets/flags/RU.png) [Russian](https://github.com/i0natan/nodebestpractices/blob/russian-translation/README.russian.md) ([Discussion](https://github.com/i0natan/nodebestpractices/issues/105))
-- ![ES](/assets/flags/ES.png) [Spanish](https://github.com/i0natan/nodebestpractices/blob/spanish-translation/README.spanish.md) ([Discussion](https://github.com/i0natan/nodebestpractices/issues/95))
-- ![TR](/assets/flags/TR.png) Turkish ([Discussion](https://github.com/i0natan/nodebestpractices/issues/139))
+- ![FR](/assets/flags/FR.png) [French](https://github.com/gaspaonrocks/nodebestpractices/blob/french-translation/README.french.md) ([Обсуждение](https://github.com/i0natan/nodebestpractices/issues/129))
+- ![HE](/assets/flags/HE.png) Hebrew ([Обсуждение](https://github.com/i0natan/nodebestpractices/issues/156))
+- ![KR](/assets/flags/KR.png) [Korean](README.korean.md) - Предоставлено [Sangbeom Han](https://github.com/uronly14me) ([Обсуждение](https://github.com/i0natan/nodebestpractices/issues/94))
+- ![RU](/assets/flags/RU.png) [Russian](https://github.com/i0natan/nodebestpractices/blob/russian-translation/README.russian.md) ([Обсуждение](https://github.com/i0natan/nodebestpractices/issues/105))
+- ![ES](/assets/flags/ES.png) [Spanish](https://github.com/i0natan/nodebestpractices/blob/spanish-translation/README.spanish.md) ([Обсуждение](https://github.com/i0natan/nodebestpractices/issues/95))
+- ![TR](/assets/flags/TR.png) Turkish ([Обсуждение](https://github.com/i0natan/nodebestpractices/issues/139))
 
 <br/><br/><br/>
 
-# Core Contributors
+# Основные участники
 
 ## `Yoni Goldberg`
 
-Independent Node.js consultant who works with customers in USA, Europe, and Israel on building large-scale scalable Node applications. Many of the best practices above were first published in his blog post at [goldbergyoni.com](https://goldbergyoni.com). Reach Yoni at @goldbergyoni or me@goldbergyoni.com
+Независимый консультант Node.js, который работает с клиентами в США, Европе и Израиле над созданием масштабируемых масштабируемых приложений Node. Многие из приведенных выше рекомендаций были впервые опубликованы в его блоге на [goldbergyoni.com](https://goldbergyoni.com). Свяжитесь с Yoni по адресу @goldbergyoni или me@goldbergyoni.com
 
 ## `Ido Richter`
 
-👨‍💻 Software engineer, 🌐 web developer, 🤖 emojis enthusiast
+👨‍💻 Разработчик ПО, 🌐 веб-разработчик, 🤖 emojis энтузиаст
 
 ## `Refael Ackermann` [@refack](https://github.com/refack) &lt;refack@gmail.com&gt; (he/him)
 
-Node.js Core Collaborator, been noding since 0.4, and have noded in multiple production sites. Founded `node4good` home of [`lodash-contrib`](https://github.com/node4good/lodash-contrib), [`formage`](https://github.com/node4good/formage), and [`asynctrace`](https://github.com/node4good/asynctrace).
+Соавтор Node.js Core, начиная с версии 0.4, и работает на нескольких продакшн сайтах. Основал `node4good` дом [`lodash-contrib`](https://github.com/node4good/lodash-contrib), [`formage`](https://github.com/node4good/formage) и [`asynctrace`](https://github.com/node4good/asynctrace).
 `refack` on freenode, Twitter, GitHub, GMail, and many other platforms. DMs are open, happy to help
 
 ## `Bruno Scheufler`
 
-💻 full-stack web developer and Node.js enthusiast
+💻 full-stack веб-разработчик и энтузиаст Node.js
 
 ## `Kyle Martin` [@js-kyle](https://github.com/js-kyle)
 
-Full Stack Developer based in New Zealand, interested in architecting and building Node.js applications to perform at global scale. Keen contributor to open source software, including Node.js Core.
+full-stack разработчик из Новой Зеландии, заинтересованный в разработке и создании приложений Node.js глобального масштаба. Вносит весомый вклад в ПО с открытым исходным кодом, включая Node.js Core.
 
 ## `Sagir Khan`
 
-Deep specialist in JavaScript and its ecosystem — React, Node.js, MongoDB, pretty much anything that involves using JavaScript/JSON in any layer of the system — building products using the web platform for the world’s most recognized brands. Individual Member of the Node.js Foundation, collaborating on the Community Committee's Website Redesign Initiative.
+Глубокий специалист по JavaScript и его экосистеме - React, Node.js, MongoDB, практически все, что связано с использованием JavaScript / JSON на любом уровне системы - создание продуктов с использованием веб-платформы для самых узнаваемых мировых брендов. Индивидуальный член Фонда Node.js, сотрудничающий в рамках Инициативы по изменению веб-сайта Комитета сообщества.
 
 Social: gh. [sagirk](https://github.com/sagirk) | t. [@sagir_k](https://twitter.com/sagir_k) | li. [sagirk](https://linkedin.com/in/sagirk) | w. [sagirk.com](https://sagirk.com/)
 
 <br/><br/><br/>
 
-# Thank You Notes
+# Благодарность
 
-This repository is being kept up to date thanks to the help from the community. We appreciate any contribution, from a single word fix to a new best practice. Below is a list of everyone who contributed to this project. A 🌻 marks a successful pull request and a ⭐ marks an approved new best practice
+Этот репозиторий постоянно обновляется благодаря помощи сообщества. Мы ценим любой вклад, от исправления одного слова до добавления новых разделов. Ниже приведен список всех, кто внес свой вклад в этот проект. 🌻 обозначает успешный запрос на получение ответа, а ⭐ обозначает одобренный новый раздел
 
-### Flowers
+## 🌻
 
 🌻 [Kevin Rambaud](https://github.com/kevinrambaud),
 🌻 [Michael Fine](https://github.com/mfine15),
@@ -1083,7 +1076,7 @@ This repository is being kept up to date thanks to the help from the community. 
 🌻 [Kapil Patel](https://github.com/kapilepatel),
 🌻 [迷渡](https://github.com/justjavac)
 
-### Stars <br/>
+## ⭐
 
 ⭐ [Kyle Martin](https://github.com/js-kyle),
 ⭐ [Keith Holliday](https://github.com/TheHollidayInn),
